@@ -1,0 +1,35 @@
+---
+clusterName: homelab
+talosVersion: v1.10.0
+kubernetesVersion: v1.33.0
+endpoint: https://192.168.1.238:6443
+domain: cluster.local
+allowSchedulingOnMasters: true
+additionalApiServerCertSans:
+  - homelab.lan
+nodes:
+  - hostname: tcpl1
+    ipAddress: 192.168.1.238
+    controlPlane: true
+    schematic:
+      overlay:
+          image: siderolabs/sbc-rockchip
+          name: rockpi4
+      customization:
+          systemExtensions:
+              officialExtensions:
+                  - siderolabs/drbd
+                  - siderolabs/nvme-cli
+    installDisk: /dev/mmcblk1
+    talosImageURL: factory.talos.dev/metal-installer/c3b3240808b320b2c562a6dcc75f15dc5fb45588240bf189a52525a956ecac03:v1.10.0
+    networkInterfaces:
+      - interface: end0
+        dhcp: true
+        vlans:
+          - vlanId: 91
+            dhcp: false
+            addresses:
+              - "192.168.91.21/24"
+            routes:
+              - network: 192.168.91.0/24
+    
