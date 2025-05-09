@@ -8,8 +8,8 @@ allowSchedulingOnMasters: true
 additionalApiServerCertSans:
   - homelab.lan
 nodes:
-  - hostname: tcpl1
-    ipAddress: 192.168.1.238
+  - hostname: tcpl-01
+    ipAddress: 192.168.95.21
     controlPlane: true
     schematic:
       overlay:
@@ -24,7 +24,7 @@ nodes:
     talosImageURL: factory.talos.dev/metal-installer/c3b3240808b320b2c562a6dcc75f15dc5fb45588240bf189a52525a956ecac03:v1.10.0
     networkInterfaces:
       - interface: end0
-        dhcp: true
+        dhcp: false
         vlans:
           - vlanId: 91
             dhcp: false
@@ -33,7 +33,11 @@ nodes:
             routes:
               - network: 192.168.91.0/24
           - vlanId: 95
-            dhcp: false
+            dhcp: true
             vip:
               ip: 192.168.95.10
-    
+controlPlane:
+  patches:
+    - |-
+      - op: remove
+        path: /machine/nodeLabels/node.kubernetes.io~1exclude-from-external-load-balancers
