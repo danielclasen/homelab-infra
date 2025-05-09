@@ -11,7 +11,7 @@ spec:
   retryInterval: 2m0s
   sourceRef:
     kind: GitRepository
-    name: podinfo
+    name: podinfo-charts
   targetNamespace: default
   timeout: 3m0s
   wait: true
