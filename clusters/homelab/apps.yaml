@@ -14,4 +14,4 @@ spec:
   path: ./apps/homelab
   prune: true
   wait: true
-  timeout: 5m0s
+  timeout: 10m0s
