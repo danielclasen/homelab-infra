@@ -5,13 +5,12 @@ metadata:
   name: podinfo
   namespace: podinfo
 spec:
+  interval: 50m
   chart:
     spec:
       chart: podinfo
       sourceRef:
         kind: GitRepository
-        name: podinfo-charts
-  targetNamespace: default
-  interval: 50m
+        name: podinfo
   timeout: 3m0s
   wait: true
