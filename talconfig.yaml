@@ -2,7 +2,7 @@
 clusterName: homelab
 talosVersion: v1.10.0
 kubernetesVersion: v1.33.0
-endpoint: https://192.168.1.238:6443
+endpoint: https://192.168.95.10:6443
 domain: cluster.local
 allowSchedulingOnMasters: true
 additionalApiServerCertSans:
@@ -32,4 +32,8 @@ nodes:
               - "192.168.91.21/24"
             routes:
               - network: 192.168.91.0/24
+          - vlanId: 95
+            dhcp: false
+            vip:
+              ip: 192.168.95.10
     
