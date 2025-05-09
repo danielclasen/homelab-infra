@@ -1,0 +1,17 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: podinfo
+  namespace: podinfo
+spec:
+  chart:
+    spec:
+      chart: podinfo
+      sourceRef:
+        kind: GitRepository
+        name: podinfo-charts
+  targetNamespace: default
+  interval: 50m
+  timeout: 3m0s
+  wait: true

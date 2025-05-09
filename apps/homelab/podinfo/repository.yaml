@@ -2,8 +2,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: podinfo-charts
-  namespace: flux-system
+  name: podinfo
+  namespace: podinfo
 spec:
   interval: 30m0s
   ref:
