@@ -37,6 +37,11 @@ nodes:
             vip:
               ip: 192.168.95.10
 controlPlane:
+  kernelModules:
+    - name: drbd
+      parameters:
+          - usermode_helper=disabled
+    - name: drbd_transport_tcp
   patches:
     - |-
       - op: remove
