@@ -13,3 +13,8 @@ spec:
       sourceRef:
         kind: GitRepository
         name: podinfo
+  values:
+    service:
+      enabled: true
+      annotations: {}
+      type: LoadBalancer
