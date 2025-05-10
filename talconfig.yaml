@@ -26,16 +26,38 @@ nodes:
       - interface: end0
         dhcp: false
         vlans:
+          - vlanId: 95
+            dhcp: true
+            vip: &vip
+              ip: 192.168.95.10
           - vlanId: 91
             dhcp: false
             addresses:
               - "192.168.91.21/24"
             routes:
               - network: 192.168.91.0/24
-          - vlanId: 95
-            dhcp: true
-            vip:
-              ip: 192.168.95.10
+  - hostname: tcpl-02
+    ipAddress: 192.168.95.22
+    controlPlane: true
+    schematic:
+      customization:
+          systemExtensions:
+              officialExtensions:
+                  - siderolabs/drbd
+                  - siderolabs/nvme-cli
+                  - siderolabs/qemu-guest-agent
+    installDisk: /dev/sda
+    talosImageURL: factory.talos.dev/metal-installer/d3546be3dcc9c26508b54b2f2bdc4aabede3962db8a3118caab2d93d5f743dcd
+    networkInterfaces:
+      - interface: ens18
+        dhcp: true
+        vip: *vip
+      - interface: ens19
+        dhcp: false
+        addresses:
+          - "192.168.91.22/24"
+        routes:
+          - network: 192.168.91.0/24
 controlPlane:
   kernelModules:
     - name: drbd
