@@ -4,7 +4,23 @@ kind: L2Advertisement
 metadata:
   name: metallb-l2-advertisment
 spec:
+  nodeSelectors:
+  - matchLabels:
+      kubernetes.io/hostname: tcpl-01
   ipAddressPools:
   - metallb-pool 
   interfaces:
   - end0.95
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: metallb-l2-advertisment
+spec:
+  nodeSelectors:
+  - matchLabels:
+      kubernetes.io/hostname: tcpl-02
+  ipAddressPools:
+  - metallb-pool 
+  interfaces:
+  - ens18
