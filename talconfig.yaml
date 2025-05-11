@@ -25,13 +25,16 @@ nodes:
     networkInterfaces:
       - interface: end0
         dhcp: false
+        mtu: 9000
         vlans:
           - vlanId: 95
             dhcp: true
+            mtu: 1500
             vip: &vip
               ip: 192.168.95.10
           - vlanId: 91
             dhcp: false
+            mtu: 9000
             addresses:
               - "192.168.91.21/24"
             routes:
@@ -51,9 +54,11 @@ nodes:
     networkInterfaces:
       - interface: ens18
         dhcp: true
+        mtu: 1500
         vip: *vip
       - interface: ens19
         dhcp: false
+        mtu: 9000
         addresses:
           - "192.168.91.22/24"
         routes:
