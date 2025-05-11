@@ -2,7 +2,7 @@
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: metallb-l2-advertisment
+  name: metallb-l2-advertisment-1
 spec:
   nodeSelectors:
   - matchLabels:
@@ -15,7 +15,7 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: metallb-l2-advertisment
+  name: metallb-l2-advertisment-2
 spec:
   nodeSelectors:
   - matchLabels:
