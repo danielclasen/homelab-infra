@@ -7,7 +7,7 @@ spec:
     storage/linstor-ssd-device: nvme0n1
   storagePools:
   - name: ssd
-    lvmPool: {}
+    lvmThinPool: {}
     source:
       hostDevices:
       - /dev/nvme0n1
@@ -21,7 +21,7 @@ spec:
     storage/linstor-ssd-device: sdb
   storagePools:
   - name: ssd
-    lvmPool: {}
+    lvmThinPool: {}
     source:
       hostDevices:
       - /dev/sdb
