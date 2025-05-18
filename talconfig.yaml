@@ -11,6 +11,8 @@ nodes:
   - hostname: tcpl-01
     ipAddress: 192.168.95.21
     controlPlane: true
+    nodeLabels:
+      storage/linstor-ssd-device: sdb
     schematic:
       customization:
         extraKernelArgs:
@@ -38,6 +40,8 @@ nodes:
   - hostname: tcpl-02
     ipAddress: 192.168.95.22
     controlPlane: true
+    nodeLabels:
+      storage/linstor-ssd-device: sdb
     schematic:
       customization:
         extraKernelArgs:
@@ -63,6 +67,8 @@ nodes:
   - hostname: tcpl-03
     ipAddress: 192.168.95.23
     controlPlane: true
+    nodeLabels:
+      storage/linstor-ssd-device: sdb
     schematic:
       customization:
         extraKernelArgs:
@@ -88,6 +94,8 @@ nodes:
   - hostname: tworker-01
     ipAddress: 192.168.95.31
     controlPlane: false
+    nodeLabels:
+      storage/linstor-ssd-device: nvme0n1
     schematic:
       overlay:
         image: siderolabs/sbc-rockchip
@@ -110,6 +118,33 @@ nodes:
             addresses:
               - "192.168.91.31/24"
             routes: *san
+  - hostname: tworker-02
+    ipAddress: 192.168.95.32
+    controlPlane: false
+    nodeLabels:
+      storage/linstor-ssd-device: nvme0n1
+    schematic:
+      overlay:
+        image: siderolabs/sbc-rockchip
+        name: rockpi4
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/drbd
+            - siderolabs/nvme-cli
+    installDisk: /dev/mmcblk1
+    talosImageURL: factory.talos.dev/metal-installer/c3b3240808b320b2c562a6dcc75f15dc5fb45588240bf189a52525a956ecac03
+    networkInterfaces:
+      - interface: end0
+        dhcp: false
+        vlans:
+          - vlanId: 95
+            dhcp: true
+          - vlanId: 91
+            dhcp: false
+            addresses:
+              - "192.168.91.32/24"
+            routes: *san
 patches:
   - |-
     - op: add
@@ -128,7 +163,4 @@ controlPlane:
       parameters:
           - usermode_helper=disabled
     - name: drbd_transport_tcp
-  patches:
-    - |-
-      - op: remove
-        path: /machine/nodeLabels/node.kubernetes.io~1exclude-from-external-load-balancers
+
