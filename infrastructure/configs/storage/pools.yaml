@@ -1,7 +1,7 @@
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
-  name: ssd-pool-config
+  name: ssd-nvme-pool-config
 spec:
   nodeSelector:
     storage/linstor-ssd-device: nvme0n1
@@ -15,7 +15,7 @@ spec:
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
-  name: ssd-pool-config
+  name: ssd-sdb-pool-config
 spec:
   nodeSelector:
     storage/linstor-ssd-device: sdb
