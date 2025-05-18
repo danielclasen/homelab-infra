@@ -13,6 +13,7 @@ nodes:
     controlPlane: true
     nodeLabels:
       storage/linstor-ssd-device: sdb
+      networking/uplink-performance: 10G
     schematic:
       customization:
         extraKernelArgs:
@@ -42,6 +43,7 @@ nodes:
     controlPlane: true
     nodeLabels:
       storage/linstor-ssd-device: sdb
+      networking/uplink-performance: 10G
     schematic:
       customization:
         extraKernelArgs:
@@ -69,6 +71,7 @@ nodes:
     controlPlane: true
     nodeLabels:
       storage/linstor-ssd-device: sdb
+      networking/uplink-performance: 10G
     schematic:
       customization:
         extraKernelArgs:
@@ -96,6 +99,7 @@ nodes:
     controlPlane: false
     nodeLabels:
       storage/linstor-ssd-device: nvme0n1
+      networking/uplink-performance: 1G
     schematic:
       overlay:
         image: siderolabs/sbc-rockchip
@@ -123,6 +127,7 @@ nodes:
     controlPlane: false
     nodeLabels:
       storage/linstor-ssd-device: nvme0n1
+      networking/uplink-performance: 1G
     schematic:
       overlay:
         image: siderolabs/sbc-rockchip
