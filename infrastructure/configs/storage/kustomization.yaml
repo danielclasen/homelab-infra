@@ -5,3 +5,5 @@ namespace: piraeus-datastore
 resources:
   - linstor-cluster.yaml
   - talos-loader-overrides.yaml
+  - pools.yaml
+  - storage-classes.yaml
