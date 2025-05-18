@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: linstor-affinity-controller
+  namespace: piraeus-datastore
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: linstor-affinity-controller
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name: linstor
+        namespace: piraeus-datastore
+  install:
+    createNamespace: true
+  upgrade:
+    crds: CreateReplace
+  values:
+    replicaCount: 3
