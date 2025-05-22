@@ -1,0 +1,178 @@
+---
+clusterName: homelab
+talosVersion: v1.10.0
+kubernetesVersion: v1.33.0
+endpoint: https://192.168.95.10:6443
+domain: cluster.local
+allowSchedulingOnMasters: true
+additionalApiServerCertSans:
+  - homelab.lan
+nodes:
+  - hostname: tcpl-01
+    ipAddress: 192.168.95.21
+    controlPlane: true
+    nodeLabels:
+      storage/linstor-ssd-device: sdb
+      networking/uplink-performance: 10G
+    schematic:
+      customization:
+        extraKernelArgs:
+          - vga=0x31b
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/drbd
+            - siderolabs/nvme-cli
+            - siderolabs/qemu-guest-agent
+    installDisk: /dev/sda
+    talosImageURL: factory.talos.dev/metal-installer/d3546be3dcc9c26508b54b2f2bdc4aabede3962db8a3118caab2d93d5f743dcd
+    networkInterfaces:
+      - interface: ens18
+        dhcp: true
+        mtu: 1500
+        vip: &vip
+          ip: 192.168.95.10
+      - interface: ens19
+        dhcp: false
+        mtu: 9000
+        addresses:
+          - "192.168.91.21/24"
+        routes: &san
+          - network: 192.168.91.0/24
+  - hostname: tcpl-02
+    ipAddress: 192.168.95.22
+    controlPlane: true
+    nodeLabels:
+      storage/linstor-ssd-device: sdb
+      networking/uplink-performance: 10G
+    schematic:
+      customization:
+        extraKernelArgs:
+          - vga=0x31b
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/drbd
+            - siderolabs/nvme-cli
+            - siderolabs/qemu-guest-agent
+    installDisk: /dev/sda
+    talosImageURL: factory.talos.dev/metal-installer/d3546be3dcc9c26508b54b2f2bdc4aabede3962db8a3118caab2d93d5f743dcd
+    networkInterfaces:
+      - interface: ens18
+        dhcp: true
+        mtu: 1500
+        vip: *vip
+      - interface: ens19
+        dhcp: false
+        mtu: 9000
+        addresses:
+          - "192.168.91.22/24"
+        routes: *san
+  - hostname: tcpl-03
+    ipAddress: 192.168.95.23
+    controlPlane: true
+    nodeLabels:
+      storage/linstor-ssd-device: sdb
+      networking/uplink-performance: 10G
+    schematic:
+      customization:
+        extraKernelArgs:
+          - vga=0x31b
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/drbd
+            - siderolabs/nvme-cli
+            - siderolabs/qemu-guest-agent
+    installDisk: /dev/sda
+    talosImageURL: factory.talos.dev/metal-installer/d3546be3dcc9c26508b54b2f2bdc4aabede3962db8a3118caab2d93d5f743dcd
+    networkInterfaces:
+      - interface: ens18
+        dhcp: true
+        mtu: 1500
+        vip: *vip
+      - interface: ens19
+        dhcp: false
+        mtu: 9000
+        addresses:
+          - "192.168.91.23/24"
+        routes: *san
+  - hostname: tworker-01
+    ipAddress: 192.168.95.31
+    controlPlane: false
+    nodeLabels:
+      storage/linstor-ssd-device: nvme0n1
+      networking/uplink-performance: 1G
+    schematic:
+      overlay:
+        image: siderolabs/sbc-rockchip
+        name: rockpi4
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/drbd
+            - siderolabs/nvme-cli
+    installDisk: /dev/mmcblk1
+    talosImageURL: factory.talos.dev/metal-installer/c3b3240808b320b2c562a6dcc75f15dc5fb45588240bf189a52525a956ecac03
+    networkInterfaces:
+      - interface: end0
+        dhcp: false
+        vlans:
+          - vlanId: 95
+            dhcp: true
+          - vlanId: 91
+            dhcp: false
+            addresses:
+              - "192.168.91.31/24"
+            routes: *san
+  - hostname: tworker-02
+    ipAddress: 192.168.95.32
+    controlPlane: false
+    nodeLabels:
+      storage/linstor-ssd-device: nvme0n1
+      networking/uplink-performance: 1G
+    schematic:
+      overlay:
+        image: siderolabs/sbc-rockchip
+        name: rockpi4
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/drbd
+            - siderolabs/nvme-cli
+    installDisk: /dev/mmcblk1
+    talosImageURL: factory.talos.dev/metal-installer/c3b3240808b320b2c562a6dcc75f15dc5fb45588240bf189a52525a956ecac03
+    networkInterfaces:
+      - interface: end0
+        dhcp: false
+        vlans:
+          - vlanId: 95
+            dhcp: true
+          - vlanId: 91
+            dhcp: false
+            addresses:
+              - "192.168.91.32/24"
+            routes: *san
+patches:
+  - |-
+    - op: add
+      path: /machine/features/kubePrism
+      value:
+        enabled: true
+        port: 7445
+    - op: add
+      path: /machine/kubelet/nodeIP
+      value:
+        validSubnets:
+          - 192.168.95.0/24
+worker:
+  kernelModules:
+    - name: drbd
+      parameters:
+          - usermode_helper=disabled
+    - name: drbd_transport_tcp
+    - name: dm-thin-pool
+controlPlane:
+  kernelModules:
+    - name: drbd
+      parameters:
+          - usermode_helper=disabled
+    - name: drbd_transport_tcp
+    - name: dm-thin-pool
