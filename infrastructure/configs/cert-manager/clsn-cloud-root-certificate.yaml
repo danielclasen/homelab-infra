@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: clsn-cloud-tls
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-prod
     kind: ClusterIssuer
   commonName: clsn.cloud
   dnsNames:
