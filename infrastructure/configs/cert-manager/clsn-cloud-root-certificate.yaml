@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: clsn-cloud-tls
-  namespace: flux-system
+  namespace: cert-manager
 spec:
   secretName: clsn-cloud-tls
   issuerRef:
