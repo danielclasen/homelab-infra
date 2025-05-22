@@ -162,10 +162,17 @@ patches:
       value:
         validSubnets:
           - 192.168.95.0/24
+worker:
+  kernelModules:
+    - name: drbd
+      parameters:
+          - usermode_helper=disabled
+    - name: drbd_transport_tcp
+    - name: dm-thin-pool
 controlPlane:
   kernelModules:
     - name: drbd
       parameters:
           - usermode_helper=disabled
     - name: drbd_transport_tcp
-
+    - name: dm-thin-pool
