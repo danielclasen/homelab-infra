@@ -2,30 +2,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: sops-secrets
-  namespace: flux-system
-spec:
-  interval: 10m
-  retryInterval: 1m
-  timeout: 5m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
-  prune: true
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: infra-controllers
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: sops-secrets
   interval: 1h
   retryInterval: 1m
   timeout: 5m
@@ -35,6 +14,10 @@ spec:
   path: ./infrastructure/controllers
   prune: true
   wait: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -52,3 +35,8 @@ spec:
     name: flux-system
   path: ./infrastructure/configs
   prune: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+    
