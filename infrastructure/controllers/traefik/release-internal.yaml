@@ -53,9 +53,4 @@ spec:
         ingressClass: traefik-internal
       kubernetesIngress:
         ingressClass: traefik-internal
-    tlsStore:
-      default: 
-        defaultCertificate:
-          secretName: clsn-dev-tls
-          namespace: traefik
 
