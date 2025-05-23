@@ -5,3 +5,5 @@ namespace: traefik
 resources:
   - clsn-cloud-root-certificate.yaml
   - clsn-dev-root-certificate.yaml
+  - tlsstore.yaml
+  - dashboard-ingressroute.yaml
