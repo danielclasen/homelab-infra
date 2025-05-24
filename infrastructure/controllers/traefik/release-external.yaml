@@ -21,8 +21,6 @@ spec:
     remediation:
       remediateLastFailure: true
   values:
-    api:
-      name: api-external
     service:
       enabled: true
       type: LoadBalancer
@@ -47,12 +45,11 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
-        services:
-          - name: api-external@internal
-            kind: TraefikService
     providers:
       kubernetesCRD:
         ingressClass: traefik-public
+        allowCrossNamespace: true
+        allowExternalNameServices: true
       kubernetesIngress:
         ingressClass: traefik-public
 

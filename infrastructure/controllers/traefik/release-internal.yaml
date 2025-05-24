@@ -28,6 +28,9 @@ spec:
       annotations:
         metallb.universe.tf/loadBalancerIPs: 192.168.95.39
       externalTrafficPolicy: Local
+      additionalServices:
+        traefik-internal:
+          type: ClusterIP
     ports:
       web:
         redirections:
@@ -44,13 +47,15 @@ spec:
       name: traefik-internal
     ingressRoute:
       dashboard:
-        enabled: false
+        enabled: true
         services:
-          - name: api-internal@internal
+          - name: api@traefik-internal
             kind: TraefikService
     providers:
       kubernetesCRD:
         ingressClass: traefik-internal
+        allowCrossNamespace: true
+        allowExternalNameServices: true
       kubernetesIngress:
         ingressClass: traefik-internal
 
