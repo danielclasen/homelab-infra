@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: traefik-internal
-  namespace: traefik
+  namespace: flux-system
 spec:
   interval: 5m
   chart:
@@ -14,12 +14,13 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: traefik
-        namespace: traefik
+        namespace: flux-system
   install:
     createNamespace: true
   upgrade:
     remediation:
       remediateLastFailure: true
+  targetNamespace: traefik-internal
   values:
     service:
       enabled: true
@@ -28,9 +29,6 @@ spec:
       annotations:
         metallb.universe.tf/loadBalancerIPs: 192.168.95.39
       externalTrafficPolicy: Local
-      additionalServices:
-        traefik-internal:
-          type: ClusterIP
     ports:
       web:
         redirections:
@@ -45,12 +43,6 @@ spec:
       enabled: true
       isDefaultClass: false
       name: traefik-internal
-    ingressRoute:
-      dashboard:
-        enabled: true
-        services:
-          - name: api@traefik-internal
-            kind: TraefikService
     providers:
       kubernetesCRD:
         ingressClass: traefik-internal

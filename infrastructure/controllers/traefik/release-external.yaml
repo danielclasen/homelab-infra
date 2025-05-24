@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: traefik-public
-  namespace: traefik
+  namespace: flux-system
 spec:
   interval: 5m
   chart:
@@ -14,12 +14,13 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: traefik
-        namespace: traefik
+        namespace: flux-system
   install:
     createNamespace: true
   upgrade:
     remediation:
       remediateLastFailure: true
+  targetNamespace: traefik-public
   values:
     service:
       enabled: true
@@ -42,9 +43,6 @@ spec:
       enabled: true
       isDefaultClass: false
       name: traefik-public
-    ingressRoute:
-      dashboard:
-        enabled: false
     providers:
       kubernetesCRD:
         ingressClass: traefik-public
