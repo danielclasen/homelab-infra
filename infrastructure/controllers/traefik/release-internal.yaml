@@ -48,6 +48,7 @@ spec:
         ingressClass: traefik-internal
         allowCrossNamespace: true
         allowExternalNameServices: true
+        namesapces: []
       kubernetesIngress:
         ingressClass: traefik-internal
 
