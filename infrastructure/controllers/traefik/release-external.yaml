@@ -46,9 +46,7 @@ spec:
     providers:
       kubernetesCRD:
         ingressClass: traefik-public
-        allowCrossNamespace: true
         allowExternalNameServices: true
-        namesapces: []
       kubernetesIngress:
         ingressClass: traefik-public
 
