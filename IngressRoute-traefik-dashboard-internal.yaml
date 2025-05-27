@@ -1,0 +1,24 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik-internal
+  creationTimestamp: "2025-05-27T09:06:38Z"
+  generation: 1
+  labels:
+    kustomize.toolkit.fluxcd.io/name: infra-configs
+    kustomize.toolkit.fluxcd.io/namespace: flux-system
+  name: traefik-dashboard-internal
+  namespace: traefik-internal
+  resourceVersion: "9207097"
+  uid: 8dd2b5c1-6600-43b3-ae05-ce3a17cc8b95
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`traefik-internal.clsn.dev`)
+    services:
+    - kind: TraefikService
+      name: api@internal
+      namespace: traefik-internal
