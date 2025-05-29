@@ -42,4 +42,20 @@ spec:
         enabled: true
         storageClass: "ssd-perf-r3"
         accessMode: ReadWriteOnce
+        size: 100Mi
+      data:
+        enabled: true
+        storageClass: "ssd-perf-r3"
+        accessMode: ReadWriteOnce
         size: 4Gi
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - adguard-home
+            topologyKey: "kubernetes.io/hostname" 
+      
