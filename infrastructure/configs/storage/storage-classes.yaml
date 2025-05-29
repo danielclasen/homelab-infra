@@ -5,16 +5,11 @@ metadata:
   name: ssd-perf-r3
 provisioner: linstor.csi.linbit.com
 parameters:
-  linstor.csi.linbit.com/placementPolicy: "AutoPlace"
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
   linstor.csi.linbit.com/disklessOnRemaining: "true"
-  linstor.csi.linbit.com/placementCount: "3"
+  linstor.csi.linbit.com/autoPlace: "3"
   linstor.csi.linbit.com/resourceGroup: "ssd-perf-r3"
   linstor.csi.linbit.com/storagePool: "ssd"
   linstor.csi.linbit.com/replicasOnSame: "Aux/network/uplink=10G"
-  linstor.csi.linbit.com/replicasOnDifferent: "Aux/network/uplink=1G"
-  linstor.csi.linbit.com/xReplicasOnDifferent: |
-    Aux/network/uplink: 1
   csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
@@ -27,16 +22,11 @@ metadata:
   name: ssd-eco-r3
 provisioner: linstor.csi.linbit.com
 parameters:
-  linstor.csi.linbit.com/placementPolicy: "AutoPlace"
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
   linstor.csi.linbit.com/disklessOnRemaining: "true"
-  linstor.csi.linbit.com/placementCount: "3"
+  linstor.csi.linbit.com/autoPlace: "3"
   linstor.csi.linbit.com/resourceGroup: "ssd-eco-r3"
   linstor.csi.linbit.com/storagePool: "ssd"
-  linstor.csi.linbit.com/replicasOnSame: "Aux/network/uplink=1G"
-  linstor.csi.linbit.com/replicasOnDifferent: "Aux/network/uplink=10G"
-  linstor.csi.linbit.com/xReplicasOnDifferent: |
-    Aux/network/uplink: 1
+  linstor.csi.linbit.com/replicasOnDifferent: "Aux/network/uplink"
   csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
