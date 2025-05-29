@@ -14,14 +14,8 @@ spec:
         kind: HelmRepository
         name: adguard-home
   values:
-    controller:
-      replicas: 3
     env:
       TZ: "Europe/Berlin"
-    service:
-      main:
-        enabled: true
-        type: ClusterIP
     ingress:
       main:
         enabled: true
