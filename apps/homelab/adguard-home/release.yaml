@@ -40,6 +40,6 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: "ssd-perf-r3"
+        storageClass: "ssd-eco-r3"
         accessMode: ReadWriteOnce
         size: 4Gi

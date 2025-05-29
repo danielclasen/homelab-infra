@@ -26,7 +26,7 @@ parameters:
   linstor.csi.linbit.com/autoPlace: "3"
   linstor.csi.linbit.com/resourceGroup: "ssd-eco-r3"
   linstor.csi.linbit.com/storagePool: "ssd"
-  linstor.csi.linbit.com/replicasOnDifferent: "Aux/network/uplink"
+  linstor.csi.linbit.com/replicasOnDifferent: "Aux/network/uplink=10G"
   csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
