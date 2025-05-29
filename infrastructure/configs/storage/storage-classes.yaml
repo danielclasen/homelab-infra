@@ -6,13 +6,13 @@ metadata:
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
-  linstor.csi.linbit.com/autoPlace: "2"
-  linstor.csi.linbit.com/placementPolicy: "AutoPlace"
+  linstor.csi.linbit.com/placementCount: "2"
   linstor.csi.linbit.com/storagePool: "ssd"
   linstor.csi.linbit.com/disklessOnRemaining: "true"
-  linstor.csi.linbit.com/replicasOnSame: "networking/uplink-performance=10G"
+  linstor.csi.linbit.com/replicasOnSame: "uplink=10G"
   linstor.csi.linbit.com/xReplicasOnDifferent: |
-    networking/uplink-performance: 1
+    uplink: 1
+  csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -25,13 +25,13 @@ metadata:
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
-  linstor.csi.linbit.com/autoPlace: "2"
-  linstor.csi.linbit.com/placementPolicy: "AutoPlace"
+  linstor.csi.linbit.com/placementCount: "2"
   linstor.csi.linbit.com/storagePool: "ssd"
   linstor.csi.linbit.com/disklessOnRemaining: "true"
-  linstor.csi.linbit.com/replicasOnSame: "networking/uplink-performance=1G"
+  linstor.csi.linbit.com/replicasOnSame: "uplink=1G"
   linstor.csi.linbit.com/xReplicasOnDifferent: |
-    networking/uplink-performance: 1
+    uplink: 1
+  csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer

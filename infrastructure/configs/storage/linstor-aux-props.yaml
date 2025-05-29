@@ -1,9 +1,0 @@
-apiVersion: piraeus.io/v1
-kind: LinstorSatelliteConfiguration
-metadata:
-  name: node-labels-aux
-spec:
-  properties:
-    - name: Aux/topology/networking/uplink-performance
-      valueFrom:
-        nodeFieldRef: metadata.labels['networking/uplink-performance']
