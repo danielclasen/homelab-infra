@@ -23,7 +23,7 @@ metadata:
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
-  linstor.csi.linbit.com/autoPlace: "3"
+  linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/placementPolicy: "AutoPlace"
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/replicasOnSame: "networking/uplink-performance=1G"
