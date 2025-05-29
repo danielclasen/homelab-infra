@@ -6,13 +6,9 @@ metadata:
   namespace: adguard-home
 spec:
   interval: 5m
-  chart:
-    spec:
-      version: 0.3.25
-      chart: adguard-home
-      sourceRef:
-        kind: HelmRepository
-        name: adguard-home
+  chartRef:
+    kind: OCIRepository
+    name: adguard-home
   values:
     controller:
       replicas: 3
@@ -21,7 +17,6 @@ spec:
     service:
       main:
         enabled: true
-        annotations: {}
         type: ClusterIP
     ingress:
       main:
