@@ -10,7 +10,8 @@ parameters:
   linstor.csi.linbit.com/placementPolicy: "AutoPlace"
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/replicasOnSame: "networking/uplink-performance=10G"
-  linstor.csi.linbit.com/replicasOnDifferent: "networking/uplink-performance=1G"
+  linstor.csi.linbit.com/xReplicasOnDifferent: |
+    networking/uplink-performance: 1
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -27,7 +28,8 @@ parameters:
   linstor.csi.linbit.com/placementPolicy: "AutoPlace"
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/replicasOnSame: "networking/uplink-performance=1G"
-  linstor.csi.linbit.com/replicasOnDifferent: "networking/uplink-performance=10G"
+  linstor.csi.linbit.com/xReplicasOnDifferent: |
+    networking/uplink-performance: 1
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
