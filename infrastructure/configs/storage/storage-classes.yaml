@@ -8,7 +8,8 @@ parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
   linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/placementPolicy: "AutoPlace"
-  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/storagePool: "ssd"
+  linstor.csi.linbit.com/disklessOnRemaining: "true"
   linstor.csi.linbit.com/replicasOnSame: "networking/uplink-performance=10G"
   linstor.csi.linbit.com/xReplicasOnDifferent: |
     networking/uplink-performance: 1
@@ -26,7 +27,8 @@ parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
   linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/placementPolicy: "AutoPlace"
-  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/storagePool: "ssd"
+  linstor.csi.linbit.com/disklessOnRemaining: "true"
   linstor.csi.linbit.com/replicasOnSame: "networking/uplink-performance=1G"
   linstor.csi.linbit.com/xReplicasOnDifferent: |
     networking/uplink-performance: 1
