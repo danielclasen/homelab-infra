@@ -6,4 +6,4 @@ spec:
   properties:
     - name: Aux/topology/networking/uplink-performance
       valueFrom:
-        nodeFieldRef: metadata.labels['networking.uplink-performance']
+        nodeFieldRef: metadata.labels['networking/uplink-performance']
