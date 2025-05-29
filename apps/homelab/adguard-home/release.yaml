@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adguard-home
+  namespace: adguard-home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      version: 0.3.25
+      chart: adguard-home
+      sourceRef:
+        kind: HelmRepository
+        name: adguard-home
+  values:
+    controller:
+      replicas: 3
+    env:
+      TZ: "Europe/Berlin"
+    service:
+      main:
+        enabled: true
+        annotations: {}
+        type: ClusterIP
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik-internal
+          # traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          # traefik.ingress.kubernetes.io/router.tls: "true"
+          # traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt-prod
+        hosts:
+          - host: adguard.clsn.dev
+            paths:
+              - path: /
+        # tls:
+          # enabled: true
+          # secretName: adguard-home-tls
+    persistence:
+      config:
+        enabled: true
+        storageClass: "ssd-eco"
+        accessMode: ReadWriteOnce
+        size: 4Gi

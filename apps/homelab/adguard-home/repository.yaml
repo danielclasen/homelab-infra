@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: adguard-home
+  namespace: adguard-home
+spec:
+  type: oci
+  url: oci://ghcr.io/gabe565/charts/adguard-home
+  interval: 5m0s
