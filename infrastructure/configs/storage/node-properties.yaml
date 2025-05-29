@@ -4,6 +4,6 @@ metadata:
   name: node-properties
 spec:
   properties:
-    - name: Aux/topology/uplink
+    - name: Aux/network/uplink
       valueFrom:
-        nodeFieldRef: metadata.labels['topology.kubernetes.io/uplink']
+        nodeFieldRef: metadata.labels['network/uplink']

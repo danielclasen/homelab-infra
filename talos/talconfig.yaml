@@ -13,7 +13,7 @@ nodes:
     controlPlane: true
     nodeLabels:
       storage/linstor-ssd-device: sdb
-      topology.kubernetes.io/uplink: 10G
+      network/uplink: 10G
     schematic:
       customization:
         extraKernelArgs:
@@ -43,7 +43,7 @@ nodes:
     controlPlane: true
     nodeLabels:
       storage/linstor-ssd-device: sdb
-      topology.kubernetes.io/uplink: 10G
+      network/uplink: 10G
     schematic:
       customization:
         extraKernelArgs:
@@ -71,7 +71,7 @@ nodes:
     controlPlane: true
     nodeLabels:
       storage/linstor-ssd-device: sdb
-      topology.kubernetes.io/uplink: 10G
+      network/uplink: 10G
     schematic:
       customization:
         extraKernelArgs:
@@ -99,7 +99,7 @@ nodes:
     controlPlane: false
     nodeLabels:
       storage/linstor-ssd-device: nvme0n1
-      topology.kubernetes.io/uplink: 1G
+      network/uplink: 1G
     schematic:
       overlay:
         image: siderolabs/sbc-rockchip
@@ -127,7 +127,7 @@ nodes:
     controlPlane: false
     nodeLabels:
       storage/linstor-ssd-device: nvme0n1
-      topology.kubernetes.io/uplink: 1G
+      network/uplink: 1G
     schematic:
       overlay:
         image: siderolabs/sbc-rockchip
