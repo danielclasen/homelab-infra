@@ -10,7 +10,6 @@ parameters:
   linstor.csi.linbit.com/resourceGroup: "ssd-perf-r3"
   linstor.csi.linbit.com/storagePool: "ssd"
   linstor.csi.linbit.com/replicasOnSame: "Aux/network/uplink=10G"
-  csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -27,7 +26,6 @@ parameters:
   linstor.csi.linbit.com/resourceGroup: "ssd-eco-r3"
   linstor.csi.linbit.com/storagePool: "ssd"
   linstor.csi.linbit.com/replicasOnDifferent: "Aux/network/uplink=10G"
-  csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
