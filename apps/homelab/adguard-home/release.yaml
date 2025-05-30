@@ -16,6 +16,10 @@ spec:
   values:
     env:
       TZ: "Europe/Berlin"
+    main:
+      ports:
+        http:
+          port: 80
     ingress:
       main:
         enabled: true
