@@ -2,25 +2,31 @@
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: metallb-l2-advertisment-1
+  name: metallb-l2-advertisment-tcpl-pxe
 spec:
   nodeSelectors:
   - matchLabels:
       kubernetes.io/hostname: tcpl-01
+  - matchLabels:
+      kubernetes.io/hostname: tcpl-02
+  - matchLabels:
+      kubernetes.io/hostname: tcpl-03
   ipAddressPools:
-  - metallb-pool 
+  - metallb-pool
   interfaces:
-  - end0.95
+  - ens18
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: metallb-l2-advertisment-2
+  name: metallb-l2-advertisment-tworker-rp4b
 spec:
   nodeSelectors:
   - matchLabels:
-      kubernetes.io/hostname: tcpl-02
+      kubernetes.io/hostname: tworker-01
+  - matchLabels:
+      kubernetes.io/hostname: tworker-02
   ipAddressPools:
-  - metallb-pool 
+  - metallb-pool
   interfaces:
-  - ens18
+  - end0.95
