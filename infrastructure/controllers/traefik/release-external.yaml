@@ -49,6 +49,8 @@ spec:
         expose:
           default: false
           internal: true
+    additionalArguments:
+      - "--api.insecure=true"
     ingressClass:
       enabled: true
       isDefaultClass: false
