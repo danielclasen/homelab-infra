@@ -3,8 +3,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: external-dns
 resources:
-  - repository.yaml
   - namespace.yaml
+  - repository.yaml
   - ./internal/adguard-secret.yaml
   - ./internal/release.yaml
   - ./external/cloudflare-secret.yaml
