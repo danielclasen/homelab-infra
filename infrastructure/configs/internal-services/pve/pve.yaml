@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: pve
   namespace: internal-services
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: pve.clsn.dev
 spec:
   type: ExternalName
   externalName: 192.168.91.10
@@ -19,7 +21,6 @@ metadata:
   name: pve-ingressroute
   namespace: internal-services
   annotations:
-    external-dns.alpha.kubernetes.io/target: pve.clsn.dev
     kubernetes.io/ingress.class: traefik-internal
 spec:
   entryPoints:
