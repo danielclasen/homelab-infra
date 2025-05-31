@@ -27,6 +27,8 @@ spec:
     cloudflare:
       proxied: true
     extraEnvVarsSecret: external-env-secret
+    extraArgs:
+      traefik-disable-legacy:
     ingressClassFilters: 
       - traefik-public
     domainFilters:
