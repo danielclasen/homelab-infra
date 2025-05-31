@@ -22,6 +22,7 @@ spec:
       remediateLastFailure: true
   targetNamespace: traefik-internal
   values:
+    namespaceOverride: traefik-internal
     service:
       enabled: true
       type: LoadBalancer

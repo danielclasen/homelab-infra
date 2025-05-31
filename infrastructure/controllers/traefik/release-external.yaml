@@ -22,6 +22,7 @@ spec:
       remediateLastFailure: true
   targetNamespace: traefik-public
   values:
+    namespaceOverride: traefik-public
     service:
       enabled: true
       type: LoadBalancer
