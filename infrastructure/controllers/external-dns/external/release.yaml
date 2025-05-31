@@ -33,6 +33,7 @@ spec:
     extraEnvVarsSecret: external-env-secret
     extraArgs:
       dry-run: true
-    ingressClassFilters: traefik-public
+    ingressClassFilters: 
+      - traefik-public
     domainFilters:
       - clsn.cloud

@@ -26,7 +26,8 @@ spec:
       - crd
       - service
       - ingress
-    ingressClassFilters: traefik-internal
+    ingressClassFilters: 
+      - traefik-internal
     domainFilters:
       - clsn.dev
     provider: webhook
