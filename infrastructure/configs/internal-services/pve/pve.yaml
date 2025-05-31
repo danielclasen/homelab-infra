@@ -28,7 +28,7 @@ spec:
     - match: Host(`pve.clsn.dev`)
       kind: Rule
       services:
-        - name: pve-clsn-dev
+        - name: pve
           port: proxmox
           scheme: https
           serversTransport: insecure-skip-verify
