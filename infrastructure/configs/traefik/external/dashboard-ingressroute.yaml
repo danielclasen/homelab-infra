@@ -13,5 +13,5 @@ spec:
     - kind: Rule
       match: Host(`traefik.clsn.dev`)
       services:
-        - name: api@internal
-          kind: TraefikService
+        - name: traefik-public-traefik-public-internal
+          kind: Service

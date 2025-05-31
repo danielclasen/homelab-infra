@@ -30,6 +30,11 @@ spec:
       annotations:
         metallb.universe.tf/loadBalancerIPs: 192.168.95.40
       externalTrafficPolicy: Local
+      additionalServices:
+        internal:
+          type: ClusterIP
+          labels:
+            traefik-service-label: internal
     ports:
       web:
         redirections:
@@ -40,6 +45,10 @@ spec:
       websecure:
         tls:
           enabled: true
+      traefik:
+        expose:
+          default: false
+          internal: true
     ingressClass:
       enabled: true
       isDefaultClass: false
