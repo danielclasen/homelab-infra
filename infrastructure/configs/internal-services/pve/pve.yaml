@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: pve
+  namespace: internal-services
 spec:
   type: ExternalName
   externalName: 192.168.91.10
@@ -16,6 +17,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: pve-ingressroute
+  namespace: internal-services
   annotations:
     external-dns.alpha.kubernetes.io/target: pve.clsn.dev
     kubernetes.io/ingress.class: traefik-internal
