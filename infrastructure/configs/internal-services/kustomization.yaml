@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: internal-services
 resources:
 - namespace.yaml
+- servers-transport.yaml
 - ./pve/pve.yaml
 
