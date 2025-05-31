@@ -15,7 +15,6 @@ spec:
         name: bitnami
       interval: 12h
   timeout: 5m
-  releaseName: external-dns
   values:
     crd:
       create: true
