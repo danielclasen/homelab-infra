@@ -15,3 +15,4 @@ spec:
       services:
         - name: traefik-public-traefik-public-internal
           kind: Service
+          port: 8080
