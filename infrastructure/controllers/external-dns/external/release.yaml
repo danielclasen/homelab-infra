@@ -28,8 +28,6 @@ spec:
       secretName: cloudflare-secret
       proxied: true
     extraEnvVarsSecret: external-env-secret
-    extraArgs:
-      dry-run: true
     ingressClassFilters: 
       - traefik-public
     domainFilters:
