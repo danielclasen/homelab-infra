@@ -58,7 +58,7 @@ spec:
           - name: ADGUARD_URL
             valueFrom:
               secretKeyRef:
-                name: adguard-configuration
+                name: adguard-secret
                 key: url
           # - name: ADGUARD_USER
           #   valueFrom:

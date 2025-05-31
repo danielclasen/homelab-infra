@@ -5,8 +5,8 @@ namespace: networking
 resources:
   - repository.yaml
   - namespace.yaml
-  - internal/adguard-secret.yaml
-  - internal/release.yaml
-  - external/cloudflare-secret.yaml
-  - external/env-secret.yaml
-  - external/release.yaml
+  - ./internal/adguard-secret.yaml
+  - ./internal/release.yaml
+  - ./external/cloudflare-secret.yaml
+  - ./external/env-secret.yaml
+  - ./external/release.yaml
