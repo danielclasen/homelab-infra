@@ -4,6 +4,6 @@ metadata:
   name: bitnami
   namespace: networking
 spec:
-  interval: 1h0m0s
-  type: oci
-  url: oci://registry-1.docker.io/bitnamicharts
+  interval: 30m0s
+  timeout: 5m
+  url: https://charts.bitnami.com/bitnami
