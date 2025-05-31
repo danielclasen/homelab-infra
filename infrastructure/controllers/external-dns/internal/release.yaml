@@ -22,6 +22,7 @@ spec:
       - crd
       - service
       - ingress
+      - traefik-proxy
     ingressClassFilters: 
       - traefik-internal
     domainFilters:
