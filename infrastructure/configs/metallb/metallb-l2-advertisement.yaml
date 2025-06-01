@@ -3,6 +3,7 @@ apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: metallb-l2-advertisment-tcpl-pxe
+  namespace: metallb
 spec:
   nodeSelectors:
   - matchLabels:
@@ -20,6 +21,7 @@ apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: metallb-l2-advertisment-tworker-rp4b
+  namespace: metallb
 spec:
   nodeSelectors:
   - matchLabels:
