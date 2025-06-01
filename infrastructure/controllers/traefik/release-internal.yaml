@@ -52,4 +52,5 @@ spec:
         publishedService: 
           enabled: true
         ingressClass: traefik-internal
+        allowExternalNameServices: true
 
