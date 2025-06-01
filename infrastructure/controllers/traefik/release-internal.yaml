@@ -30,6 +30,7 @@ spec:
       annotations:
         metallb.io/loadBalancerIPs: *ip
         external-dns.alpha.kubernetes.io/hostname: traefik-internal.clsn.dev
+        external-dns.alpha.kubernetes.io/target: *ip
       externalTrafficPolicy: Local
     ports:
       web:
