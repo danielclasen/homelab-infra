@@ -17,9 +17,15 @@ spec:
         namespace: networking
   install:
     createNamespace: true
-  upgrade:
+    crds: CreateReplace
     remediation:
       remediateLastFailure: true
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      remediateLastFailure: true
+      retries: 3
   targetNamespace: traefik-internal
   values:
     namespaceOverride: traefik-internal

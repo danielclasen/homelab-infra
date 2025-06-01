@@ -16,9 +16,15 @@ spec:
         name: switchboard
   install:
     createNamespace: true
-  upgrade:
+    crds: CreateReplace
     remediation:
       remediateLastFailure: true
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      remediateLastFailure: true
+      retries: 3
   targetNamespace: switchboard
   values:
     integrations:
