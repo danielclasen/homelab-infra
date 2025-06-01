@@ -35,7 +35,7 @@ spec:
     externalDNS:
       enabled: true
       targetService:
-        name: traefik-internal
+        name: traefik
         namespace: traefik-internal
     selector:
       ingressClass: traefik-internal

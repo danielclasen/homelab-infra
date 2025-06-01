@@ -13,6 +13,6 @@ spec:
     - kind: Rule
       match: Host(`traefik.clsn.dev`)
       services:
-        - name: traefik-public-traefik-public-internal
+        - name: traefik-internal
           kind: Service
           port: traefik

@@ -26,6 +26,7 @@ spec:
       remediateLastFailure: true
       retries: 3
   targetNamespace: traefik-internal
+  releaseName: traefik
   values:
     namespaceOverride: traefik-internal
     service:
