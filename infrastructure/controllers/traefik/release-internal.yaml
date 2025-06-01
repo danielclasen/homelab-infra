@@ -61,4 +61,9 @@ spec:
           enabled: true
         ingressClass: traefik-internal
         allowExternalNameServices: true
+    logs:
+      access:
+        enabled: true
+      general:
+        level: DEBUG
 
