@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homeassistant
+  namespace: internal-services
+spec:
+  type: ExternalName
+  externalName: homeassistant.lan
+  ports:
+    - name: ha-http
+      port: 8123
+      targetPort: 8123
+      protocol: TCP
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: homeassistant-redirectregex
+spec:
+  redirectRegex:
+    regex: ^https://ha.clsn.dev/(.*)
+    replacement: https://homeassistant.clsn.dev/${1}
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homeassistant-ingressroute
+  namespace: internal-services
+  annotations:
+    kubernetes.io/ingress.class: traefik-internal
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`homeassistant.clsn.dev`) || Host(`ha.clsn.dev`)
+      kind: Rule
+      middlewares:
+        - name: homeassistant-redirectregex
+      services:
+        - name: homeassistant
+          port: ha-http
+          scheme: http
+    - match: Host(`homeassistant.clsn.dev`) && PathPrefix(`/api/v2`)
+      kind: Rule
+      services:
+        - name: homeassistant
+          port: http
+          scheme: http
+      

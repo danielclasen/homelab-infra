@@ -5,4 +5,4 @@ resources:
 - namespace.yaml
 - servers-transport.yaml
 - ./pve/pve.yaml
-
+- ./homeassistant/homeassistant.yaml
