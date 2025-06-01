@@ -18,7 +18,6 @@ spec:
   targetNamespace: external-dns
   install:
     createNamespace: true
-    crds: CreateReplace
     remediation:
       remediateLastFailure: true
       retries: 3
