@@ -27,3 +27,4 @@ spec:
   values:
     crds:
       enabled: true
+      keep: true
