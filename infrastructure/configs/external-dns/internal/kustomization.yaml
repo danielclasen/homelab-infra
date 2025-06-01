@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: external-dns
 resources:
   - adguard-secret.yaml
-  - release.yaml

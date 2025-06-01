@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: external-dns
 resources:
   - env-secret.yaml
-  - release.yaml

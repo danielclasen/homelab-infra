@@ -16,12 +16,10 @@ spec:
   targetNamespace: metallb
   install:
     createNamespace: true
-    crds: CreateReplace
     remediation:
       remediateLastFailure: true
       retries: 3
   upgrade:
-    crds: CreateReplace
     remediation:
       remediateLastFailure: true
       retries: 3
