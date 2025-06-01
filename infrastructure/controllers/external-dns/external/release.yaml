@@ -17,6 +17,7 @@ spec:
   timeout: 5m
   targetNamespace: external-dns
   install:
+    createNamespace: true
     crds: CreateReplace
     remediation:
       remediateLastFailure: true
