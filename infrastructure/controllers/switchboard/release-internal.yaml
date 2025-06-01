@@ -34,8 +34,7 @@ spec:
             kind: ClusterIssuer
     externalDNS:
       enabled: true
-      targetService:
-        name: traefik-internal-traefik
-        namespace: traefik-internal
+      targetIPs:
+        - 192.168.95.39
     selector:
       ingressClass: traefik-internal

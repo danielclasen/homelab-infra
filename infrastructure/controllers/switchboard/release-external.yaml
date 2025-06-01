@@ -33,9 +33,6 @@ spec:
             name: letsencrypt-prod
             kind: ClusterIssuer
     externalDNS:
-      enabled: true
-      targetService:
-        name: traefik-external-traefik
-        namespace: traefik-external
+      enabled: false
     selector:
       ingressClass: traefik-external
