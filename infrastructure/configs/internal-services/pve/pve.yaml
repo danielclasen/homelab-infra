@@ -19,8 +19,6 @@ metadata:
   name: pve-ingressroute
   namespace: internal-services
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: pve.clsn.dev
-    external-dns.alpha.kubernetes.io/target: traefik-internal.clsn.dev
     kubernetes.io/ingress.class: traefik-internal
 spec:
   entryPoints:
