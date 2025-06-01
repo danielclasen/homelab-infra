@@ -38,6 +38,6 @@ spec:
     extraArgs:
       traefik-disable-legacy:
     ingressClassFilters: 
-      - traefik-public
+      - traefik-external
     domainFilters:
       - clsn.cloud

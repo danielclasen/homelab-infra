@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: traefik-public
+  name: traefik-external
   namespace: traefik
 spec:
   interval: 5m
@@ -25,10 +25,10 @@ spec:
     remediation:
       remediateLastFailure: true
       retries: 3
-  targetNamespace: traefik-public
-  releaseName: traefik
+  targetNamespace: traefik-external
+  releaseName: traefik-external-traefik
   values:
-    namespaceOverride: traefik-public
+    namespaceOverride: traefik-external
     service:
       enabled: true
       type: LoadBalancer
@@ -60,14 +60,14 @@ spec:
     ingressClass:
       enabled: true
       isDefaultClass: false
-      name: traefik-public
+      name: traefik-external
     providers:
       kubernetesCRD:
-        ingressClass: traefik-public
+        ingressClass: traefik-external
         allowExternalNameServices: true
       kubernetesIngress:
         publishedService: 
           enabled: true
-        ingressClass: traefik-public
+        ingressClass: traefik-external
         allowExternalNameServices: true
 
