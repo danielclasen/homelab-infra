@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: external-dns-internal
-  namespace: external-dns
+  namespace: networking
 spec:
   interval: 10m
   chart:
@@ -15,6 +15,7 @@ spec:
         name: bitnami
       interval: 12h
   timeout: 5m
+  targetNamespace: external-dns
   values:
     crd:
       create: true
@@ -22,7 +23,6 @@ spec:
       - crd
       - service
       - ingress
-      - traefik-proxy
     ingressClassFilters: 
       - traefik-internal
     domainFilters:

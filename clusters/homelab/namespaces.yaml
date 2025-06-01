@@ -22,8 +22,3 @@ metadata:
     pod-security.kubernetes.io/warn: privileged
     pod-security.kubernetes.io/warn-version: latest
   name: piraeus-datastore
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: traefik

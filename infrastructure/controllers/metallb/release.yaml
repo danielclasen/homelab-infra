@@ -13,4 +13,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: metallb-charts
-        
+  targetNamespace: metallb
+  install:
+    createNamespace: true  
