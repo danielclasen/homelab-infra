@@ -6,7 +6,7 @@ metadata:
   namespace: internal-services
 spec:
   type: ExternalName
-  externalName: homeassistant.lan
+  externalName: 192.168.1.101
   ports:
     - name: ha-http
       port: 8123
