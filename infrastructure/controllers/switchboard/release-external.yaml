@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: switchboard-external
-  namespace: networking
+  namespace: switchboard
 spec:
   interval: 5m
   chart:
@@ -15,7 +15,6 @@ spec:
         kind: HelmRepository
         name: switchboard
   install:
-    createNamespace: true
     crds: CreateReplace
     remediation:
       remediateLastFailure: true
@@ -25,7 +24,6 @@ spec:
     remediation:
       remediateLastFailure: true
       retries: 3
-  targetNamespace: switchboard
   values:
     integrations:
       certManager:

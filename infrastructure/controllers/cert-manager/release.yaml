@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cert-manager
-  namespace: networking
+  namespace: cert-manager
 spec:
   chart:
     spec:
@@ -14,7 +14,6 @@ spec:
         name: cert-manager
       version: 1.17.x
   install:
-    createNamespace: true
     crds: CreateReplace
     remediation:
       remediateLastFailure: true
@@ -25,8 +24,6 @@ spec:
       remediateLastFailure: true
       retries: 3
   interval: 1m0s
-  releaseName: cert-manager
-  targetNamespace: cert-manager
   values:
     crds:
       enabled: true

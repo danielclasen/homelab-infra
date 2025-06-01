@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: bitnami
-  namespace: networking
+  namespace: external-dns
 spec:
   interval: 6h
   type: oci
