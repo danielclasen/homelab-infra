@@ -26,9 +26,9 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      loadBalancerIP: "192.168.95.39"
+      loadBalancerIP: &ip 192.168.95.39
       annotations:
-        metallb.io/loadBalancerIPs: 192.168.95.39
+        metallb.io/loadBalancerIPs: *ip
       externalTrafficPolicy: Local
     ports:
       web:
@@ -49,5 +49,7 @@ spec:
         ingressClass: traefik-internal
         allowExternalNameServices: true
       kubernetesIngress:
+        publishedService: 
+          enabled: true
         ingressClass: traefik-internal
 
