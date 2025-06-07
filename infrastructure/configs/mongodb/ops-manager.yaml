@@ -1,3 +1,4 @@
+---
 apiVersion: mongodb.com/v1
 kind: MongoDBOpsManager
 metadata:
@@ -18,8 +19,18 @@ spec:
   externalConnectivity:
     type: ClusterIP
     port: 8080
-  backup:
-    enabled: true
-    headDB:
-      storage: 4Gi
-      storageClass: ssd-perf-r3
+  statefulSet:
+    spec:
+      volumeClaimTemplates:
+        - apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: data
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 16Gi
+            volumeMode: Filesystem
+            storageClassName: ssd-perf-r3        
