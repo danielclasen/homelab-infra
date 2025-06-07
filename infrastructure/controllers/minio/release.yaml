@@ -23,14 +23,15 @@ spec:
       remediateLastFailure: true
       retries: 3
   values:
-    replicas: 4
+    replicas: 3
+    drivesPerNode: 2
     persistence:
-      storageClass: "ssd-hybrid-r1"
+      storageClass: "ssd-perf-xfs-r1"
       size: 10Gi
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: traefik-public
+        kubernetes.io/ingress.class: traefik-external
       hosts:
         - s3.clsn.cloud
     consoleIngress:
@@ -44,6 +45,8 @@ spec:
         memory: "2Gi"
       limits:
         memory: "4Gi"
+    nodeSelector:
+        beta.kubernetes.io/arch: amd64
     buckets:
       - name: notesnook
         purge: false
