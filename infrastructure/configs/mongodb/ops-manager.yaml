@@ -22,15 +22,13 @@ spec:
   statefulSet:
     spec:
       volumeClaimTemplates:
-        - apiVersion: v1
-          kind: PersistentVolumeClaim
-          metadata:
+        - metadata:
             name: data
           spec:
             accessModes:
-            - ReadWriteOnce
+              - ReadWriteOnce
             resources:
               requests:
                 storage: 16Gi
             volumeMode: Filesystem
-            storageClassName: ssd-perf-r3        
+            storageClassName: ssd-perf-r3
