@@ -1,0 +1,20 @@
+apiVersion: mongodb.com/v1
+kind: MongoDBOpsManager
+metadata:
+  name: ops-manager
+  namespace: mongodb
+spec:
+  replicas: 1
+  version: 8.0.7
+  adminCredentials: ops-manager-credentials-secret
+  applicationDatabase:
+    members: 3
+    version: 8.0.7
+  externalConnectivity:
+    type: ClusterIP
+    port: 8080
+  backup:
+    enabled: true
+    headDB:
+      storage: 4Gi
+      storageClass: ssd-perf-r3
