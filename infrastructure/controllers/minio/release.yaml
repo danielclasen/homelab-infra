@@ -1,0 +1,50 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minio
+  namespace: minio
+spec:
+  interval: 5m
+  timeout: 2m
+  chart:
+    spec:
+      chart: minio
+      version: 5.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: minio
+  install:
+    remediation:
+      remediateLastFailure: true
+      retries: 3
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      retries: 3
+  values:
+    replicas: 4
+    persistence:
+      storageClass: "ssd-hybrid-r1"
+      size: 10Gi
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik-public
+      hosts:
+        - host: s3.clsn.cloud
+    consoleIngress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik-internal
+      hosts:
+        - host: s3.clsn.dev
+    resources:
+      requests:
+        memory: "2Gi"
+      limits:
+        memory: "4Gi"
+    buckets:
+      - name: notesnook
+        purge: false
+        versioning: true      
