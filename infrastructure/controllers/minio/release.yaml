@@ -32,13 +32,13 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik-public
       hosts:
-        - host: s3.clsn.cloud
+        - s3.clsn.cloud
     consoleIngress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik-internal
       hosts:
-        - host: s3.clsn.dev
+        - s3.clsn.dev
     resources:
       requests:
         memory: "2Gi"
