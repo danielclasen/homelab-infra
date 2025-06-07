@@ -10,6 +10,12 @@ spec:
   applicationDatabase:
     members: 3
     version: 8.0.7
+    persistent: true
+    podSpec:
+      persistence:
+        single:
+          storage: 10Gi
+          storageClass: ssd-perf-xfs-r1
   externalConnectivity:
     type: ClusterIP
     port: 8080
