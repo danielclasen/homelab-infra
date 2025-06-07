@@ -1,0 +1,18 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: notesnook
+  namespace: notesnook
+spec:
+  version: 8.0.0
+  members: 3
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBUser
+metadata:
+  name: notesnook-mongodb-user
+spec:
+  username: "notesnook"
+  db: "notesnook"
+  connectionStringSecretName: notesnook-mongodb-connection-string
