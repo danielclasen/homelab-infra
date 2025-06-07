@@ -12,6 +12,9 @@ spec:
     members: 3
     version: 8.0.7
     podSpec:
+      podTemplate:
+        nodeSelector:
+          beta.kubernetes.io/arch: amd64
       persistence:
         single:
           storage: 10Gi
@@ -19,29 +22,3 @@ spec:
   externalConnectivity:
     type: ClusterIP
     port: 8080
-  statefulSet:
-    spec:
-      template:
-        spec:
-          nodeSelector:
-            beta.kubernetes.io/arch: amd64
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                - matchExpressions:
-                  - key: beta.kubernetes.io/arch
-                    operator: In
-                    values:
-                    - amd64
-      volumeClaimTemplates:
-        - metadata:
-            name: data
-          spec:
-            accessModes:
-              - ReadWriteOnce
-            resources:
-              requests:
-                storage: 16Gi
-            volumeMode: Filesystem
-            storageClassName: ssd-perf-r3
