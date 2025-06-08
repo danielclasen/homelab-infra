@@ -12,7 +12,13 @@ spec:
     members: 3
     version: 8.0.7
     podSpec:
-      podTemplate:
+      persistence:
+        single:
+          storage: 10Gi
+          storageClass: ssd-perf-xfs-r1
+  statefulSet:
+    spec:
+      template:
         spec:
           affinity:
             nodeAffinity:
@@ -23,10 +29,6 @@ spec:
                         operator: In
                         values:
                           - amd64
-      persistence:
-        single:
-          storage: 10Gi
-          storageClass: ssd-perf-xfs-r1
   externalConnectivity:
     type: ClusterIP
     port: 8080
