@@ -13,15 +13,16 @@ spec:
     version: 8.0.7
     podSpec:
       podTemplate:
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: beta.kubernetes.io/arch
-                      operator: In
-                      values:
-                        - amd64
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: beta.kubernetes.io/arch
+                        operator: In
+                        values:
+                          - amd64
       persistence:
         single:
           storage: 10Gi
