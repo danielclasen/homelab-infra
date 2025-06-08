@@ -13,6 +13,6 @@ spec:
     - kind: Rule
       match: Host(`mongodb.clsn.dev`)
       services:
-        - name: mongodb-ops-manager
+        - name: ops-manager-svc
           kind: Service
           port: 8080
