@@ -13,8 +13,9 @@ spec:
     version: 8.0.7
     podSpec:
       podTemplate:
-        nodeSelector:
-          beta.kubernetes.io/arch: amd64
+        spec:
+          nodeSelector:
+            beta.kubernetes.io/arch: amd64
       persistence:
         single:
           storage: 10Gi
