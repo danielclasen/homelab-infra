@@ -9,8 +9,6 @@ resources:
   - mongodb-ops-manager-secret.yaml
   - notesnook-mongodb-secret.yaml
   - notesnook-mongodb.yaml
-  - notesnook-identity-mongodb-secret.yaml
-  - notesnook-identity-mongodb.yaml
   - notesnook-env-secret.yaml
   - notesnook-s3-secret.yaml
   - release.yaml

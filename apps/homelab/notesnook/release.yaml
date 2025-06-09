@@ -94,10 +94,10 @@ spec:
               - name: MONGODB_CONNECTION_STRING
                 valueFrom:
                   secretKeyRef:
-                    name: notesnook-identity-mongodb-connection-string
+                    name: notesnook-mongodb-connection-string
                     key: "connectionString.standard"
               - name: MONGODB_DATABASE_NAME
-                value: notesnook-identity
+                value: identity
           sse:
             image:
               repository: docker.io/streetwriters/sse
