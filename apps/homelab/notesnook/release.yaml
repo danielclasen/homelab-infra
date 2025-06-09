@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: notesnook
-      version: 0.1.0
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
         name: notesnook
@@ -18,7 +18,7 @@ spec:
     env:
       NOTESNOOK_APP_PUBLIC_URL: https://notes.clsn.dev
       MONOGRAPH_PUBLIC_URL: https://mngrph.clsn.cloud
-      ATTACHMENTS_SERVER_PUBLIC_URL: https://s3.clsn.cloud
+      ATTACHMENTS_SERVER_PUBLIC_URL: &attachmentsServerUrl https://s3.clsn.cloud
       AUTH_SERVER_PUBLIC_URL: &authServerUrl https://auth.notes.clsn.dev
       DISABLE_SIGNUPS: false
     controllers:
@@ -44,6 +44,11 @@ spec:
                   secretKeyRef:
                     name: notesnook-s3-secret
                     key: bucket
+              - name: S3_BUCKET_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: notesnook-s3-secret
+                    key: bucket
               - name: S3_ACCESS_KEY_ID
                 valueFrom:
                   secretKeyRef:
@@ -55,7 +60,7 @@ spec:
                     name: notesnook-s3-secret
                     key: password
               - name: S3_SERVICE_URL
-                value: *authServerUrl
+                value: *attachmentsServerUrl
           identity:
             env:
               - name: MONGODB_CONNECTION_STRING
@@ -77,16 +82,4 @@ spec:
         className: traefik-internal
 
     mailhog:
-      enabled: true
-      auth:
-        enabled: true
-        existingSecret: mailhog-auth-secret
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik-internal
-        hosts:
-          - host: mailhog.clsn.dev
-            paths:
-              - path: /
-                pathType: Prefix
+      enabled: false

@@ -5,9 +5,10 @@ namespace: notesnook
 resources:
   - namespace.yaml
   - repository.yaml
+  - mongodb-ops-manager-config.yaml
+  - mongodb-ops-manager-secret.yaml
   - notesnook-mongodb.yaml
   - notesnook-identity-mongodb.yaml
   - notesnook-env-secret.yaml
   - notesnook-s3-secret.yaml
-  - mailhog-auth-secret.yaml
   - release.yaml
