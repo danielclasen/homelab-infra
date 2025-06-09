@@ -18,6 +18,17 @@ spec:
       single:
         storage: 1Gi
         storageClass: ssd-perf-xfs-r1
+    # multiarch does not seem to be supported by mongodb-kubernetes yet
+    podTemplate:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: beta.kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
