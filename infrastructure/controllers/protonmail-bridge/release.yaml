@@ -27,6 +27,7 @@ spec:
     persistence:
       root:
         enabled: true
+        type: persistentVolumeClaim
         storageClass: "ssd-perf-r3"
         retain: true
         size: 1Gi
