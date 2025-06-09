@@ -13,7 +13,7 @@ spec:
       name: mongodb-ops-manager-config
   credentials: mongodb-ops-manager-secret
   persistent: true
-  configSrvPodSpec:
+  podSpec:
     persistence:
       single:
         storage: 1Gi
