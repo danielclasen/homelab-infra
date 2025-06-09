@@ -1,0 +1,44 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bridge
+  namespace: protonmail
+spec:
+  interval: 5m
+  timeout: 2m
+  chart:
+    spec:
+      chart: proton-bridge
+      version: 0.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: protonmail-bridge
+  values:
+    env:
+      TZ: Europe/Berlin
+    protonmailBridge:
+      login:
+        enabled: true
+        secretName: protonmail-bridge-login-secret
+      certificate:
+        enabled: true
+        secretName: protonmail-bridge-certificate-secret
+    persistence:
+      root:
+        enabled: true
+        storageClass: "ssd-perf-r3"
+        retain: true
+        size: 1Gi
+    service:
+      main:
+        type: LoadBalancer
+        annotations:
+          metallb.io/loadBalancerIPs: &ip "192.168.95.39"
+          external-dns.alpha.kubernetes.io/hostname: mail.clsn.dev,smtp.clsn.dev,imap.clsn.dev
+          external-dns.alpha.kubernetes.io/target: *ip
+        ports:
+          smtp:
+            enabled: true
+          imap:
+            enabled: true
