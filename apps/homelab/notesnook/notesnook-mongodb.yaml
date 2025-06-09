@@ -2,7 +2,7 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: notesnook
+  name: notesnook-db
   namespace: notesnook
 spec:
   type: ReplicaSet
@@ -13,7 +13,7 @@ spec:
       name: mongodb-ops-manager-config
   credentials: mongodb-ops-manager-secret
   persistent: true
-  configSrvPodSpec:
+  podSpec:
     persistence:
       single:
         storage: 10Gi
@@ -25,5 +25,10 @@ metadata:
   name: notesnook-mongodb-user
 spec:
   username: "notesnook"
+  passwordSecretKeyRef:
+    name: notesnook-mongodb-secret
+    key: password
   db: "notesnook"
+  mongodbResourceRef:
+    name: notesnook-db
   connectionStringSecretName: notesnook-mongodb-connection-string

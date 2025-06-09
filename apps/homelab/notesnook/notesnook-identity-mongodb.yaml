@@ -2,7 +2,7 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: notesnook-identity
+  name: notesnook-identity-db
   namespace: notesnook
 spec:
   type: ReplicaSet
@@ -25,5 +25,10 @@ metadata:
   name: notesnook-identity-mongodb-user
 spec:
   username: "notesnook-identity"
+  passwordSecretKeyRef:
+    name: notesnook-identity-mongodb-secret
+    key: password
   db: "notesnook-identity"
+  mongodbResourceRef:
+    name: notesnook-identity-db
   connectionStringSecretName: notesnook-identity-mongodb-connection-string
