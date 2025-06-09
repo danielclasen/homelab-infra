@@ -32,3 +32,8 @@ spec:
   externalConnectivity:
     type: ClusterIP
     port: 8080
+  backup:
+    enabled: true
+    headDB:
+      storage: 30Gi
+      storageClass: ssd-perf-r3
