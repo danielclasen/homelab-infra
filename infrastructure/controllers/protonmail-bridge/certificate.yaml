@@ -7,6 +7,7 @@ metadata:
 spec:
   commonName: mail.clsn.dev
   dnsNames:
+  - mail.clsn.dev
   - smtp.clsn.dev
   - imap.clsn.dev
   issuerRef:
