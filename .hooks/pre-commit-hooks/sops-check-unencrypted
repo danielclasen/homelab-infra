@@ -1,0 +1,181 @@
+#!/bin/sh
+
+# Pre-commit hook to check for unencrypted SOPS secrets.
+
+# Ensure the script exits on any error
+set -e
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+# Source common color and icon definitions
+# Determine the script's own directory to build a robust path to common/colors.sh
+SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
+COMMON_SCRIPT_PATH="${SCRIPT_DIR}/../common/colors.sh" # Assumes common is one level up and then into common/
+
+if [ -f "$COMMON_SCRIPT_PATH" ]; then
+    . "$COMMON_SCRIPT_PATH"
+else
+    # Fallback if common script is not found - try REPO_ROOT based path
+    COMMON_SCRIPT_PATH_REPO="${REPO_ROOT}/.hooks/common/colors.sh"
+    if [ -f "$COMMON_SCRIPT_PATH_REPO" ]; then
+        . "$COMMON_SCRIPT_PATH_REPO"
+    else
+        printf "Error: Common colors script not found at %s or %s\n" "$COMMON_SCRIPT_PATH" "$COMMON_SCRIPT_PATH_REPO"
+        # Define fallbacks or exit if colors are critical
+        CLR_RED=''; CLR_GREEN=''; CLR_YELLOW=''; CLR_BLUE=''; CLR_CYAN=''; CLR_NC=''; ICON_SUCCESS=''; ICON_FAIL=''; ICON_WARN=''; ICON_INFO=''; ICON_RUN='';
+    fi
+fi
+SOPS_CONFIG_FILE="${REPO_ROOT}/.sops.yaml"
+
+if [ ! -f "$SOPS_CONFIG_FILE" ]; then
+    printf "${CLR_YELLOW}${ICON_WARN} SOPS Hook: Configuration file ${CLR_BLUE}%s${CLR_NC}${CLR_YELLOW} not found. Skipping check.${CLR_NC}\n" "$SOPS_CONFIG_FILE"
+    exit 0 # Exit cleanly if no .sops.yaml, or use 'exit 1' to enforce its presence
+fi
+
+# Check if yq is installed
+if ! command -v yq &>/dev/null; then
+    printf "${CLR_RED}${ICON_FAIL} SOPS Hook: Error: yq command-line YAML processor not found.${CLR_NC}\n"
+    printf "           ${CLR_YELLOW}Please install yq (v4+, by Mike Farah) to use this pre-commit hook.${CLR_NC}\n"
+    printf "           ${CLR_YELLOW}Installation instructions: https://github.com/mikefarah/yq#install${CLR_NC}\n"
+    exit 1
+fi
+
+# Read configuration from .sops.yaml (first rule)
+path_regex_sops=$(yq e -r '.creation_rules[0].path_regex' "$SOPS_CONFIG_FILE")
+encrypted_regex_sops=$(yq e -r '.creation_rules[0].encrypted_regex' "$SOPS_CONFIG_FILE")
+
+if [ "$path_regex_sops" = "null" ] || [ -z "$path_regex_sops" ]; then
+    printf "${CLR_RED}${ICON_FAIL} SOPS Hook: Error: Could not read 'path_regex' from ${CLR_BLUE}%s${CLR_NC}${CLR_RED} (or it's null/empty).${CLR_NC}\n" "$SOPS_CONFIG_FILE"
+    printf "           ${CLR_YELLOW}Please ensure '.creation_rules[0].path_regex' is correctly defined.${CLR_NC}\n"
+    exit 1
+fi
+if [ "$encrypted_regex_sops" = "null" ] || [ -z "$encrypted_regex_sops" ]; then
+    printf "${CLR_RED}${ICON_FAIL} SOPS Hook: Error: Could not read 'encrypted_regex' from ${CLR_BLUE}%s${CLR_NC}${CLR_RED} (or it's null/empty).${CLR_NC}\n" "$SOPS_CONFIG_FILE"
+    printf "           ${CLR_YELLOW}Please ensure '.creation_rules[0].encrypted_regex' is correctly defined.${CLR_NC}\n"
+    exit 1
+fi
+
+printf "${CLR_CYAN}${ICON_INFO} SOPS Hook: Initialized. Using path_regex='${CLR_BLUE}%s${CLR_NC}' and encrypted_regex='${CLR_BLUE}%s${CLR_NC}'\n" "${path_regex_sops}" "${encrypted_regex_sops}"
+
+found_unencrypted_secret=0
+
+# Get list of staged files (A-dded, C-opied, M-odified)
+# Loop using process substitution to keep variable scope in the current shell.
+# IFS= ensures leading/trailing whitespace in filenames is preserved by read.
+# -r prevents backslash interpretation.
+# || [ -n "$file" ] ensures the last line is processed if it's not newline-terminated.
+while IFS= read -r file || [ -n "$file" ]; do
+
+    # echo "SOPS Hook: DEBUG: Processing file: '$file'"
+    # Check if the file path matches the path_regex from .sops.yaml
+    if echo "$file" | grep -qE -- "${path_regex_sops}"; then
+        # echo "SOPS Hook: DEBUG: File '$file' MATCHES path_regex ('${path_regex_sops}')."
+
+        # Create a temporary file to hold staged content
+        staged_content_file=$(mktemp)
+        # Ensure temp file is removed on exit or interrupt
+        trap 'rm -f "$staged_content_file"' EXIT HUP INT QUIT TERM
+
+        if ! git show ":$file" >"$staged_content_file" 2>/dev/null; then
+            printf "${CLR_YELLOW}${ICON_WARN} SOPS Hook: Warning: Could not get staged content for '${CLR_BLUE}%s${CLR_NC}${CLR_YELLOW}'. Skipping.${CLR_NC}\n" "$file"
+            rm -f "$staged_content_file"
+            trap - EXIT HUP INT QUIT TERM # Clear trap for this file
+            continue
+        fi
+
+        # If file is empty, it's fine
+        if [ ! -s "$staged_content_file" ]; then
+            printf "${CLR_GREEN}${ICON_SUCCESS} SOPS Hook: '${CLR_BLUE}%s${CLR_NC}'${CLR_GREEN} is empty. OK.${CLR_NC}\n" "$file"
+            rm -f "$staged_content_file"
+            trap - EXIT HUP INT QUIT TERM # Clear trap for this file
+            continue
+        fi
+
+        # Check if file contains keys matching encrypted_regex
+        # echo "SOPS Hook: DEBUG: About to check for encrypted_regex ('${encrypted_regex_sops}') in '$file'."
+
+        # Capture yq output and error separately using temp files for robustness
+        local_out_file=$(mktemp)
+        local_err_file=$(mktemp)
+        yq_regex_check_output=""
+        yq_regex_check_error=""
+        yq_regex_check_exit_code=0
+
+        # Export the regex for yq's strenv, as set -a is active
+        export encrypted_regex_sops
+
+        yq e '[ (.. | select(type == "!!map") | (keys // [])[] | select(test(strenv(encrypted_regex_sops)))) ] | length > 0' "$staged_content_file" >"$local_out_file" 2>"$local_err_file"
+        yq_regex_check_exit_code=$?
+
+        yq_regex_check_output=$(cat "$local_out_file")
+        yq_regex_check_error=$(cat "$local_err_file")
+        rm -f "$local_out_file" "$local_err_file"
+
+        # echo "SOPS Hook: DEBUG: yq regex check stdout: [$yq_regex_check_output]"
+        # echo "SOPS Hook: DEBUG: yq regex check stderr: [$yq_regex_check_error]"
+        # echo "SOPS Hook: DEBUG: yq regex check exit_code: [$yq_regex_check_exit_code]"
+
+        # Check for yq failure (non-zero exit code OR non-empty stderr, as yq seems to exit 0 on some errors)
+        if [ "$yq_regex_check_exit_code" -ne 0 ] || [ -n "$yq_regex_check_error" ]; then
+            printf "${CLR_RED}${ICON_FAIL} SOPS Hook: ERROR: yq command for encrypted_regex check failed for '${CLR_BLUE}%s${CLR_NC}${CLR_RED}'. Exit: %s, Stderr: %s. Halting commit.${CLR_NC}\n" "$file" "$yq_regex_check_exit_code" "$yq_regex_check_error"
+            found_unencrypted_secret=1 # Treat yq error as potentially unencrypted
+        elif [ "$yq_regex_check_output" = "true" ]; then
+            # echo "SOPS Hook: DEBUG: File '$file' CONTAINS keys matching encrypted_regex ('${encrypted_regex_sops}')."
+            printf "${CLR_YELLOW}${ICON_INFO} SOPS Hook: '${CLR_BLUE}%s${CLR_NC}'${CLR_YELLOW} contains keys potentially matching encrypted_regex ('${CLR_BLUE}%s${CLR_NC}')${CLR_YELLOW}.${CLR_NC}\n" "$file" "${encrypted_regex_sops}"
+
+            # Now check if it's SOPS encrypted (has a 'sops' root key)
+            # echo "SOPS Hook: DEBUG: About to check for 'sops' metadata key in '$file'."
+            local_sops_out_file=$(mktemp)
+            local_sops_err_file=$(mktemp)
+            yq_sops_check_output=""
+            yq_sops_check_error=""
+            yq_sops_check_exit_code=0
+
+            yq e 'has("sops")' "$staged_content_file" >"$local_sops_out_file" 2>"$local_sops_err_file"
+            yq_sops_check_exit_code=$?
+
+            yq_sops_check_output=$(cat "$local_sops_out_file")
+            yq_sops_check_error=$(cat "$local_sops_err_file")
+            rm -f "$local_sops_out_file" "$local_sops_err_file"
+
+            # echo "SOPS Hook: DEBUG: yq sops_check stdout: [$yq_sops_check_output]"
+            # echo "SOPS Hook: DEBUG: yq sops_check stderr: [$yq_sops_check_error]"
+            # echo "SOPS Hook: DEBUG: yq sops_check exit_code: [$yq_sops_check_exit_code]"
+
+            # Check for yq failure (non-zero exit code OR non-empty stderr)
+            if [ "$yq_sops_check_exit_code" -ne 0 ] || [ -n "$yq_sops_check_error" ]; then
+                printf "${CLR_RED}${ICON_FAIL} SOPS Hook: ERROR: yq command for sops_check failed for '${CLR_BLUE}%s${CLR_NC}${CLR_RED}'. Exit: %s, Stderr: %s. Halting commit.${CLR_NC}\n" "$file" "$yq_sops_check_exit_code" "$yq_sops_check_error"
+                found_unencrypted_secret=1                   # Treat yq error as potentially unencrypted
+            elif [ "$yq_sops_check_output" = "false" ]; then # If 'has("sops")' is false
+                # echo "SOPS Hook: DEBUG: File '$file' DOES NOT have 'sops' metadata key."
+                printf "${CLR_RED}${ICON_FAIL} SOPS Hook: ERROR: Unencrypted sensitive data found in '${CLR_BLUE}%s${CLR_NC}${CLR_RED}'.${CLR_NC}\n" "$file"
+                printf "           ${CLR_RED}It contains keys matching encrypted_regex ('${CLR_BLUE}%s${CLR_NC}${CLR_RED}') but is NOT SOPS encrypted (missing 'sops' metadata key).${CLR_NC}\n" "${encrypted_regex_sops}"
+                printf "           ${CLR_YELLOW}Please encrypt this file using SOPS: ${CLR_CYAN}sops --encrypt --in-place '%s'${CLR_NC}\n" "$file"
+                found_unencrypted_secret=1
+            elif [ "$yq_sops_check_output" = "true" ]; then
+                # echo "SOPS Hook: DEBUG: File '$file' HAS 'sops' metadata key. OK."
+                printf "${CLR_GREEN}${ICON_SUCCESS} SOPS Hook: '${CLR_BLUE}%s${CLR_NC}'${CLR_GREEN} is SOPS encrypted. OK.${CLR_NC}\n" "$file"
+            else
+                printf "${CLR_YELLOW}${ICON_WARN} SOPS Hook: WARNING: yq sops_check for '${CLR_BLUE}%s${CLR_NC}'${CLR_YELLOW} returned unexpected stdout: '%s'. Assuming not encrypted.${CLR_NC}\n" "$file" "$yq_sops_check_output"
+                found_unencrypted_secret=1 # Treat unexpected output as potentially unencrypted
+            fi
+        elif [ "$yq_regex_check_output" = "false" ]; then
+            # echo "SOPS Hook: DEBUG: File '$file' DOES NOT contain keys matching encrypted_regex ('${encrypted_regex_sops}'). OK."
+            printf "${CLR_GREEN}${ICON_SUCCESS} SOPS Hook: '${CLR_BLUE}%s${CLR_NC}'${CLR_GREEN} does not contain keys matching encrypted_regex ('${CLR_BLUE}%s${CLR_NC}')${CLR_GREEN}. OK.${CLR_NC}\n" "$file" "${encrypted_regex_sops}"
+        else
+            printf "${CLR_YELLOW}${ICON_WARN} SOPS Hook: WARNING: yq regex_check for '${CLR_BLUE}%s${CLR_NC}'${CLR_YELLOW} returned unexpected stdout: '%s'. Assuming no sensitive keys due to error.${CLR_NC}\n" "$file" "$yq_regex_check_output"
+        fi
+        rm -f "$staged_content_file"
+        trap - EXIT HUP INT QUIT TERM # Clear trap for this file
+        # else
+        # echo "SOPS Hook: DEBUG: File '$file' does NOT match path_regex ('${path_regex_sops}'). Skipping detailed checks."
+    fi
+done < <(git diff --cached --name-only --diff-filter=ACM --no-renames)
+
+if [ "$found_unencrypted_secret" -eq 1 ]; then
+    printf "${CLR_RED}${ICON_FAIL} SOPS Hook: Commit aborted due to unencrypted sensitive files.${CLR_NC}\n"
+    exit 1
+fi
+
+printf "${CLR_GREEN}${ICON_SUCCESS} SOPS Hook: All checks passed.${CLR_NC}\n"
+exit 0

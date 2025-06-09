@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# Main pre-commit hook dispatcher
+# This script will execute all executable files found in the .hooks/pre-commit-hooks directory.
+
+# Determine the absolute path to the repository root
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+# Source common color and icon definitions
+COMMON_SCRIPT_PATH="${REPO_ROOT}/.hooks/common/colors.sh"
+if [ -f "$COMMON_SCRIPT_PATH" ]; then
+    . "$COMMON_SCRIPT_PATH"
+else
+    printf "Error: Common colors script not found at %s\n" "$COMMON_SCRIPT_PATH"
+    # Define fallbacks or exit if colors are critical
+    CLR_RED=''; CLR_GREEN=''; CLR_YELLOW=''; CLR_BLUE=''; CLR_CYAN=''; CLR_NC=''; ICON_SUCCESS=''; ICON_FAIL=''; ICON_WARN=''; ICON_INFO=''; ICON_RUN='';
+fi
+HOOKS_DIR="${REPO_ROOT}/.hooks/pre-commit-hooks"
+
+# Check if the hooks directory exists
+if [ ! -d "$HOOKS_DIR" ]; then
+    printf "${CLR_YELLOW}${ICON_WARN} Pre-commit: Hooks directory '$HOOKS_DIR' not found. Skipping individual hooks.${CLR_NC}\n"
+    exit 0
+fi
+
+printf "${CLR_CYAN}${ICON_INFO} Pre-commit: Running hooks from ${CLR_BLUE}%s${CLR_NC}...\n" "$HOOKS_DIR"
+
+# Assume success initially
+overall_exit_code=0
+
+# Loop through all files in the hooks directory
+for hook_script in "$HOOKS_DIR"/*; do
+    # Check if the file is executable
+    if [ -f "$hook_script" ] && [ -x "$hook_script" ]; then
+        printf "${CLR_CYAN}${ICON_RUN} Pre-commit: --- Running hook: ${CLR_BLUE}%s${CLR_NC} ---\n" "$(basename "$hook_script")"
+        
+        # Execute the hook script
+        if ! "$hook_script"; then
+            printf "${CLR_RED}${ICON_FAIL} Pre-commit: --- Hook $(basename "$hook_script") FAILED ---${CLR_NC}\n"
+            overall_exit_code=1 # Mark failure
+            # To stop on first failure, uncomment the next line:
+            # break 
+        else
+            printf "${CLR_GREEN}${ICON_SUCCESS} Pre-commit: --- Hook $(basename "$hook_script") PASSED ---${CLR_NC}\n"
+        fi
+        echo # Add a blank line for readability between hooks
+    fi
+done
+
+if [ "$overall_exit_code" -ne 0 ]; then
+    printf "\n${CLR_RED}${ICON_FAIL} Pre-commit: One or more hooks failed. Commit aborted.${CLR_NC}\n"
+    exit 1
+else
+    printf "\n${CLR_GREEN}${ICON_SUCCESS} Pre-commit: All hooks passed.${CLR_NC}\n"
+    exit 0
+fi
