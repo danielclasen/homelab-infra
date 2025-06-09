@@ -39,8 +39,10 @@ spec:
             MONOGRAPH_PUBLIC_URL: &monographPublicUrl https://mngrph.clsn.cloud
             MONOGRAPH_PUBLIC_HOST: &monographPublicHost mngrph.clsn.cloud
             ATTACHMENTS_SERVER_PUBLIC_URL: &attachmentsServerUrl https://s3.clsn.cloud
-            AUTH_SERVER_PUBLIC_URL: &authServerUrl https://auth.notes.clsn.dev
-            AUTH_SERVER_PUBLIC_HOST: &authServerPublicHost auth.notes.clsn.dev
+            SSE_SERVER_PUBLIC_URL: &sseServerUrl https://sse-notes.clsn.dev
+            SSE_SERVER_PUBLIC_HOST: &sseServerPublicHost sse-notes.clsn.dev
+            AUTH_SERVER_PUBLIC_URL: &authServerUrl https://auth-notes.clsn.dev
+            AUTH_SERVER_PUBLIC_HOST: &authServerPublicHost auth-notes.clsn.dev
             IDENTITY_SERVER_URL: *authServerUrl
             NOTESNOOK_APP_HOST: *notesnookAppUrl
             DISABLE_SIGNUPS: false
@@ -156,3 +158,14 @@ spec:
                 service:
                   identifier: main
                   port: auth
+      sse:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik-internal
+        hosts:
+          - host: *sseServerPublicHost
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: sse
