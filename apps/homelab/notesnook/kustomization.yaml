@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: notesnook
 resources:
   - namespace.yaml
-  - repository.yaml
   - mongodb-ops-manager-config.yaml
   - mongodb-ops-manager-secret.yaml
   - notesnook-mongodb.yaml

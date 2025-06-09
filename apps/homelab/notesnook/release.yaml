@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -9,26 +10,49 @@ spec:
   timeout: 2m
   chart:
     spec:
-      chart: notesnook
-      version: 0.1.1
+      chart: app-template
+      version: 4.0.1
       sourceRef:
         kind: HelmRepository
-        name: notesnook
+        name: bjw-s
+        namespace: flux-system
   values:
-    env:
-      NOTESNOOK_APP_PUBLIC_URL: https://notes.clsn.dev
-      MONOGRAPH_PUBLIC_URL: https://mngrph.clsn.cloud
-      ATTACHMENTS_SERVER_PUBLIC_URL: &attachmentsServerUrl https://s3.clsn.cloud
-      AUTH_SERVER_PUBLIC_URL: &authServerUrl https://auth.notes.clsn.dev
-      DISABLE_SIGNUPS: false
     controllers:
       main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        defaultContainerOptionsStrategy: merge
         defaultContainerOptions:
+          env:
+            NOTESNOOK_SERVER_PORT: &notesnookServerPort 5264
+            NOTESNOOK_SERVER_HOST: &notesnookServerHost notesnook
+            NOTESNOOK_API: &notesnookApi notesnook:5264
+            IDENTITY_SERVER_PORT: &identityServerPort 8264
+            IDENTITY_SERVER_HOST: *notesnookServerHost
+            SSE_SERVER_PORT: &sseServerPort 7264
+            SSE_SERVER_HOST: *notesnookServerHost
+            MONOGRAPH_PORT: &monographPort 3000
+            MONOGRAPH_HOST: *notesnookServerHost
+            SELF_HOSTED: 1
+            NOTESNOOK_APP_PUBLIC_URL: &notesnookAppUrl https://notes.clsn.dev
+            NOTESNOOK_APP_PUBLIC_HOST: &notesnookAppPublicHost notes.clsn.dev
+            MONOGRAPH_PUBLIC_URL: &monographPublicUrl https://mngrph.clsn.cloud
+            MONOGRAPH_PUBLIC_HOST: &monographPublicHost mngrph.clsn.cloud
+            ATTACHMENTS_SERVER_PUBLIC_URL: &attachmentsServerUrl https://s3.clsn.cloud
+            AUTH_SERVER_PUBLIC_URL: &authServerUrl https://auth.notes.clsn.dev
+            AUTH_SERVER_PUBLIC_HOST: &authServerPublicHost auth.notes.clsn.dev
+            IDENTITY_SERVER_URL: *authServerUrl
+            NOTESNOOK_APP_HOST: *notesnookAppUrl
+            DISABLE_SIGNUPS: false
           envFrom:
             - secretRef:
                 name: notesnook-env-secret
         containers:
           main:
+            image:
+              repository: docker.io/streetwriters/notesnook-sync
+              # renovate datasource=docker depName=docker.io/streetwriters/notesnook-sync
+              tag: v1.0-beta.1
             env:
               - name: MONGODB_CONNECTION_STRING
                 valueFrom:
@@ -62,6 +86,10 @@ spec:
               - name: S3_SERVICE_URL
                 value: *attachmentsServerUrl
           identity:
+            image:
+              repository: docker.io/streetwriters/identity
+              # renovate datasource=docker depName=docker.io/streetwriters/identity
+              tag: v1.0-beta.1
             env:
               - name: MONGODB_CONNECTION_STRING
                 valueFrom:
@@ -70,16 +98,65 @@ spec:
                     key: "connectionString.standard"
               - name: MONGODB_DATABASE_NAME
                 value: notesnook-identity
+          sse:
+            image:
+              repository: docker.io/streetwriters/sse
+              # renovate datasource=docker depName=docker.io/streetwriters/sse
+              tag: v1.0-beta.1
+          monograph:
+            image:
+              repository: docker.io/streetwriters/monograph
+              # renovate datasource=docker depName=docker.io/streetwriters/monograph
+              tag: 1.2.4
+            env:
+              PUBLIC_URL: *monographPublicUrl
+              API_HOST: *notesnookApi
+
+    service:
+      main:
+        forceRename: notesnook
+        enabled: true
+        ports:
+          sync:
+            port: *notesnookServerPort
+          sse:
+            port: *sseServerPort
+          auth:
+            port: *identityServerPort  
+          http:
+            port: *monographPort
+
     ingress:
       main:
         enabled: true
-        className: traefik-internal
+        annotations:
+          kubernetes.io/ingress.class: traefik-internal
+        hosts:
+          - host: *notesnookAppPublicHost
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: sync
       monograph:
         enabled: true
-        className: traefik-external
+        annotations:
+          kubernetes.io/ingress.class: traefik-external
+        hosts:
+          - host: *monographPublicHost
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
       identity:
         enabled: true
-        className: traefik-internal
-
-    mailhog:
-      enabled: false
+        annotations:
+          kubernetes.io/ingress.class: traefik-internal
+        hosts:
+          - host: *authServerPublicHost
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: auth
