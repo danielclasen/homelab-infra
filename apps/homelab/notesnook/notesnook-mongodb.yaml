@@ -36,6 +36,10 @@ kind: MongoDBUser
 metadata:
   name: notesnook-mongodb-user
 spec:
+  security:
+    authentication:
+      enabled : true
+      modes: ["SCRAM"]
   username: "notesnook"
   passwordSecretKeyRef:
     name: notesnook-mongodb-secret
