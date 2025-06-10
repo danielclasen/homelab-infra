@@ -87,6 +87,6 @@ spec:
         existingSecretKey: password
         policy: consoleAdmin
       - accessKey: s3-operator
-        existingSecret: minio-user-operator-secret
+        existingSecret: minio-s3-operator-secret
         existingSecretKey: S3_SECRET_KEY
         policy: s3-operator
