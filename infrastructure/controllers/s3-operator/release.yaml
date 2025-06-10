@@ -30,7 +30,7 @@ spec:
     kubernetesClusterDomain: cluster.local
 
     s3:
-      endpointUrl: "minio.minio.svc.cluster.local:9000"
+      endpointUrl: "s3.clsn.cloud"
 
       # To manage access/secret keys, two options :
       #   - (Poor) Directly set them using the accessKey/secretKey parameters below.
