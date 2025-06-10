@@ -8,6 +8,10 @@ spec:
   type: ReplicaSet
   version: 8.0.7
   members: 3
+  security:
+    authentication:
+      enabled : true
+      modes: ["SCRAM"]
   opsManager:
     configMapRef:
       name: mongodb-ops-manager-config
@@ -36,10 +40,6 @@ kind: MongoDBUser
 metadata:
   name: notesnook-mongodb-user
 spec:
-  security:
-    authentication:
-      enabled : true
-      modes: ["SCRAM"]
   username: "notesnook"
   passwordSecretKeyRef:
     name: notesnook-mongodb-secret
