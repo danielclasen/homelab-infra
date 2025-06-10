@@ -71,7 +71,6 @@ spec:
               - 'admin:CreatePolicy'
               - 'admin:GetBucketQuota'
               - 'admin:GetPolicy'
-              - 'admin:ListUserPolicies'
               - 'admin:SetBucketQuota'
               - 'admin:CreateUser'
               - 'admin:ListUsers'
