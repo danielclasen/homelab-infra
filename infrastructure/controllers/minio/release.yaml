@@ -47,11 +47,6 @@ spec:
         memory: "4Gi"
     nodeSelector:
         beta.kubernetes.io/arch: amd64
-    buckets:
-      - name: notesnook
-        purge: false
-        versioning: true
-        policy: none
     policies:
       - name: s3-operator
         statements:
