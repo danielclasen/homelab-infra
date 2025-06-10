@@ -48,3 +48,17 @@ spec:
   mongodbResourceRef:
     name: notesnook-db
   connectionStringSecretName: notesnook-mongodb-connection-string
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBUser
+metadata:
+  name: notesnook-identity-mongodb-user
+spec:
+  username: "notesnook-identity"
+  passwordSecretKeyRef:
+    name: notesnook-identity-mongodb-secret
+    key: password
+  db: "identity"
+  mongodbResourceRef:
+    name: notesnook-db
+  connectionStringSecretName: notesnook-identity-mongodb-connection-string
