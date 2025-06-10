@@ -70,7 +70,7 @@ metadata:
     app.kubernetes.io/part-of: s3-operator
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: s3-operator
-  name: user-notesnook
+  name: s3-user-notesnook
 spec:
   accessKey: s3-notesnook
   policies:

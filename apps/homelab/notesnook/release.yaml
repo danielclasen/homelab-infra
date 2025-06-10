@@ -62,18 +62,18 @@ spec:
                     name: notesnook-mongodb-connection-string
                     key: "connectionString.standard"
               MONGODB_DATABASE_NAME: notesnook
-              S3_INTERNAL_SERVICE_URL: "http://minio.minio.svc.cluster.local:9000"
+              S3_INTERNAL_SERVICE_URL: *attachmentsServerUrl
               S3_INTERNAL_BUCKET_NAME: notesnook
               S3_BUCKET_NAME: notesnook
               S3_ACCESS_KEY_ID:
                 valueFrom:
                   secretKeyRef:
-                    name: s3-notesnook
+                    name: s3-user-notesnook
                     key: accessKey
               S3_ACCESS_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: s3-notesnook
+                    name: s3-user-notesnook
                     key: secretKey
               S3_SERVICE_URL: *attachmentsServerUrl
           identity:
