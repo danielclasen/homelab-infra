@@ -11,5 +11,5 @@ resources:
   - notesnook-mongodb-identity-connection-string-secret.yaml
   - notesnook-mongodb.yaml
   - notesnook-env-secret.yaml
-  - notesnook-s3-secret.yaml
+  - minio-resources.yaml
   - release.yaml
