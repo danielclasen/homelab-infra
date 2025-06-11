@@ -10,8 +10,10 @@ spec:
   members: 3
   security:
     authentication:
-      enabled: false
+      enabled: true
       modes: ["SCRAM", "SCRAM-SHA-1", "MONGODB-CR"]
+      agents:
+        mode: "SCRAM"      
   opsManager:
     configMapRef:
       name: mongodb-ops-manager-config
