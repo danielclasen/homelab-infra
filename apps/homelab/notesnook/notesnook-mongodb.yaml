@@ -11,9 +11,7 @@ spec:
   security:
     authentication:
       enabled: true
-      modes: ["SCRAM", "SCRAM-SHA-1", "MONGODB-CR"]
-      agents:
-        mode: "SCRAM"      
+      modes: ["SCRAM"]  
   opsManager:
     configMapRef:
       name: mongodb-ops-manager-config
