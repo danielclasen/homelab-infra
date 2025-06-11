@@ -10,7 +10,7 @@ spec:
   members: 3
   security:
     authentication:
-      enabled : true
+      enabled: true
       modes: ["SCRAM"]
   opsManager:
     configMapRef:
@@ -30,10 +30,10 @@ spec:
             requiredDuringSchedulingIgnoredDuringExecution:
               nodeSelectorTerms:
                 - matchExpressions:
-                  - key: beta.kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
+                    - key: beta.kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
@@ -48,6 +48,9 @@ spec:
   mongodbResourceRef:
     name: notesnook-db
   connectionStringSecretName: notesnook-mongodb-connection-string
+  roles:
+    - db: "notesnook"
+      name: "dbOwner"
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
@@ -62,3 +65,6 @@ spec:
   mongodbResourceRef:
     name: notesnook-db
   connectionStringSecretName: notesnook-identity-mongodb-connection-string
+  roles:
+    - db: "identity"
+      name: "dbOwner"
