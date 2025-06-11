@@ -8,3 +8,8 @@ spec:
   provider:
     kubernetes:
       remoteNamespace: notesnook
+      server:
+        caProvider:
+          type: ConfigMap
+          name: kube-root-ca.crt
+          key: ca.crt
