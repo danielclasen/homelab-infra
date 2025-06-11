@@ -11,7 +11,7 @@ spec:
   security:
     authentication:
       enabled: true
-      modes: ["SCRAM"]
+      modes: ["SCRAM", "SCRAM-SHA-1", "MONGODB-CR"]
   opsManager:
     configMapRef:
       name: mongodb-ops-manager-config
@@ -50,7 +50,7 @@ spec:
   connectionStringSecretName: notesnook-mongodb-connection-string
   roles:
     - db: "notesnook"
-      name: "dbOwner"
+      name: "dbAdmin"
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
@@ -67,4 +67,4 @@ spec:
   connectionStringSecretName: notesnook-identity-mongodb-connection-string
   roles:
     - db: "identity"
-      name: "dbOwner"
+      name: "dbAdmin"
