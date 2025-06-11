@@ -1,0 +1,10 @@
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: notesnook-kubernetes-secret-store
+  namespace: notesnook
+spec:
+  provider:
+    kubernetes:
+      remoteNamespace: notesnook
