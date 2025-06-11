@@ -85,7 +85,7 @@ spec:
               MONGODB_CONNECTION_STRING:
                 valueFrom:
                   secretKeyRef:
-                    name: notesnook-mongodb-connection-string
+                    name: notesnook-identity-mongodb-custom-connection-string
                     key: "connectionString.standard"
               MONGODB_DATABASE_NAME: identity
           sse:

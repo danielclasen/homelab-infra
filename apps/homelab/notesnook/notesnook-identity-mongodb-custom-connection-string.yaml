@@ -1,0 +1,31 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: template-notesnook-identity-mongodb-custom-connection-string
+spec:
+  target:
+    name: notesnook-identity-mongodb-custom-connection-string
+    template:
+      engineVersion: v2
+      data:
+        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" }}'
+        connectionString.srv: '{{ .connectionStringSrv | replace "/?" "/identity?" }}'
+        username: '{{ .username }}'
+        password: '{{ .password }}'
+  data:
+  - secretKey: connectionStringStandard
+    remoteRef:
+      key: notesnook-identity-mongodb-connection-string
+      property: connectionString.standard
+  - secretKey: connectionStringSrv
+    remoteRef:
+      key: notesnook-identity-mongodb-connection-string
+      property: connectionString.srv
+  - secretKey: username
+    remoteRef:
+      key: notesnook-identity-mongodb-connection-string
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: notesnook-identity-mongodb-connection-string
+      property: password
