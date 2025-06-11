@@ -51,6 +51,10 @@ spec:
   roles:
     - db: "notesnook"
       name: "dbAdmin"
+    - db: "identity"
+      name: "dbAdmin"
+    - db: "admin"
+      name: "clusterAdmin"
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
