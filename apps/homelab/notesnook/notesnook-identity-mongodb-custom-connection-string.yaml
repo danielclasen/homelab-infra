@@ -30,9 +30,6 @@ spec:
       key: notesnook-identity-mongodb-connection-string
       property: username
   - secretKey: password
-    secretKeyRef:
-      name: notesnook-identity-mongodb-connection-string
-      key: password
     remoteRef:
       key: notesnook-identity-mongodb-connection-string
       property: password
