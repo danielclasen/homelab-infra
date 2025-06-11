@@ -13,7 +13,7 @@ spec:
       engineVersion: v2
       data:
         connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" }}'
-        connectionString.srv: '{{ .connectionStringSrv | replace "/?" "/identity?" }}'
+        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/identity?" }}'
         username: '{{ .username }}'
         password: '{{ .password }}'
   data:
@@ -24,7 +24,7 @@ spec:
   - secretKey: connectionStringSrv
     remoteRef:
       key: notesnook-identity-mongodb-connection-string
-      property: connectionString.srv
+      property: connectionString.standardSrv
   - secretKey: username
     remoteRef:
       key: notesnook-identity-mongodb-connection-string
