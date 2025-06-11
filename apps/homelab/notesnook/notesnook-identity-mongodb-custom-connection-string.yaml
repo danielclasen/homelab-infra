@@ -4,9 +4,9 @@ metadata:
   name: template-notesnook-identity-mongodb-custom-connection-string
 spec:
   refreshInterval: 1m0s
-  secretStoreRefs:
-    - name: notesnook-kubernetes-secret-store
-      kind: SecretStore
+  secretStoreRef:
+    name: notesnook-kubernetes-secret-store
+    kind: SecretStore
   target:
     name: notesnook-identity-mongodb-custom-connection-string
     template:
