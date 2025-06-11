@@ -1,4 +1,45 @@
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: eso-store-role
+  namespace: notesnook
+rules:
+  - apiGroups: [""]
+    resources:
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  # This will allow the role `eso-store-role` to perform **permission reviews** for itself within the defined namespace:
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - selfsubjectrulesreviews # used to review or fetch the list of permissions a user or service account currently has.
+    verbs:
+      - create # `create` allows creating a `selfsubjectrulesreviews` request.
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: eso-service-account
+  namespace: notesnook
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-eso-store-role-to-eso-service-account
+  namespace: notesnook
+subjects:
+  - kind: ServiceAccount
+    name: eso-service-account
+    namespace: notesnook
+roleRef:
+  kind: Role
+  name: eso-store-role
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: external-secrets.io/v1
 kind: SecretStore
 metadata:
@@ -13,3 +54,6 @@ spec:
           type: ConfigMap
           name: kube-root-ca.crt
           key: ca.crt
+      auth:
+        serviceAccount:
+          name: "eso-service-account"  
