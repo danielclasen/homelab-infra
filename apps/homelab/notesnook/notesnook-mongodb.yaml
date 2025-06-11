@@ -10,7 +10,7 @@ spec:
   members: 3
   security:
     authentication:
-      enabled: true
+      enabled: false
       modes: ["SCRAM", "SCRAM-SHA-1", "MONGODB-CR"]
   opsManager:
     configMapRef:
