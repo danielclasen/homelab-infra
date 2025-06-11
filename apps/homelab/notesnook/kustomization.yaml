@@ -9,6 +9,7 @@ resources:
   - mongodb-ops-manager-secret.yaml
   - notesnook-mongodb-secret.yaml
   - notesnook-identity-mongodb-secret.yaml
+  - notesnook-identity-mongodb-custom-connection-string.yaml
   - notesnook-mongodb.yaml
   - notesnook-env-secret.yaml
   - minio-resources.yaml
