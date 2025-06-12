@@ -1,4 +1,19 @@
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: notesnook-db-tls
+  namespace: notesnook
+spec:
+  commonName: mdb.notes.clsn.dev
+  dnsNames:
+  - 'mdb.notes.clsn.dev'
+  - '*.mdb.notes.clsn.dev'
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: mdb-notesnook-db-cert
+---
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
@@ -11,7 +26,10 @@ spec:
   security:
     authentication:
       enabled: true
-      modes: ["SCRAM"]  
+      modes: ["SCRAM"]
+    certsSecretPrefix: mdb
+    tls:
+      enabled: true
   opsManager:
     configMapRef:
       name: mongodb-ops-manager-config
@@ -34,6 +52,11 @@ spec:
                       operator: In
                       values:
                         - amd64
+  externalAccess:
+    external-domain: mdb.notes.clsn.dev
+    externalService:
+      annotations: 
+        external-dns.alpha.kubernetes.io/hostname: '{resourceName}-{podIndex}.{mongodProcessDomain}'
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
