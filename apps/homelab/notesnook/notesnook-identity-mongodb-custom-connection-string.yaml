@@ -12,8 +12,8 @@ spec:
     template:
       engineVersion: v2
       data:
-        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" }}'
-        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/identity?" }}'
+        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&useSsl=true" }}'
+        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&useSsl=true" }}'
         username: '{{ .username }}'
         password: '{{ .password }}'
   data:
