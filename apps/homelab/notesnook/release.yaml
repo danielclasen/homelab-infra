@@ -59,7 +59,7 @@ spec:
               MONGODB_CONNECTION_STRING:
                 valueFrom:
                   secretKeyRef:
-                    name: notesnook-mongodb-connection-string
+                    name: notesnook-mongodb-custom-connection-string
                     key: "connectionString.standard"
               MONGODB_DATABASE_NAME: notesnook
               S3_INTERNAL_SERVICE_URL: *attachmentsServerUrl

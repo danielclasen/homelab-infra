@@ -1,6 +1,43 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
+  name: template-notesnook-mongodb-custom-connection-string
+spec:
+  refreshInterval: 1m0s
+  secretStoreRef:
+    name: notesnook-kubernetes-secret-store
+    kind: SecretStore
+  target:
+    name: notesnook-mongodb-custom-connection-string
+    template:
+      engineVersion: v2
+      data:
+        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/notesnook?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true" }}'
+        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/notesnook?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true" }}'
+        username: '{{ .username }}'
+        password: '{{ .password }}'
+  data:
+  - secretKey: connectionStringStandard
+    remoteRef:
+      key: notesnook-mongodb-connection-string
+      property: connectionString.standard
+  - secretKey: connectionStringSrv
+    remoteRef:
+      key: notesnook-mongodb-connection-string
+      property: connectionString.standardSrv
+  - secretKey: username
+    remoteRef:
+      key: notesnook-mongodb-connection-string
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: notesnook-mongodb-connection-string
+      property: password
+
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
   name: template-notesnook-identity-mongodb-custom-connection-string
 spec:
   refreshInterval: 1m0s
@@ -12,8 +49,8 @@ spec:
     template:
       engineVersion: v2
       data:
-        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&useSsl=true" }}'
-        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&useSsl=true" }}'
+        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true" }}'
+        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true" }}'
         username: '{{ .username }}'
         password: '{{ .password }}'
   data:
