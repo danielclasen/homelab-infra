@@ -12,6 +12,9 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt-prod
+  usages:
+    - server auth
+    - client auth
   secretName: mdb-notesnook-db-cert
 ---
 apiVersion: mongodb.com/v1
