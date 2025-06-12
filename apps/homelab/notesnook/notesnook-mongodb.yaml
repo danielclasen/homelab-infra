@@ -92,7 +92,7 @@ spec:
   db: "admin"
   mongodbResourceRef:
     name: nn
-  connectionStringSecretName: notesnook-identity-mongodb-connection-string
+  connectionStringSecretName: notesnook-identity-mongodb-custom-connection-string
   roles:
     - db: "identity"
       name: "dbOwner"
