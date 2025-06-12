@@ -23,6 +23,14 @@ spec:
         - host: headlamp.clsn.dev
     config:
       watchPlugins: true
+    volumeMounts:
+      - mountPath: "/home/headlamp/.config/Headlamp/kubeconfigs/"
+        name: kubeconfig
+        readOnly: true
+    volumes:
+      - name: kubeconfig
+        secret:
+          secretName: headlamp-kubeconfig-secret
     persistentVolumeClaim:
       enabled: true
       storageClassName: ssd-perf-r3
