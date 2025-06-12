@@ -72,17 +72,13 @@ spec:
   passwordSecretKeyRef:
     name: notesnook-mongodb-secret
     key: password
-  db: "notesnook"
+  db: "admin"
   mongodbResourceRef:
     name: nn
   connectionStringSecretName: notesnook-mongodb-connection-string
   roles:
     - db: "notesnook"
       name: "dbAdmin"
-    - db: "identity"
-      name: "dbAdmin"
-    - db: "admin"
-      name: "clusterAdmin"
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
@@ -93,7 +89,7 @@ spec:
   passwordSecretKeyRef:
     name: notesnook-identity-mongodb-secret
     key: password
-  db: "identity"
+  db: "admin"
   mongodbResourceRef:
     name: nn
   connectionStringSecretName: notesnook-identity-mongodb-connection-string
