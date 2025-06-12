@@ -57,7 +57,7 @@ spec:
                       values:
                         - amd64
   externalAccess:
-    external-domain: mdb.notes.clsn.dev
+    externalDomain: mdb.notes.clsn.dev
     externalService:
       annotations: 
         external-dns.alpha.kubernetes.io/hostname: '{resourceName}-{podIndex}.{mongodProcessDomain}'
