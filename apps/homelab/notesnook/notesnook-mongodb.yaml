@@ -78,7 +78,7 @@ spec:
   connectionStringSecretName: notesnook-mongodb-connection-string
   roles:
     - db: "notesnook"
-      name: "dbAdmin"
+      name: "dbOwner"
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
@@ -95,4 +95,4 @@ spec:
   connectionStringSecretName: notesnook-identity-mongodb-connection-string
   roles:
     - db: "identity"
-      name: "dbAdmin"
+      name: "dbOwner"
