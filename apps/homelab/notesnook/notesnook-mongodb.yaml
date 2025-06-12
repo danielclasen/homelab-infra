@@ -24,7 +24,7 @@ metadata:
   namespace: notesnook
 spec:
   type: ReplicaSet
-  version: 8.0.7
+  version: 7.0.21
   members: 3
   security:
     authentication:
