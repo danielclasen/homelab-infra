@@ -61,6 +61,7 @@ spec:
     externalService:
       annotations: 
         external-dns.alpha.kubernetes.io/hostname: '{resourceName}-{podIndex}.{mongodProcessDomain}'
+        metallb.io/ip-allocated-from-pool: metallb-pool
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBUser
