@@ -2,7 +2,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: notesnook-db-tls
+  name: nn-tls
   namespace: notesnook
 spec:
   commonName: mdb.notes.clsn.dev
@@ -15,12 +15,12 @@ spec:
   usages:
     - server auth
     - client auth
-  secretName: mdb-notesnook-db-cert
+  secretName: mdb-nn-cert
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: notesnook-db
+  name: nn
   namespace: notesnook
 spec:
   type: ReplicaSet
@@ -74,7 +74,7 @@ spec:
     key: password
   db: "notesnook"
   mongodbResourceRef:
-    name: notesnook-db
+    name: nn
   connectionStringSecretName: notesnook-mongodb-connection-string
   roles:
     - db: "notesnook"
@@ -95,7 +95,7 @@ spec:
     key: password
   db: "identity"
   mongodbResourceRef:
-    name: notesnook-db
+    name: nn
   connectionStringSecretName: notesnook-identity-mongodb-connection-string
   roles:
     - db: "identity"
