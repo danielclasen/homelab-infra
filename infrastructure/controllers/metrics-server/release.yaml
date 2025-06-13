@@ -3,6 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: metrics-server
+  namespace: kube-system
 spec:
   interval: 5m
   chart:
@@ -12,7 +13,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: metrics-server
-        namespace: flux-system
   install:
     remediation:
       remediateLastFailure: true
@@ -22,8 +22,15 @@ spec:
       remediateLastFailure: true
       retries: 3
   releaseName: kube-metrics-server
+  targetNamespace: kube-system
   values:
     apiService:
       insecureSkipTLSVerify: false
     tls:
       type: cert-manager
+    service:
+      type: ClusterIP
+      port: 443
+      labels:
+        kubernetes.io/cluster-service: "true"
+        kubernetes.io/name: "Metrics-server"
