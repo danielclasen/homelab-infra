@@ -25,7 +25,7 @@ spec:
         - host: headlamp.clsn.dev
           paths:
             - path: /
-              pathType: Prefix
+              type: Prefix
     podSecurityContext:
       fsGroup: 1000
     config:
