@@ -5,5 +5,4 @@ namespace: headlamp
 resources:
   - namespace.yaml
   - repository.yaml
-  - kubeconfig-secret.yaml
   - release.yaml
