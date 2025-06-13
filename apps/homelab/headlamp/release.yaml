@@ -15,6 +15,7 @@ spec:
         kind: HelmRepository
         name: headlamp
   values:
+    # yaml-language-server: $schema=https://raw.githubusercontent.com/kubernetes-sigs/headlamp/refs/heads/main/charts/headlamp/values.schema.json
     ingress:
       ingressClassName: &ingressClass traefik-internal
       enabled: true
@@ -22,7 +23,14 @@ spec:
         kubernetes.io/ingress.class: *ingressClass
       hosts:
         - host: headlamp.clsn.dev
+          paths:
+            - path: /
+    podSecurityContext:
+      fsGroup: 1000
     config:
+      env:
+        - name: HEADLAMP_CONFIG_TRACING_ENABLED
+          value: false
       watchPlugins: true
     # Workaround for: https://github.com/kubernetes-sigs/headlamp/issues/1826  
     initContainers:
