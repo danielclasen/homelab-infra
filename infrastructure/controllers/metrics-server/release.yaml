@@ -22,7 +22,7 @@ spec:
       remediateLastFailure: true
       retries: 3
   releaseName: kube-metrics-server
-  targetNameSpace: kube-system
+  targetNamespace: kube-system
   values:
     apiService:
       insecureSkipTLSVerify: false
