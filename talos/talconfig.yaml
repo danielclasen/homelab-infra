@@ -162,6 +162,10 @@ patches:
       value:
         validSubnets:
           - 192.168.95.0/24
+    - op: add
+      path: /machine/kubelet/extraArgs
+      value:
+        rotate-server-certificates: true
 worker:
   kernelModules:
     - name: drbd
