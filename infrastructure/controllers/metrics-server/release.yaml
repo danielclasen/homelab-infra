@@ -25,7 +25,8 @@ spec:
   targetNamespace: kube-system
   values:
     apiService:
-      insecureSkipTLSVerify: false
+      insecureSkipTLSVerify: true # can be disabled with next chart release
+    # will work with next chart release
     tls:
       type: cert-manager
     service:
