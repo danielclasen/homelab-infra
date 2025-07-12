@@ -29,5 +29,5 @@ spec:
       services:
         - name: adguard-01
           port: http
-          scheme: https
+          scheme: http
           serversTransport: insecure-skip-verify
