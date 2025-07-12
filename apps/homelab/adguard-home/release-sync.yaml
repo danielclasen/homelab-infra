@@ -47,6 +47,9 @@ spec:
           - host: adguard-sync.clsn.dev
             paths:
               - path: /
+    secret:
+      adguard-home-sync-secret:
+        enabled: false
     workload:
       main:
         podSpec:
