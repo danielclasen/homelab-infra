@@ -166,6 +166,21 @@ patches:
       path: /machine/kubelet/extraArgs
       value:
         rotate-server-certificates: true
+  - |-
+    - op: add
+      path: /cluster/apiServer/extraArgs
+      value:
+        feature-gates: UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
+    - op: add
+      path: /machine/sysctls
+      value:
+        user.max_user_namespaces: "11255"
+    - op: add
+      path: /machine/kubelet/extraConfig
+      value:
+        featureGates:
+          UserNamespacesSupport: true
+          UserNamespacesPodSecurityStandards: true
 worker:
   kernelModules:
     - name: drbd
@@ -173,6 +188,11 @@ worker:
           - usermode_helper=disabled
     - name: drbd_transport_tcp
     - name: dm-thin-pool
+  patches:
+    - |-
+      - op: add
+        path: /cluster/apiServer
+        value: {}
 controlPlane:
   kernelModules:
     - name: drbd
