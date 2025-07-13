@@ -54,7 +54,7 @@ spec:
         paths:
           - path: /
             pathType: Exact
-            backend: &backend
+            backend:
               service:
                 name: uptime-kuma
                 port:
@@ -74,7 +74,11 @@ spec:
         paths:
           - path: /assets
             pathType: Prefix
-            backend: *backend
+            backend: &backend
+              service:
+                name: uptime-kuma
+                port:
+                  name: http
           - path: /api/status-page/heartbeat/public
             pathType: Exact
             backend: *backend
