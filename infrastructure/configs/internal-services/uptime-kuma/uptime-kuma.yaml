@@ -46,7 +46,7 @@ metadata:
   namespace: internal-services
   annotations:
     kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.middlewares: uptime-kuma-public-addprefix@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: uptime-kuma-public-addprefix@internal-services
 spec:
   rules:
     - host: status.clsn.cloud
