@@ -9,3 +9,4 @@ resources:
 - ./adguard/adguard-01.yaml
 - ./adguard/adguard-02.yaml
 - ./adguard/adguard-03.yaml
+- ./uptime-kuma/uptime-kuma.yaml
