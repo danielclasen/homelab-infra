@@ -54,7 +54,7 @@ spec:
         paths:
           - path: /
             pathType: Exact
-            backend:
+            backend: &backend
               service:
                 name: uptime-kuma
                 port:
@@ -74,36 +74,22 @@ spec:
         paths:
           - path: /assets
             pathType: Prefix
-            backend:
-              service:
-                name: uptime-kuma
-                port:
-                  name: http
+            backend: *backend
           - path: /api/status-page/heartbeat/public
             pathType: Exact
-            backend:
-              service:
-                name: uptime-kuma
-                port:
-                  name: http
+            backend: *backend
+          - path: /api/entry-page
+            pathType: Exact
+            backend: *backend
           - path: /icon.svg
             pathType: Exact
-            backend:
-              service:
-                name: uptime-kuma
-                port:
-                  name: http
+            backend: *backend
           - path: /favicon.ico
             pathType: Exact
-            backend:
-              service:
-                name: uptime-kuma
-                port:
-                  name: http
+            backend: *backend
+          - path: /icon-192x192.png
+            pathType: Exact
+            backend: *backend
           - path: /manifest.json
             pathType: Exact
-            backend:
-              service:
-                name: uptime-kuma
-                port:
-                  name: http
+            backend: *backend
