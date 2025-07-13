@@ -59,3 +59,51 @@ spec:
                 name: uptime-kuma
                 port:
                   name: http
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: uptime-kuma-public-assets
+  namespace: internal-services
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  rules:
+    - host: status.clsn.cloud
+      http:
+        paths:
+          - path: /assets
+            pathType: Prefix
+            backend:
+              service:
+                name: uptime-kuma
+                port:
+                  name: http
+          - path: /api/status-page/heartbeat/public
+            pathType: Exact
+            backend:
+              service:
+                name: uptime-kuma
+                port:
+                  name: http
+          - path: /icon.svg
+            pathType: Exact
+            backend:
+              service:
+                name: uptime-kuma
+                port:
+                  name: http
+          - path: /favicon.ico
+            pathType: Exact
+            backend:
+              service:
+                name: uptime-kuma
+                port:
+                  name: http
+          - path: /manifest.json
+            pathType: Exact
+            backend:
+              service:
+                name: uptime-kuma
+                port:
+                  name: http
