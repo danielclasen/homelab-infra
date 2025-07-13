@@ -79,6 +79,9 @@ spec:
                 name: uptime-kuma
                 port:
                   name: http
+          - path: /upload
+            pathType: Prefix
+            backend: *backend
           - path: /api/status-page/heartbeat/public
             pathType: Exact
             backend: *backend
