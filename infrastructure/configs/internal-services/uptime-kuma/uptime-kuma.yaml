@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uptime-kuma
+  namespace: internal-services
+spec:
+  type: ExternalName
+  externalName: 192.168.95.9
+  ports:
+    - name: http
+      port: 3001
+      targetPort: 3001
+      protocol: TCP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: uptime-kuma-ingressroute
+  namespace: internal-services
+  annotations:
+    kubernetes.io/ingress.class: traefik-internal
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`status.clsn.dev`)
+      kind: Rule
+      services:
+        - name: uptime-kuma
+          port: http
+          scheme: http
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: uptime-kuma-public-addprefix
+spec:
+  addPrefix:
+    prefix: /status/public
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: uptime-kuma-public-ingressroute
+  namespace: internal-services
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`status.clsn.cloud`) && Path(`/`)
+      kind: Rule
+      middlewares:
+        - name: uptime-kuma-public-addprefix
+      services:
+        - name: uptime-kuma
+          port: http
+          scheme: http
