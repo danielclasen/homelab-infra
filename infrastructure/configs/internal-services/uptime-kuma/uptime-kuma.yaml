@@ -82,6 +82,9 @@ spec:
           - path: /api/status-page/heartbeat/public
             pathType: Exact
             backend: *backend
+          - path: /api/status-page/public
+            pathType: Exact
+            backend: *backend
           - path: /api/entry-page
             pathType: Exact
             backend: *backend
