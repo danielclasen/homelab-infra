@@ -123,6 +123,7 @@ spec:
           kubernetes.io/ingress.class: traefik-internal
           cert-manager.io/cluster-issuer: letsencrypt-prod
           uptime-kuma.autodiscovery.probe.name: "Notesnook Sync"
+          uptime-kuma.autodiscovery.probe.path: "/version"
         hosts:
           - host: *notesnookAppPublicHost
             paths:
@@ -157,6 +158,7 @@ spec:
           kubernetes.io/ingress.class: traefik-internal
           cert-manager.io/cluster-issuer: letsencrypt-prod
           uptime-kuma.autodiscovery.probe.name: "Notesnook Identity"
+          uptime-kuma.autodiscovery.probe.path: "/version"
         hosts:
           - host: *authServerPublicHost
             paths:
@@ -174,6 +176,7 @@ spec:
           kubernetes.io/ingress.class: traefik-internal
           cert-manager.io/cluster-issuer: letsencrypt-prod
           uptime-kuma.autodiscovery.probe.name: "Notesnook SSE"
+          uptime-kuma.autodiscovery.probe.path: "/version"
         hosts:
           - host: *sseServerPublicHost
             paths:

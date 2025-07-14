@@ -32,7 +32,7 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik-external
-        uptime-kuma.autodiscovery.probe.name: "MinIO"
+        uptime-kuma.autodiscovery.probe.enabled: false
       hosts:
         - s3.clsn.cloud
     consoleIngress:
