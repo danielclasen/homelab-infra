@@ -72,6 +72,7 @@ spec:
         className: &ingressClass traefik-internal
         annotations:
           kubernetes.io/ingress.class: *ingressClass
+          uptime-kuma.autodiscovery.probe.name: "AdGuard Home Sync"
         hosts:
           - host: adguard-sync.clsn.dev
             paths:

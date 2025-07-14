@@ -41,6 +41,7 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: traefik-internal
+          uptime-kuma.autodiscovery.probe.name: "AdGuard Home"
           # traefik.ingress.kubernetes.io/router.entrypoints: websecure
           # traefik.ingress.kubernetes.io/router.tls: "true"
           # traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt-prod

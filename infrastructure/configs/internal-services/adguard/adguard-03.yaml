@@ -20,6 +20,7 @@ metadata:
   namespace: internal-services
   annotations:
     kubernetes.io/ingress.class: traefik-internal
+    uptime-kuma.autodiscovery.probe.name: "AdGuard Home 03"
 spec:
   entryPoints:
     - websecure

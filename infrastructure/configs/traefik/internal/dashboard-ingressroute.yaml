@@ -6,6 +6,7 @@ metadata:
   namespace: traefik-internal
   annotations:
     kubernetes.io/ingress.class: traefik-internal
+    uptime-kuma.autodiscovery.probe.name: "Traefik Internal Dashboard"
 spec:
   entryPoints:
     - websecure

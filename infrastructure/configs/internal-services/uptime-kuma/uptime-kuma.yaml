@@ -20,6 +20,7 @@ metadata:
   namespace: internal-services
   annotations:
     kubernetes.io/ingress.class: traefik-internal
+    uptime-kuma.autodiscovery.probe.name: "Uptime Kuma"
 spec:
   entryPoints:
     - websecure
@@ -47,6 +48,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik-external
     traefik.ingress.kubernetes.io/router.middlewares: internal-services-uptime-kuma-public-addprefix@kubernetescrd
+    uptime-kuma.autodiscovery.probe.name: "Uptime Kuma Public Status Page"
 spec:
   rules:
     - host: status.clsn.cloud
@@ -67,6 +69,7 @@ metadata:
   namespace: internal-services
   annotations:
     kubernetes.io/ingress.class: traefik-external
+    uptime-kuma.autodiscovery.probe.enabled: false
 spec:
   rules:
     - host: status.clsn.cloud

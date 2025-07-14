@@ -32,12 +32,14 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik-external
+        uptime-kuma.autodiscovery.probe.name: "MinIO"
       hosts:
         - s3.clsn.cloud
     consoleIngress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik-internal
+        uptime-kuma.autodiscovery.probe.name: "MinIO Console"
       hosts:
         - s3.clsn.dev
     resources:
