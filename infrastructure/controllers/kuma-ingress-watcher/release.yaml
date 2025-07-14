@@ -16,6 +16,26 @@ spec:
         name: kuma-ingress-watcher
   values:
     namespace: kuma
+    kumaIngressWatcher:
+      watchInterval: 10
+      ingressRoute:
+        enabled: true
+        traefikv3: true
+      ingress:
+        enabled: true
+      fileBasedMonitors:
+        enabled: false
+        monitorsFilePath: "/etc/kuma-controller/monitors.yaml"
+        monitors: []
+        #- name: "homie"
+        #  type: "http"
+        #  url: "https://homepage-192-168-1-28.traefik.me/"
+        #  interval: 60
+        #  - name: "another-monitor"
+        #    type: "http"
+        #    host: "example-host"
+        #    port: 8080
+        #    interval: 120
     secret:
       name: kuma-ingress-discovery-token
     deployment:
@@ -24,7 +44,7 @@ spec:
       label: kuma-ingress-watcher
       image:
         name: ghcr.io/squent/kuma-ingress-watcher
-      logLevel: INFO
+      logLevel: DEBUG
     uptimeKuma:
       url: "https://status.clsn.dev"
       credentialsSecret: uptime-kuma-secret
