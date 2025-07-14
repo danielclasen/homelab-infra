@@ -44,7 +44,7 @@ spec:
       label: kuma-ingress-watcher
       image:
         name: ghcr.io/squent/kuma-ingress-watcher
-      logLevel: DEBUG
+      logLevel: INFO
     uptimeKuma:
       url: "https://status.clsn.dev"
       credentialsSecret: uptime-kuma-secret
