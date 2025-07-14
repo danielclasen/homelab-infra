@@ -69,7 +69,7 @@ metadata:
   namespace: internal-services
   annotations:
     kubernetes.io/ingress.class: traefik-external
-    uptime-kuma.autodiscovery.probe.enabled: false
+    uptime-kuma.autodiscovery.probe.enabled: "false"
 spec:
   rules:
     - host: status.clsn.cloud
