@@ -39,6 +39,8 @@ spec:
     extraArgs:
       webhook-provider-url: http://localhost:8888
       traefik-disable-legacy:
+      default-targets: 192.168.95.39
+      force-default-targets:
     sidecars:
       - name: adguard-webhook
         image: ghcr.io/muhlba91/external-dns-provider-adguard:v9.0.1
@@ -67,15 +69,5 @@ spec:
               secretKeyRef:
                 name: adguard-secret
                 key: url
-          # - name: ADGUARD_USER
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: adguard-configuration
-          #       key: user
-          # - name: ADGUARD_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: adguard-configuration
-          #       key: password
           - name: DRY_RUN
             value: "false" 
