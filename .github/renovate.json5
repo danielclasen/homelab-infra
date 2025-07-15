@@ -1,41 +1,43 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":disableRateLimiting",
-    ":dependencyDashboard",
-    ":semanticCommits",
-    ":automergeDigest",
-    ":automergeBranch",
-    //"github>danielclasen/homelab-infra//.github/renovate/autoMerge.json5",
-    "github>danielclasen/homelab-infra//.github/renovate/customManagers.json5"
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    'config:recommended',
+    'docker:enableMajor',
+    ':disableRateLimiting',
+    ':dependencyDashboard',
+    ':semanticCommits',
+    ':automergeDigest',
+    ':automergeBranch',
+    ':timezone(Europe/Berlin)',
+    //'github>danielclasen/homelab-infra//.github/renovate/autoMerge.json5',
+    'github>danielclasen/homelab-infra//.github/renovate/customManagers.json5',
+    'github>danielclasen/homelab-infra//.github/renovate/labels.json5',
+    'github>danielclasen/homelab-infra//.github/renovate/groups.json5',
   ],
-  "enabledManagers": [
-    "flux",
-    "kustomize",
-    "helm-values",
-    "kubernetes"
+  dependencyDashboardTitle: 'Renovate Dashboard 🤖',
+  suppressNotifications: [
+    'prEditedNotification',
+    'prIgnoreNotification',
   ],
-  "flux": {
-    "managerFilePatterns": [
-      "/apps/.+\\.ya?ml$/",
-      "/clusters/.+\\.ya?ml$/",
-      "/infrastructure/.+\\.ya?ml$/"
+  flux: {
+    managerFilePatterns: [
+      '/apps/.+\\.ya?ml$/',
+      '/clusters/.+\\.ya?ml$/',
+      '/infrastructure/.+\\.ya?ml$/'
     ]
   },
-  "kubernetes": {
-    "managerFilePatterns": [
-      "/apps/.+\\.ya?ml$/",
-      "/clusters/.+\\.ya?ml$/",
-      "/infrastructure/.+\\.ya?ml$/"
+  kubernetes: {
+    managerFilePatterns: [
+      '/apps/.+\\.ya?ml$/',
+      '/clusters/.+\\.ya?ml$/',
+      '/infrastructure/.+\\.ya?ml$/'
     ]
   },
-  "helm-values": {
-    "commitMessageTopic": "helm values {{depName}}",
-    "managerFilePatterns": [
-      "/(^|/)values\\.ya?ml$/",
-      "/(^|/)release.*\\.ya?ml$/"
+  helmValues: {
+    commitMessageTopic: "helm values {{depName}}",
+    managerFilePatterns: [
+      '/(^|/)values\\.ya?ml$/',
+      '/(^|/)release.*\\.ya?ml$/'
     ],
-    "pinDigests": false
   }
 }
