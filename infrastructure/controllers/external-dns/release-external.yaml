@@ -37,6 +37,7 @@ spec:
     extraEnvVarsSecret: external-env-secret
     extraArgs:
       traefik-disable-legacy:
+      force-default-targets:
     ingressClassFilters: 
       - traefik-external
     domainFilters:
