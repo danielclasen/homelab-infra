@@ -25,7 +25,6 @@ spec:
       manager:
         image:
           repository: inseefrlab/s3-operator
-          tag: v0.12.0
       replicas: 1
     kubernetesClusterDomain: cluster.local
 
