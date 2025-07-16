@@ -21,11 +21,6 @@ spec:
       TZ: "Europe/Berlin"
     service:
       main:
-        type: LoadBalancer
-        loadBalancerIP: &ip 192.168.95.20
-        externalTrafficPolicy: Cluster
-        annotations:
-          metallb.io/allow-shared-ip: adguard-home
         ports:
           http:
             port: 80

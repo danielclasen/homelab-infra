@@ -63,6 +63,9 @@ spec:
           - name: LOG_LEVEL
             value: debug
           - name: ADGUARD_URL
-            value: http://192.168.95.20:3000
+            valueFrom:
+              secretKeyRef:
+                name: adguard-secret
+                key: url
           - name: DRY_RUN
             value: "false" 
