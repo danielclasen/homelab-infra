@@ -9,7 +9,6 @@ parameters:
   linstor.csi.linbit.com/autoPlace: "3"
   linstor.csi.linbit.com/resourceGroup: "ssd-perf-r3"
   linstor.csi.linbit.com/storagePool: "ssd"
-  linstor.csi.linbit.com/replicasOnSame: "Aux/network/uplink=10G"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -18,27 +17,12 @@ volumeBindingMode: WaitForFirstConsumer
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: ssd-eco-r3
+  name: ssd-perf-r1
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/disklessOnRemaining: "true"
-  linstor.csi.linbit.com/autoPlace: "3"
-  linstor.csi.linbit.com/resourceGroup: "ssd-eco-r3"
-  linstor.csi.linbit.com/storagePool: "ssd"
-  linstor.csi.linbit.com/replicasOnDifferent: "Aux/network/uplink=10G"
-reclaimPolicy: Delete
-allowVolumeExpansion: true
-volumeBindingMode: WaitForFirstConsumer
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.33.0/storageclass.json
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: ssd-hybrid-r1
-provisioner: linstor.csi.linbit.com
-parameters:
   linstor.csi.linbit.com/autoPlace: "1"
-  linstor.csi.linbit.com/resourceGroup: "ssd-hybrid-r1"
+  linstor.csi.linbit.com/resourceGroup: "ssd-perf-r1"
   linstor.csi.linbit.com/storagePool: "ssd"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
