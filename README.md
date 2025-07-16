@@ -87,13 +87,11 @@ The following commands can be run from the `talos` directory within this reposit
     *   **Block Storage (LINSTOR/Piraeus)**:
         *   **Provisioner**: `linstor.csi.linbit.com`, managed by the Piraeus Operator (Helm release: `linstor-affinity-controller`).
         *   **Namespace**: `piraeus-datastore`.
-        *   **Underlying Pools**: LINSTOR utilizes LVM thin pools named `ssd`. These are created on host block devices (e.g., `/dev/nvme0n1`, `/dev/sdb`) selected via node labels (e.g., `storage/linstor-ssd-device: nvme0n1`).
+        *   **Underlying Pools**: LINSTOR utilizes host block devices (e.g., `/dev/nvme0n1`, `/dev/sdb`) selected via node labels (e.g., `storage/linstor-ssd-device: nvme0n1`).
         *   **StorageClasses**:
             *   `ssd-perf-r3` (3 replicas, default filesystem)
-            *   `ssd-eco-r3` (3 replicas, default filesystem)
-            *   `ssd-hybrid-r1` (1 replica, default filesystem)
+            *   `ssd-perf-r1` (1 replica, default filesystem)
             *   `ssd-perf-xfs-r1` (1 replica, XFS filesystem)
-        *   **Replica Placement**: Leverages node labels (e.g., `Aux/network/uplink=10G`) for intelligent replica placement, optimizing for network performance and availability.
     *   **Object Storage (MinIO)**:
         *   **Deployment**: A 3-replica MinIO cluster runs in the `minio` namespace. It uses the `ssd-perf-xfs-r1` StorageClass for persistence.
         *   **Access**:
