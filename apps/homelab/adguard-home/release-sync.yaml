@@ -45,7 +45,7 @@ spec:
               FEATURES_STATS_CONFIG: true
               FEATURES_THEME: true
               API_DARK_MODE: true
-              ORIGIN_URL: http://192.168.95.20:3000
+              ORIGIN_URL: http://192.168.95.20
               ORIGIN_WEB_URL: https://adguard.clsn.dev
               RUN_ON_START: true
               REPLICA1_AUTO_SETUP: true

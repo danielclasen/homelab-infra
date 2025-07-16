@@ -28,8 +28,7 @@ spec:
           metallb.io/allow-shared-ip: adguard-home
         ports:
           http:
-            port: 3000
-            targetPort: 80
+            port: 80
       dns-tcp:
         type: LoadBalancer
         loadBalancerIP: *ip
