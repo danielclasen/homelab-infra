@@ -23,6 +23,7 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: &ip 192.168.95.20
+        externalTrafficPolicy: Cluster
         annotations:
           metallb.io/allow-shared-ip: adguard-home
         ports:
@@ -32,10 +33,12 @@ spec:
       dns-tcp:
         type: LoadBalancer
         loadBalancerIP: *ip
+        externalTrafficPolicy: Cluster
         annotations:
           metallb.io/allow-shared-ip: adguard-home
       dns-udp:
         type: LoadBalancer
+        externalTrafficPolicy: Cluster
         loadBalancerIP: *ip
         annotations:
           metallb.io/allow-shared-ip: adguard-home
