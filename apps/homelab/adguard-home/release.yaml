@@ -22,8 +22,8 @@ spec:
     service:
       main:
         type: LoadBalancer
+        loadBalancerIP: &ip 192.168.95.20
         annotations:
-          metallb.io/loadBalancerIPs: &ip 192.168.95.20
           metallb.io/allow-shared-ip: adguard-home
         ports:
           http:
@@ -31,13 +31,13 @@ spec:
             targetPort: 80
       dns-tcp:
         type: LoadBalancer
+        loadBalancerIP: *ip
         annotations:
-          metallb.io/loadBalancerIPs: *ip
           metallb.io/allow-shared-ip: adguard-home
       dns-udp:
         type: LoadBalancer
+        loadBalancerIP: *ip
         annotations:
-          metallb.io/loadBalancerIPs: *ip
           metallb.io/allow-shared-ip: adguard-home
     ingress:
       main:
