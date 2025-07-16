@@ -16,6 +16,17 @@ spec:
         single:
           storage: 10Gi
           storageClass: ssd-perf-xfs-r1
+      podTemplate:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: beta.kubernetes.io/arch
+                        operator: In
+                        values:
+                          - amd64
   statefulSet:
     spec:
       template:
