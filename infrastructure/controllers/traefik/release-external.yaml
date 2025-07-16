@@ -32,9 +32,8 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      loadBalancerIP: &ip 192.168.95.40
       annotations:
-        metallb.io/loadBalancerIPs: *ip
+        metallb.io/loadBalancerIPs: 192.168.95.40
       externalTrafficPolicy: Local
       additionalServices:
         internal:
