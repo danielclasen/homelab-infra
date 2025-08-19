@@ -6,7 +6,7 @@ metadata:
   namespace: prometheus
 spec:
   interval: 5m
-  timeout: 2m
+  timeout: 5m
   chart:
     spec:
       chart: kube-prometheus-stack
@@ -14,17 +14,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
-  install:
-    createNamespace: true
-    crds: CreateReplace
-    remediation:
-      remediateLastFailure: true
-      retries: 3
-  upgrade:
-    crds: CreateReplace
-    remediation:
-      remediateLastFailure: true
-      retries: 3
   values:
     # Disable grafana as per https://truecharts.org/guides/#prometheus mentioned: As we provide our own grafana with included dashboard. We recommend to disable grafana and add a few tweaks in the kube-prometheus-stack:
     grafana:
