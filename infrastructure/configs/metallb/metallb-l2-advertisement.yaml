@@ -12,6 +12,8 @@ spec:
       kubernetes.io/hostname: tcpl-02
   - matchLabels:
       kubernetes.io/hostname: tcpl-03
+  - matchLabels:
+      kubernetes.io/hostname: tcpl-04
   ipAddressPools:
   - metallb-pool
   interfaces:
