@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus
+  namespace: prometheus
+spec:
+  interval: 5m
+  timeout: 2m
+  chart:
+    spec:
+      chart: prometheus
+      version: 76.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+  values:
+    # Disable grafana as per https://truecharts.org/guides/#prometheus mentioned: As we provide our own grafana with included dashboard. We recommend to disable grafana and add a few tweaks in the kube-prometheus-stack:
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      defaultDashboardsEnabled: true
+      forceDeployDatasources: true
+    crds:
+      enabled: true
+      upgradeJob:
+        enabled: true
+        forceConflicts: true
+    cleanPrometheusOperatorObjectNames: true
+    alertmanager:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeEtcd:
+      service:
+        selector:
+          component: kube-apiserver # etcd runs on control plane nodes
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: &ingressClass traefik-internal
+        annotations:
+          kubernetes.io/ingress.class: *ingressClass
+          uptime-kuma.autodiscovery.probe.name: "Prometheus"
+        hosts:
+          - host: prometheus.clsn.dev
+        paths:
+          - path: /
+            type: Prefix
+
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ssd-perf-r3
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 20Gi
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        ruleSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        enableAdminAPI: true
+        walCompression: true
+        enableFeatures:
+          - memory-snapshot-on-shutdown
+        retention: 14d
+        retentionSize: 20GiB
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500Mi
+          limits:
+            memory: 2000Mi
+          
