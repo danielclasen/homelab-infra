@@ -1,9 +1,9 @@
 ---
 clusterName: homelab
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.10.0
+talosVersion: v1.10.6
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.33.0
+kubernetesVersion: v1.33.3
 endpoint: https://192.168.95.10:6443
 domain: cluster.local
 allowSchedulingOnMasters: true
@@ -26,7 +26,7 @@ nodes:
             - siderolabs/nvme-cli
             - siderolabs/qemu-guest-agent
     installDisk: /dev/sda
-    talosImageURL: factory.talos.dev/metal-installer/d3546be3dcc9c26508b54b2f2bdc4aabede3962db8a3118caab2d93d5f743dcd
+    talosImageURL: factory.talos.dev/metal-installer/21ac916f042279b36bd6f8dd5b2b83d4352cca9354a05fd67a0cc55c3f2560ca
     networkInterfaces:
       - interface: ens18
         dhcp: true
@@ -56,7 +56,7 @@ nodes:
             - siderolabs/nvme-cli
             - siderolabs/qemu-guest-agent
     installDisk: /dev/sda
-    talosImageURL: factory.talos.dev/metal-installer/d3546be3dcc9c26508b54b2f2bdc4aabede3962db8a3118caab2d93d5f743dcd
+    talosImageURL: factory.talos.dev/metal-installer/21ac916f042279b36bd6f8dd5b2b83d4352cca9354a05fd67a0cc55c3f2560ca
     networkInterfaces:
       - interface: ens18
         dhcp: true
@@ -84,7 +84,7 @@ nodes:
             - siderolabs/nvme-cli
             - siderolabs/qemu-guest-agent
     installDisk: /dev/sda
-    talosImageURL: factory.talos.dev/metal-installer/d3546be3dcc9c26508b54b2f2bdc4aabede3962db8a3118caab2d93d5f743dcd
+    talosImageURL: factory.talos.dev/metal-installer/21ac916f042279b36bd6f8dd5b2b83d4352cca9354a05fd67a0cc55c3f2560ca
     networkInterfaces:
       - interface: ens18
         dhcp: true
@@ -95,6 +95,34 @@ nodes:
         mtu: 9000
         addresses:
           - "192.168.91.23/24"
+        routes: *san
+  - hostname: tcpl-04
+    ipAddress: 192.168.95.24
+    controlPlane: true
+    nodeLabels:
+      storage/linstor-ssd-device: sdb
+      network/uplink: 2.5G
+    schematic:
+      customization:
+        extraKernelArgs:
+          - vga=0x31b
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/drbd
+            - siderolabs/nvme-cli
+            - siderolabs/qemu-guest-agent
+    installDisk: /dev/sda
+    talosImageURL: factory.talos.dev/metal-installer/21ac916f042279b36bd6f8dd5b2b83d4352cca9354a05fd67a0cc55c3f2560ca
+    networkInterfaces:
+      - interface: ens18
+        dhcp: true
+        mtu: 1500
+        vip: *vip
+      - interface: ens19
+        dhcp: false
+        mtu: 9000
+        addresses:
+          - "192.168.91.24/24"
         routes: *san
   - hostname: tworker-01
     ipAddress: 192.168.95.31
