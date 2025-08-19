@@ -54,10 +54,10 @@ spec:
           kubernetes.io/ingress.class: *ingressClass
           uptime-kuma.autodiscovery.probe.name: "Prometheus"
         hosts:
-          - host: prometheus.clsn.dev
+          - prometheus.clsn.dev
         paths:
           - path: /
-            type: Prefix
+            pathType: Prefix
 
       prometheusSpec:
         storageSpec:
