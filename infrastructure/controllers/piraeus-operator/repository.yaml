@@ -5,4 +5,4 @@ metadata:
   namespace: piraeus-datastore
 spec:
   interval: 30m
-  url: https://charts.linstor.io
+  url: https://piraeus.io/helm-charts/
