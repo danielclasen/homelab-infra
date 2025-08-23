@@ -25,10 +25,12 @@ spec:
                 GF_SECURITY_ADMIN_USER:
                   secretKeyRef:
                     name: grafana-admin-secret
+                    expandObjectName: false
                     key: user
                 GF_SECURITY_ADMIN_PASSWORD:
                   secretKeyRef:
                     name: grafana-admin-secret
+                    expandObjectName: false
                     key: password
     ingress:
       main:
