@@ -51,13 +51,13 @@ spec:
       data:
         enabled: true
         size: 1Gi
-        storageClassName: ssd-perf-r3 
+        storageClass: ssd-perf-r3 
     cnpg:
       main:
         cluster:
           storage:
             size: "2Gi"
-            storageClassName: ssd-perf-r1
+            storageClass: ssd-perf-r1
           walStorage:
             size: "1Gi"
-            storageClassName: ssd-perf-r1
+            storageClass: ssd-perf-r1
