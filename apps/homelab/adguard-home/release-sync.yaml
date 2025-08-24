@@ -45,18 +45,18 @@ spec:
               FEATURES_STATS_CONFIG: true
               FEATURES_THEME: true
               API_DARK_MODE: true
-              ORIGIN_URL: http://adguard-home.adguard-home.svc.cluster.local
-              ORIGIN_WEB_URL: https://adguard.clsn.dev
+              ORIGIN_URL: ${ADGUARD_0_URL}
+              ORIGIN_WEB_URL: ${ADGUARD_0_WEB_URL}
               RUN_ON_START: true
               REPLICA1_AUTO_SETUP: true
-              REPLICA1_URL: http://192.168.95.11:3000
-              REPLICA1_WEB_URL: https://adguard-01.clsn.dev
+              REPLICA1_URL: ${ADGUARD_1_URL}
+              REPLICA1_WEB_URL: ${ADGUARD_1_WEB_URL}
               REPLICA2_AUTO_SETUP: true
-              REPLICA2_URL: http://192.168.95.12:3000
-              REPLICA2_WEB_URL: https://adguard-02.clsn.dev
+              REPLICA2_URL: ${ADGUARD_2_URL}
+              REPLICA2_WEB_URL: ${ADGUARD_2_WEB_URL}
               REPLICA3_AUTO_SETUP: true
-              REPLICA3_URL: http://192.168.95.13:3000
-              REPLICA3_WEB_URL: https://adguard-03.clsn.dev
+              REPLICA3_URL: ${ADGUARD_3_URL}
+              REPLICA3_WEB_URL: ${ADGUARD_3_WEB_URL}
             envFrom:
               - secretRef:
                   name: adguard-home-sync-secret
