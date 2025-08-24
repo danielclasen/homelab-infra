@@ -74,4 +74,10 @@ spec:
             memory: 500Mi
           limits:
             memory: 2000Mi
+        additionalScrapeConfigs:
+          - job_name: 'openwrt-router'
+            scrape_interval: 30s
+            static_configs:
+              - targets: ['192.168.1.1:9100']
+            
           
