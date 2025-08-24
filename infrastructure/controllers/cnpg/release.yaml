@@ -27,3 +27,7 @@ spec:
   values:
     nodeSelector:
       beta.kubernetes.io/arch: amd64
+    monitoring:
+      podMonitorEnabled: true
+      grafanaDashboard:
+        create: true

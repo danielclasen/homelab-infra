@@ -61,3 +61,6 @@ spec:
           walStorage:
             size: "1Gi"
             storageClass: ssd-perf-r1
+        monitoring:
+          enablePodMonitor: true
+          
