@@ -8,3 +8,6 @@ resources:
   - release.yaml
   - sync-secret.yaml
   - release-sync.yaml
+  - eso-store.yaml
+  - exporter-secret-template.yaml
+  - release-exporter.yaml
