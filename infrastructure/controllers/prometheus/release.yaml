@@ -32,6 +32,7 @@ spec:
     kubeProxy:
       enabled: false
     kubeEtcd:
+      enabled: true
       service:
         selector:
           component: etcd # etcd runs on control plane nodes
