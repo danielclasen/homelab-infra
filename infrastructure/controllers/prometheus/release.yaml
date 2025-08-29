@@ -35,7 +35,7 @@ spec:
       enabled: true
       service:
         selector:
-          component: etcd # etcd runs on control plane nodes
+          component: kube-apiserver # etcd runs on control plane nodes
     prometheus:
       ingress:
         enabled: true
