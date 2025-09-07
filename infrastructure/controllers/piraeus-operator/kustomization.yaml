@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: piraeus-datastore
 resources:
   - https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.9.0
+  - https://github.com/piraeusdatastore/piraeus-operator/config/extras/monitoring?ref=v2.9.0
   - repository.yaml
   - release.yaml
