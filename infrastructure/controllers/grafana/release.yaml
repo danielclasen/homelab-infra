@@ -50,16 +50,16 @@ spec:
     persistence:
       data:
         enabled: true
-        size: 1Gi
+        size: 2Gi
         storageClass: ssd-perf-r3 
     cnpg:
       main:
         cluster:
           storage:
-            size: "2Gi"
+            size: "5Gi"
             storageClass: ssd-perf-r1
           walStorage:
-            size: "1Gi"
+            size: "2Gi"
             storageClass: ssd-perf-r1
         monitoring:
           enablePodMonitor: true
