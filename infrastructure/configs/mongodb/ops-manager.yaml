@@ -14,7 +14,7 @@ spec:
     podSpec:
       persistence:
         single:
-          storage: 10Gi
+          storage: 30Gi
           storageClass: ssd-perf-xfs-r1
       podTemplate:
         spec:
