@@ -30,7 +30,7 @@ spec:
         type: persistentVolumeClaim
         storageClass: "ssd-perf-r3"
         retain: true
-        size: 1Gi
+        size: 5Gi
     service:
       main:
         type: LoadBalancer
