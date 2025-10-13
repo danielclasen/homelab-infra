@@ -48,3 +48,9 @@ spec:
     headDB:
       storage: 30Gi
       storageClass: ssd-perf-r3
+    opLogStores:
+      - name: oplog-store
+        mongodbResourceRef:
+          name: oplog
+        mongodbUserRef:
+          name: oplog-mongodb-user
