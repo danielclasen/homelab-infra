@@ -1,0 +1,61 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: oplog
+  namespace: mongodb
+spec:
+  type: ReplicaSet
+  version: 8.0.7
+  members: 3
+  security:
+    authentication:
+      enabled: true
+      modes: ["SCRAM"]
+    certsSecretPrefix: oplog
+    tls:
+      ca: ca-bundle
+      enabled: true
+  additionalMongodConfig:
+    net:
+      ssl:
+        mode: preferSSL
+  opsManager:
+    configMapRef:
+      name: oplog-ops-manager-config
+  credentials: oplog-ops-manager-secret
+  persistent: true
+  podSpec:
+    persistence:
+      single:
+        storage: 100Gi
+        storageClass: ssd-perf-xfs-r1
+    # multiarch does not seem to be supported by mongodb-kubernetes yet
+    podTemplate:
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: beta.kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBUser
+metadata:
+  name: oplog-mongodb-user
+spec:
+  username: oplog
+  passwordSecretKeyRef:
+    name: oplog-mongodb-secret
+    key: password
+  db: "admin"
+  mongodbResourceRef:
+    name: oplog
+  connectionStringSecretName: oplog-mongodb-connection-string
+  roles:
+    - db: "oplog"
+      name: "dbOwner"

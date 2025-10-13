@@ -6,3 +6,7 @@ resources:
   - ops-manager-credentials-secret.yaml
   - ops-manager.yaml
   - ops-manager-ingressroute.yaml
+  - oplog-ops-manager-config.yaml
+  - oplog-ops-manager-secret.yaml
+  - oplog-mongodb-secret.yaml
+  - oplog-mongodb.yaml
