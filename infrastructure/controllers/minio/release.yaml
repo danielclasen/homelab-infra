@@ -27,7 +27,7 @@ spec:
     drivesPerNode: 2
     persistence:
       storageClass: "ssd-perf-xfs-r1"
-      size: 100Gi
+      size: 10Gi
     ingress:
       enabled: true
       annotations:
