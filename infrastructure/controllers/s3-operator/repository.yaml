@@ -5,5 +5,5 @@ metadata:
   name: inseefrlab
   namespace: minio
 spec:
-  url: https://inseefrlab.github.io/helm-charts
+  url: https://inseefrlab.github.io/s3-operator
   interval: 5m0s
