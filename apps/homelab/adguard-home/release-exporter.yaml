@@ -20,7 +20,7 @@ spec:
     image:
       repository: ghcr.io/henrywhitaker3/adguard-exporter
       # renovate datasource=docker depName=ghcr.io/henrywhitaker3/adguard-exporter
-      tag: v1.2.0
+      tag: v1.2.1
       pullPolicy: IfNotPresent
 
     workload:
