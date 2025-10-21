@@ -100,7 +100,7 @@ spec:
             image:
               repository: docker.io/streetwriters/monograph
               # renovate datasource=docker depName=docker.io/streetwriters/monograph
-              tag: 1.2.4
+              tag: 1.2.5
             env:
               PUBLIC_URL: *monographPublicUrl
               API_HOST: *notesnookApi
