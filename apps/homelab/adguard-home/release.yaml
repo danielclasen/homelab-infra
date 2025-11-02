@@ -16,6 +16,7 @@ spec:
         name: adguard-home
   values:
     image:
+      # renovate datasource=docker depName=docker.io/adguard/adguardhome
       tag: v0.107.63
     env:
       TZ: "Europe/Berlin"
