@@ -84,7 +84,16 @@ spec:
             version: 0.1.0
           - name: flux
             source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_flux
-            version: 0.4.0
+            version: 0.5.0
           - name: kompose
             source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_kompose
             version: 0.1.0-beta-1
+          - name: prometheus
+            source: https://artifacthub.io/packages/headlamp/test-123/prometheus_headlamp_plugin
+            version: 0.0.3
+          - name: ai-assistant
+            source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_ai_assistant
+            version: 0.1.0-alpha
+          - name: external-secrets-operator
+            source: https://artifacthub.io/packages/headlamp/external-secrets-operator-headlamp-plugin/external-secrets-operator
+            version: 0.1.0-beta7
