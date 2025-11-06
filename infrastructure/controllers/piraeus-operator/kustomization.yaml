@@ -5,3 +5,12 @@ namespace: piraeus-datastore
 resources:
   - https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.10.0
   - https://github.com/piraeusdatastore/piraeus-operator/config/extras/monitoring?ref=v2.10.0
+patches:
+  - target:
+      group: piraeus.io
+      version: v1
+      kind: LinstorSatellite
+    patch: |-
+      - op: replace
+        path: /spec/deletionPolicy
+        value: Evacuate
