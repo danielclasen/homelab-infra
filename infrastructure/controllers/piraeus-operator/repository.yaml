@@ -1,8 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: linstor
-  namespace: piraeus-datastore
-spec:
-  interval: 30m
-  url: https://piraeus.io/helm-charts/
