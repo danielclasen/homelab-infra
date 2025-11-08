@@ -32,7 +32,11 @@ This section provides an overview of the Kubernetes cluster setup managed by thi
 ### GitOps & Configuration Management
 
 *   **Tooling**: FluxCD.
-*   **Repository Structure**: This `homelab-infra` repository is my central place for managing Kubernetes cluster configurations and all application deployments using a GitOps approach. Reusable Helm charts might be sourced from other repositories (e.g., `danielclasen/charts`) or public chart repositories.
+*   **Repository Structure**: This `homelab-infra` repository is my central place for managing Kubernetes cluster configurations and all application deployments using a GitOps approach. 
+    *   `flux/` - FluxCD manifests for clusters, infrastructure controllers, and application deployments
+    *   `talos/` - Talos Linux node configurations managed with Talhelper
+    *   `terraform/` - Terraform infrastructure-as-code for Proxmox VMs and cluster nodes
+    *   Reusable Helm charts might be sourced from other repositories (e.g., `danielclasen/charts`) or public chart repositories.
 
 ### Talos & Talhelper Node Management
 
