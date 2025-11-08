@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - clsn-cloud-root-certificate.yaml
-  - clsn-dev-root-certificate.yaml
-  - tlsstore.yaml
-  - ./internal
-  - ./external

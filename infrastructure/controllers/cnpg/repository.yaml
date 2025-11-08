@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: cnpg
-  namespace: cnpg
-spec:
-  interval: 30m
-  url: https://cloudnative-pg.github.io/charts

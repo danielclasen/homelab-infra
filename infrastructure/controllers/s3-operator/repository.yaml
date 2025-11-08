@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: inseefrlab
-  namespace: minio
-spec:
-  url: https://inseefrlab.github.io/s3-operator
-  interval: 5m0s
