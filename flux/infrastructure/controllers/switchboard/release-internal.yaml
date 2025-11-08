@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: switchboard-internal
+  namespace: switchboard
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: switchboard
+      version: 0.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: switchboard
+  install:
+    crds: CreateReplace
+    remediation:
+      remediateLastFailure: true
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      remediateLastFailure: true
+      retries: 3
+  values:
+    integrations:
+      certManager:
+        enabled: true
+        certificateTemplate:
+          issuerRef:
+            name: letsencrypt-prod
+            kind: ClusterIssuer
+      externalDNS:
+        enabled: true
+        targetService:
+          name: traefik-internal-traefik
+          namespace: traefik-internal
+    selector:
+      ingressClass: traefik-internal

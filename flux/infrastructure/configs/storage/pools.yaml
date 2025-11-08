@@ -1,0 +1,27 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: ssd-nvme-pool-config
+spec:
+  nodeSelector:
+    storage/linstor-ssd-device: nvme0n1
+  storagePools:
+  - name: ssd
+    lvmThinPool: {}
+    source:
+      hostDevices:
+      - /dev/nvme0n1
+---
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: ssd-sdb-pool-config
+spec:
+  nodeSelector:
+    storage/linstor-ssd-device: sdb
+  storagePools:
+  - name: ssd
+    lvmThinPool: {}
+    source:
+      hostDevices:
+      - /dev/sdb

@@ -21,16 +21,16 @@
   ],
   flux: {
     managerFilePatterns: [
-      '/apps/.+\\.ya?ml$/',
-      '/clusters/.+\\.ya?ml$/',
-      '/infrastructure/.+\\.ya?ml$/'
+      '/flux/apps/.+\\.ya?ml$/',
+      '/flux/clusters/.+\\.ya?ml$/',
+      '/flux/infrastructure/.+\\.ya?ml$/'
     ]
   },
   kubernetes: {
     managerFilePatterns: [
-      '/apps/.+\\.ya?ml$/',
-      '/clusters/.+\\.ya?ml$/',
-      '/infrastructure/.+\\.ya?ml$/'
+      '/flux/apps/.+\\.ya?ml$/',
+      '/flux/clusters/.+\\.ya?ml$/',
+      '/flux/infrastructure/.+\\.ya?ml$/'
     ]
   },
   'helm-values': {

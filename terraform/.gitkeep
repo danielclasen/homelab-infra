@@ -1,0 +1,5 @@
+# Terraform configuration for Proxmox infrastructure
+# This directory will contain Terraform code for managing:
+# - Proxmox VMs
+# - Talos Kubernetes cluster nodes
+# - Network configuration

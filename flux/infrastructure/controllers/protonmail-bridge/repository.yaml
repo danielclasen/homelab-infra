@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: protonmail-bridge
+  namespace: protonmail
+spec:
+  url: https://danielclasen.github.io/charts
+  interval: 5m0s

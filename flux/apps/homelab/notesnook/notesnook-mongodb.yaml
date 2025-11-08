@@ -1,0 +1,102 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nn-tls
+  namespace: notesnook
+spec:
+  commonName: mdb.notes.clsn.dev
+  dnsNames:
+  - 'mdb.notes.clsn.dev'
+  - '*.mdb.notes.clsn.dev'
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  usages:
+    - server auth
+    - client auth
+  secretName: mdb-nn-cert
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: nn
+  namespace: notesnook
+spec:
+  type: ReplicaSet
+  version: 7.0.21
+  members: 3
+  security:
+    authentication:
+      enabled: true
+      modes: ["SCRAM"]
+    certsSecretPrefix: mdb
+    tls:
+      ca: ca-bundle
+      enabled: true
+  additionalMongodConfig:
+    net:
+      ssl:
+        mode: preferSSL
+  opsManager:
+    configMapRef:
+      name: mongodb-ops-manager-config
+  credentials: mongodb-ops-manager-secret
+  persistent: true
+  podSpec:
+    persistence:
+      single:
+        storage: 10Gi
+        storageClass: ssd-perf-xfs-r1
+    # multiarch does not seem to be supported by mongodb-kubernetes yet
+    podTemplate:
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: beta.kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
+  externalAccess:
+    externalDomain: mdb.notes.clsn.dev
+    externalService:
+      annotations: 
+        external-dns.alpha.kubernetes.io/hostname: '{resourceName}-{podIndex}.{mongodProcessDomain}'
+        metallb.io/ip-allocated-from-pool: metallb-pool
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBUser
+metadata:
+  name: notesnook-mongodb-user
+spec:
+  username: "notesnook"
+  passwordSecretKeyRef:
+    name: notesnook-mongodb-secret
+    key: password
+  db: "admin"
+  mongodbResourceRef:
+    name: nn
+  connectionStringSecretName: notesnook-mongodb-connection-string
+  roles:
+    - db: "notesnook"
+      name: "dbOwner"
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBUser
+metadata:
+  name: notesnook-identity-mongodb-user
+spec:
+  username: "notesnook-identity"
+  passwordSecretKeyRef:
+    name: notesnook-identity-mongodb-secret
+    key: password
+  db: "admin"
+  mongodbResourceRef:
+    name: nn
+  connectionStringSecretName: notesnook-identity-mongodb-connection-string
+  roles:
+    - db: "identity"
+      name: "dbOwner"

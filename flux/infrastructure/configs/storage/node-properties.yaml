@@ -1,0 +1,9 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: node-properties
+spec:
+  properties:
+    - name: Aux/network/uplink
+      valueFrom:
+        nodeFieldRef: metadata.labels['network/uplink']

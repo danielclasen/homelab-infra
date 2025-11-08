@@ -1,0 +1,28 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: podinfo
+  namespace: podinfo
+spec:
+  interval: 5m
+  chart:
+    spec:
+      version: 6.8.0
+      chart: ./charts/podinfo
+      sourceRef:
+        kind: GitRepository
+        name: podinfo
+  values:
+    replicaCount: 2
+    ingress:
+      enabled: true
+      className: traefik-external
+      annotations:
+        kubernetes.io/ingress.class: traefik-external
+        uptime-kuma.autodiscovery.probe.name: "Podinfo"
+      hosts:
+        - host: podinfo.clsn.cloud
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
