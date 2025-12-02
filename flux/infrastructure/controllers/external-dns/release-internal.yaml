@@ -65,4 +65,3 @@ spec:
       - clsn.dev
     extraArgs:
       ingress-class: traefik-internal
-      traefik-disable-legacy: "" 

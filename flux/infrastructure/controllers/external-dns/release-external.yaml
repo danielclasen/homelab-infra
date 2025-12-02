@@ -36,7 +36,6 @@ spec:
       - clsn.cloud
     extraArgs:
       ingress-class: traefik-external
-      traefik-disable-legacy: ""
       cloudflare-proxied: ""
     env:
       - name: CF_API_TOKEN
