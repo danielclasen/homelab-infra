@@ -64,4 +64,4 @@ spec:
     domainFilters:
       - clsn.dev
     extraArgs:
-      - ingress-class=traefik-internal
+      - --ingress-class=traefik-internal
