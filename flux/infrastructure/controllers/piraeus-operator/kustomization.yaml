@@ -5,6 +5,8 @@ namespace: piraeus-datastore
 resources:
   - https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.10.0
   - https://github.com/piraeusdatastore/piraeus-operator/config/extras/monitoring?ref=v2.10.0
+  - https://github.com/kubernetes-csi/external-snapshotter/client/config/crd?ref=v8.4.0
+  - https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.4.0
 patches:
   - target:
       group: piraeus.io
