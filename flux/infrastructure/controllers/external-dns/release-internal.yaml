@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/external-dns-helm-chart-1.19.0/charts/external-dns/values.schema.json
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -9,54 +10,45 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 9.0.0
+      version: 1.19.0
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: external-dns
       interval: 12h
   timeout: 5m
   install:
+    crds: Skip
     remediation:
       remediateLastFailure: true
       retries: 3
   upgrade:
-    crds: CreateReplace
+    crds: Skip
     remediation:
       remediateLastFailure: true
       retries: 3
   values:
-    crd:
-      create: true
     sources:
       - crd
       - service
       - ingress
-    ingressClassFilters: 
-      - traefik-internal
-    domainFilters:
-      - clsn.dev
-    provider: webhook
-    extraArgs:
-      webhook-provider-url: http://localhost:8888
-      traefik-disable-legacy:
-    sidecars:
-      - name: adguard-webhook
-        image: ghcr.io/muhlba91/external-dns-provider-adguard:v9.1.0
-        ports:
-          - containerPort: 8888
-            name: http
-          - containerPort: 8080
-            name: healthz
-        livenessProbe:
+    provider:
+      name: webhook
+      webhook:
+        image:
+          repository: ghcr.io/muhlba91/external-dns-provider-adguard
+          tag: v11.0.0
+        service:
+          port: 8888
+        livenessProbe: 
           httpGet:
             path: /healthz
-            port: healthz
+            port: 8080
           initialDelaySeconds: 10
           timeoutSeconds: 5
-        readinessProbe:
+        readinessProbe: 
           httpGet:
             path: /healthz
-            port: healthz
+            port: 8080
           initialDelaySeconds: 10
           timeoutSeconds: 5
         env:
@@ -68,4 +60,9 @@ spec:
                 name: adguard-secret
                 key: url
           - name: DRY_RUN
-            value: "false" 
+            value: "false"
+    domainFilters:
+      - clsn.dev
+    extraArgs:
+      ingress-class: traefik-internal
+      traefik-disable-legacy: "" 

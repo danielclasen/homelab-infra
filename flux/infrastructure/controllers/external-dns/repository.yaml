@@ -2,9 +2,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: bitnami
+  name: external-dns
   namespace: external-dns
 spec:
   interval: 6h
-  type: oci
-  url: oci://registry-1.docker.io/bitnamicharts
+  url: https://kubernetes-sigs.github.io/external-dns/

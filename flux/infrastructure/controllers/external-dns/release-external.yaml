@@ -9,13 +9,14 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 9.0.0
+      version: 1.19.0
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: external-dns
       interval: 12h
   timeout: 5m
   install:
+    crds: CreateReplace
     remediation:
       remediateLastFailure: true
       retries: 3
@@ -25,20 +26,26 @@ spec:
       remediateLastFailure: true
       retries: 3
   values:
-    crd:
-      create: true
     sources:
       - crd
       - service
       - ingress
-    provider: cloudflare
-    cloudflare:
-      proxied: true
-    extraEnvVarsSecret: external-env-secret
-    extraArgs:
-      traefik-disable-legacy:
-      force-default-targets:
-    ingressClassFilters: 
-      - traefik-external
+    provider:
+      name: cloudflare
     domainFilters:
       - clsn.cloud
+    extraArgs:
+      ingress-class: traefik-external
+      traefik-disable-legacy: ""
+      cloudflare-proxied: ""
+    env:
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: external-env-secret
+            key: CF_API_TOKEN
+      - name: EXTERNAL_DNS_DEFAULT_TARGETS
+        valueFrom:
+          secretKeyRef:
+            name: external-env-secret
+            key: EXTERNAL_DNS_DEFAULT_TARGETS
