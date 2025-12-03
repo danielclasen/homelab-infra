@@ -63,4 +63,14 @@ spec:
             storageClass: ssd-perf-r1
         monitoring:
           enablePodMonitor: true
+    dashboards:
+      grafana:
+        flux-cluster:
+          enabled: true
+        flux-control-plane:
+          enabled: true
+        metallb:
+          enabled: true
+        cert-manager:
+          enabled: true
           
