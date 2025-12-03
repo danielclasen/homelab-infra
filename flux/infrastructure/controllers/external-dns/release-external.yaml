@@ -35,8 +35,8 @@ spec:
     domainFilters:
       - clsn.cloud
     extraArgs:
-      - --ingress-class=traefik-external
-      - --cloudflare-proxied
+      ingress-class: traefik-external
+      cloudflare-proxied:
     env:
       - name: CF_API_TOKEN
         valueFrom:
