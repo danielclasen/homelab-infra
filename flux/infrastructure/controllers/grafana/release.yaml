@@ -44,9 +44,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    configmap:
-      dashboard-traefik:
-        enabled: true
     persistence:
       data:
         enabled: true
@@ -72,5 +69,7 @@ spec:
         metallb:
           enabled: true
         cert-manager:
+          enabled: true
+        traefik:
           enabled: true
           
