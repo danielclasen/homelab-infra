@@ -37,6 +37,7 @@ spec:
     extraArgs:
       ingress-class: traefik-external
       cloudflare-proxied:
+      force-default-targets:
     env:
       - name: CF_API_TOKEN
         valueFrom:
