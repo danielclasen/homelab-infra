@@ -32,36 +32,27 @@ spec:
       - service
       - ingress
     provider:
-      name: webhook
-      webhook:
-        image:
-          repository: ghcr.io/muhlba91/external-dns-provider-adguard
-          tag: v11.0.0
-        service:
-          port: 8888
-        livenessProbe: 
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 10
-          timeoutSeconds: 5
-        readinessProbe: 
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 10
-          timeoutSeconds: 5
-        env:
-          - name: LOG_LEVEL
-            value: debug
-          - name: ADGUARD_URL
-            valueFrom:
-              secretKeyRef:
-                name: adguard-secret
-                key: url
-          - name: DRY_RUN
-            value: "false"
+      name: rfc2136
     domainFilters:
       - clsn.dev
+    txtPrefix: external-dns-
+    txtOwnerId: k8s
+    policy: sync
     extraArgs:
       ingress-class: traefik-internal
+      rfc2136-host: 192.168.1.1
+      rfc2136-port: 53530
+      rfc2136-zone: clsn.dev
+      rfc2136-tsig-secret-alg: hmac-sha256
+      rfc2136-tsig-axfr:
+    env:
+    - name: "EXTERNAL_DNS_RFC2136_TSIG_SECRET"
+      valueFrom:
+        secretKeyRef:
+          name: internal-rfc2136-secret
+          key: rfc2136-secret
+    - name: "EXTERNAL_DNS_RFC2136_TSIG_KEYNAME"
+      valueFrom:
+        secretKeyRef:
+          name: internal-rfc2136-secret
+          key: rfc2136-keyname
