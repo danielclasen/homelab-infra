@@ -181,36 +181,8 @@ nodes:
               - "192.168.91.32/24"
             routes: *san
 patches:
-  - |-
-    - op: add
-      path: /machine/features/kubePrism
-      value:
-        enabled: true
-        port: 7445
-    - op: add
-      path: /machine/kubelet/nodeIP
-      value:
-        validSubnets:
-          - 192.168.95.0/24
-    - op: add
-      path: /machine/kubelet/extraArgs
-      value:
-        rotate-server-certificates: true
-  - |-
-    - op: add
-      path: /cluster/apiServer/extraArgs
-      value:
-        feature-gates: UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
-    - op: add
-      path: /machine/sysctls
-      value:
-        user.max_user_namespaces: "11255"
-    - op: add
-      path: /machine/kubelet/extraConfig
-      value:
-        featureGates:
-          UserNamespacesSupport: true
-          UserNamespacesPodSecurityStandards: true
+  - "@./patches/000-kubelet-patch.yaml"
+  - "@./patches/001-timesync-delay-patch.yaml"
 worker:
   kernelModules:
     - name: drbd
@@ -218,11 +190,8 @@ worker:
           - usermode_helper=disabled
     - name: drbd_transport_tcp
     - name: dm-thin-pool
-  patches:
-    - |-
-      - op: add
-        path: /cluster/apiServer
-        value: {}
+  # patches:
+  #   - "@./patches/worker/000-new-patch.yaml"
 controlPlane:
   kernelModules:
     - name: drbd
@@ -231,16 +200,5 @@ controlPlane:
     - name: drbd_transport_tcp
     - name: dm-thin-pool
   patches:
-    - |-
-      - op: add
-        path: /cluster/etcd/extraArgs
-        value:
-          listen-metrics-urls: http://0.0.0.0:2381
-      - op: add
-        path: /cluster/controllerManager/extraArgs
-        value:
-          bind-address: 0.0.0.0
-      - op: add
-        path: /cluster/scheduler/extraArgs
-        value:
-          bind-address: 0.0.0.0
+    - "@./patches/controlPlane/000-metrics-listen-patch.yaml"
+    - "@./patches/controlPlane/001-timesync-ptp-patch.yaml"

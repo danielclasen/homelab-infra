@@ -1,0 +1,22 @@
+---
+machine:
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
+  kubelet:
+    extraArgs:
+      rotate-server-certificates: true
+    extraConfig:
+      featureGates: 
+        UserNamespacesSupport: true
+        UserNamespacesPodSecurityStandards: true
+    nodeIP:
+      validSubnets:
+        - 192.168.95.0/24
+  sysctls:
+    user.max_user_namespaces: "11255"
+cluster:
+  apiServer:
+    extraArgs:
+      feature-gates: UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true

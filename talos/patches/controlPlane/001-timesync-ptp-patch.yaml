@@ -1,0 +1,6 @@
+---
+machine:
+  time:
+    bootTimeout: 2m
+    servers:
+      - /dev/ptp0

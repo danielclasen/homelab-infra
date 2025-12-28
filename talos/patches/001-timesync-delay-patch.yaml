@@ -1,0 +1,4 @@
+---
+machine:
+  time:
+    bootTimeout: 2m
