@@ -6,7 +6,4 @@ resources:
 - servers-transport.yaml
 - ./pve/pve.yaml
 - ./homeassistant/homeassistant.yaml
-- ./adguard/adguard-01.yaml
-- ./adguard/adguard-02.yaml
-- ./adguard/adguard-03.yaml
 - ./uptime-kuma/uptime-kuma.yaml

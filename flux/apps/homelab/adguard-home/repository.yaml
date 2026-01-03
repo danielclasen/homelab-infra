@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: adguard-home
-  namespace: adguard-home
-spec:
-  url: https://charts.gabe565.com
-  interval: 5m0s
