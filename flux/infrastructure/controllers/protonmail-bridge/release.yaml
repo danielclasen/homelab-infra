@@ -35,7 +35,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          metallb.io/loadBalancerIPs: &ip 192.168.95.38
+          metallb.io/loadBalancerIPs: &ip 192.168.95.42
           external-dns.alpha.kubernetes.io/hostname: mail.clsn.dev,smtp.clsn.dev,imap.clsn.dev
           external-dns.alpha.kubernetes.io/target: *ip
         ports:

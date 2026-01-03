@@ -85,7 +85,7 @@ The following commands can be run from the `talos` directory within this reposit
         *   `cert-manager` is configured to automatically issue certificates for both domains using Cloudflare's DNS01 challenge.
     *   **LoadBalancer**: MetalLB provides LoadBalancer services for the cluster, operating in L2 mode.
         *   **Namespace**: `metallb`
-        *   **IP Address Pool**: `192.168.95.20-192.168.95.40`
+        *   **IP Address Pool**: `192.168.95.39-192.168.95.50`
         *   **L2 Advertisement**: Service IPs are advertised by all nodes. Control planes (`tcpl-01` to `tcpl-03`) use the `ens18` interface, and worker nodes (`tworker-01`, `tworker-02`) use the `end0.95` interface.
 *   **Storage**:
     *   **Block Storage (LINSTOR/Piraeus)**:

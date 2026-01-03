@@ -27,7 +27,7 @@ spec:
             port: 80
       dns-tcp:
         type: LoadBalancer
-        loadBalancerIP: &ip 192.168.95.20
+        loadBalancerIP: &ip 192.168.95.50
         externalTrafficPolicy: Local
         annotations:
           metallb.io/allow-shared-ip: adguard-home
