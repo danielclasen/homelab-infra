@@ -33,7 +33,7 @@ spec:
       enabled: true
       type: LoadBalancer
       annotations:
-        metallb.io/loadBalancerIPs: &ip 192.168.95.41
+        metallb.io/loadBalancerIPs: &ip 192.168.95.49
         external-dns.alpha.kubernetes.io/target: *ip
       externalTrafficPolicy: Local
     ports:
