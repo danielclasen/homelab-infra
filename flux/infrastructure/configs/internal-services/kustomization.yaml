@@ -4,6 +4,5 @@ namespace: internal-services
 resources:
 - namespace.yaml
 - servers-transport.yaml
-- ./pve/pve.yaml
 - ./homeassistant/homeassistant.yaml
 - ./uptime-kuma/uptime-kuma.yaml
