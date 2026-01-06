@@ -74,12 +74,12 @@ spec:
       main:
         enabled: true
         ports:
-          metrics-http-01:
+          main:
             enabled: true
             protocol: http
             port: 8080
             targetSelector: main
-          metrics-http-02:
+          backup:
             enabled: true
             protocol: http
             port: 8081
@@ -90,7 +90,7 @@ spec:
         enabled: true
         type: "servicemonitor"
         endpoints:
-          - port: metrics-http-01
+          - port: main
             path: /metrics
         targetSelector: main
         prometheusRule:
@@ -99,7 +99,7 @@ spec:
         enabled: true
         type: "servicemonitor"
         endpoints:
-          - port: metrics-http-02
+          - port: backup
             path: /metrics
         targetSelector: main
         prometheusRule:
