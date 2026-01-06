@@ -75,10 +75,12 @@ spec:
         enabled: true
         ports:
           metrics-http-01:
+            enabled: true
             protocol: http
             port: 8080
             targetSelector: main
           metrics-http-02:
+            enabled: true
             protocol: http
             port: 8081
             targetPort: 8080
