@@ -34,6 +34,7 @@ spec:
                 - "--log.level=debug"
                 - "--log.format=json"
                 - "--exporter.instance-label=opnsense-01"
+                - "--web.listen-address=:8080"
               probes:
                 liveness:
                   path: /
@@ -55,16 +56,17 @@ spec:
                 - "--log.level=debug"
                 - "--log.format=json"
                 - "--exporter.instance-label=opnsense-02"
+                - "--web.listen-address=:8081"
               probes:
                 liveness:
                   path: /
-                  port: 8080
+                  port: 8081
                 readiness:
                   path: /
-                  port: 8080
+                  port: 8081
                 startup:
                   path: /
-                  port: 8080
+                  port: 8081
               envFrom:
                 - secretRef:
                     name: opnsense-02-secret
@@ -83,7 +85,6 @@ spec:
             enabled: true
             protocol: http
             port: 8081
-            targetPort: 8080
             targetSelector: backup
     metrics:
       opnsense-01:
