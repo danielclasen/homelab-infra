@@ -28,6 +28,7 @@ spec:
         podSpec:
           containers:
             main:
+              enabled: true
               command:
               args:
                 - "--log.level=debug"
@@ -48,6 +49,7 @@ spec:
                     name: opnsense-01-secret
                     expandObjectName: false
             backup:
+              enabled: true
               command:
               args:
                 - "--log.level=debug"
@@ -79,6 +81,7 @@ spec:
           metrics-http-02:
             protocol: http
             port: 8081
+            targetPort: 8080
             targetSelector: backup
     metrics:
       opnsense-01:
