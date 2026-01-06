@@ -79,6 +79,6 @@ spec:
           - job_name: 'openwrt-router'
             scrape_interval: 30s
             static_configs:
-              - targets: ['192.168.1.1:9100']
+              - targets: ['192.168.1.6:9100']
             
           
