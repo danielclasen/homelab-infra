@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prometheus
+resources:
+  - opnsense-01-secret.yaml
+  - opnsense-02-secret.yaml
+  - release.yaml

@@ -1,0 +1,101 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: opnsense-exporter
+  namespace: prometheus
+spec:
+  interval: 5m
+  timeout: 2m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.29.54
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  values:
+    TZ: "Europe/Berlin"
+    image:
+      repository: ghcr.io/athennamind/opnsense-exporter
+      # renovate datasource=docker depName=ghcr.io/athennamind/opnsense-exporter
+      tag: 0.0.11
+      pullPolicy: IfNotPresent
+
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              command:
+              args:
+                - "--log.level=debug"
+                - "--log.format=json"
+                - "--exporter.instance-label=opnsense-01"
+              probes:
+                liveness:
+                  path: /
+                  port: 8080
+                readiness:
+                  path: /
+                  port: 8080
+                startup:
+                  path: /
+                  port: 8080
+              envFrom:
+                - secretRef:
+                    name: opnsense-01-secret
+                    expandObjectName: false
+            backup:
+              command:
+              args:
+                - "--log.level=debug"
+                - "--log.format=json"
+                - "--exporter.instance-label=opnsense-02"
+              probes:
+                liveness:
+                  path: /
+                  port: 8080
+                readiness:
+                  path: /
+                  port: 8080
+                startup:
+                  path: /
+                  port: 8080
+              envFrom:
+                - secretRef:
+                    name: opnsense-02-secret
+                    expandObjectName: false
+
+    service:
+      main:
+        enabled: true
+        ports:
+          metrics-http-01:
+            protocol: http
+            port: 8080
+            targetSelector: main
+          metrics-http-02:
+            protocol: http
+            port: 8081
+            targetSelector: backup
+    metrics:
+      opnsense-01:
+        enabled: true
+        type: "servicemonitor"
+        endpoints:
+          - port: metrics-http-01
+            path: /metrics
+        targetSelector: main
+        prometheusRule:
+          enabled: false
+      opnsense-02:
+        enabled: true
+        type: "servicemonitor"
+        endpoints:
+          - port: metrics-http-02
+            path: /metrics
+        targetSelector: main
+        prometheusRule:
+          enabled: false
