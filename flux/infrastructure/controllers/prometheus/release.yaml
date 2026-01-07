@@ -80,5 +80,9 @@ spec:
             scrape_interval: 30s
             static_configs:
               - targets: ['192.168.1.6:9100']
+          - job_name: 'truenas-01'
+            scrape_interval: 10s
+            static_configs:
+              - targets: ['192.168.95.15:9018']
             
           
