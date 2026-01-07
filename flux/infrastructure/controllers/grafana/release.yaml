@@ -72,12 +72,22 @@ spec:
           enabled: true
         traefik:
           enabled: true
+        opnsense-exporter:
+          enabled: true
+          failOnError: false
+          b64content: false
+          datasource:
+            - name: "$${DS_PROMETHEUS-K0}"
+              value: Prometheus
+          marketplace:
+            id: 21113
+            revision: 1
         truenas-overview:
           enabled: true
           failOnError: false
           b64content: false
           datasource:
-            - name: "${DS_MIMIR}"
+            - name: "$${DS_MIMIR}"
               value: Prometheus
           url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/refs/heads/main/dashboards/truenas_scale.json
         truenas-apps:
@@ -85,7 +95,7 @@ spec:
           failOnError: false
           b64content: false
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/refs/heads/main/dashboards/truenas_scale_applications_k3s.json
         truenas-cgroups:
@@ -93,7 +103,7 @@ spec:
           failOnError: false
           b64content: false
           datasource:
-            - name: "${DS_MIMIR}"
+            - name: "$${DS_MIMIR}"
               value: Prometheus
           url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/refs/heads/main/dashboards/truenas_scale_cgroups.json
         truenas-disks:
@@ -101,7 +111,7 @@ spec:
           failOnError: false
           b64content: false
           datasource:
-            - name: "${DS_MIMIR}"
+            - name: "$${DS_MIMIR}"
               value: Prometheus
           url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/refs/heads/main/dashboards/truenas_scale_disk_insights.json
         truenas-temps:
@@ -109,6 +119,6 @@ spec:
           failOnError: false
           b64content: false
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/refs/heads/main/dashboards/truenas_scale_temperatures.json
