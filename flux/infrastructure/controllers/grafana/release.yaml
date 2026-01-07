@@ -72,16 +72,6 @@ spec:
           enabled: true
         traefik:
           enabled: true
-        opnsense-exporter:
-          enabled: true
-          failOnError: false
-          b64content: false
-          datasource:
-            - name: "${DS_PROMETHEUS-K0}"
-              value: Prometheus
-          marketplace:
-            id: 21113
-            revision: 1
         truenas-overview:
           enabled: true
           failOnError: false
