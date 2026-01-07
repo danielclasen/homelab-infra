@@ -83,6 +83,6 @@ spec:
           - job_name: 'truenas-01'
             scrape_interval: 10s
             static_configs:
-              - targets: ['192.168.95.15:9018']
+              - targets: ['192.168.95.15:9108']
             
           
