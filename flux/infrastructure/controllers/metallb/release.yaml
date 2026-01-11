@@ -21,3 +21,9 @@ spec:
     remediation:
       remediateLastFailure: true
       retries: 3
+  values:
+    prometheus:
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
