@@ -27,3 +27,4 @@ spec:
         enabled: true
       prometheusRule:
         enabled: true
+      serviceAccount: default
