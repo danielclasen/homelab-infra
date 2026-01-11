@@ -27,4 +27,5 @@ spec:
         enabled: true
       prometheusRule:
         enabled: true
+      namespace: prometheus
       serviceAccount: default
