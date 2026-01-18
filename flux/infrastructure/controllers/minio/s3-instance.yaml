@@ -1,0 +1,31 @@
+apiVersion: s3.onyxia.sh/v1alpha1
+kind: S3Instance
+metadata:
+  labels:
+    app.kubernetes.io/name: instance
+    app.kubernetes.io/instance: s3-cluster-instance
+    app.kubernetes.io/part-of: s3-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: s3-operator
+  # Name of the S3Instance
+  name: s3-cluster-instance
+spec:
+  # Type of the Provider. Can be "mockedS3Provider" or "minio"
+  s3Provider: minio
+  # URL of the Provider
+  url: https://s3.clsn.cloud
+  # Name of the secret containing 2 Keys S3_ACCESS_KEY and S3_SECRET_KEY
+  secretRef: minio-s3-operator-secret
+  # Region of the Provider
+  #region: de-homelab-k8s-1
+  # namespaces allowed to have buckets, policies, ... Wildcard prefix/suffix allowed. If empty only the same namespace as s3instance is allowed
+  allowedNamespaces: ["*"]
+
+  # Allowed bucket entity suppression on s3instance
+  bucketDeletionEnabled: false                              
+  # Allowed policy entity suppression on s3instance          
+  policyDeletionEnabled: true
+  # Allowed path entity suppression on s3instance          
+  pathDeletionEnabled: false
+  # Allowed s3User entity suppression on s3instance          
+  s3UserDeletionEnabled: true

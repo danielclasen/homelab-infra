@@ -6,3 +6,4 @@ resources:
   - repository.yaml
   - minio-users-secret.yaml
   - release.yaml
+  - s3-instance.yaml
