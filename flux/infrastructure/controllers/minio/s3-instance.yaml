@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/created-by: s3-operator
   # Name of the S3Instance
   name: s3-cluster-instance
+  namespace: minio
 spec:
   # Type of the Provider. Can be "mockedS3Provider" or "minio"
   s3Provider: minio
