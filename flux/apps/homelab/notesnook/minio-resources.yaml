@@ -15,7 +15,7 @@ spec:
     # 10GB
     default: 10000000000
     # override: 20000000000
-  s3InstanceRef: minoi/s3-cluster-instance
+  s3InstanceRef: minio/s3-cluster-instance
 ---
 apiVersion: s3.onyxia.sh/v1alpha1
 kind: Policy
@@ -29,7 +29,7 @@ metadata:
   name: minio-policy-notesnook
 spec:
   name: notesnook
-  s3InstanceRef: minoi/s3-cluster-instance
+  s3InstanceRef: minio/s3-cluster-instance
   policyContent: >-
     {
       "Version": "2012-10-17",
@@ -75,6 +75,6 @@ metadata:
   name: s3-user-notesnook
 spec:
   accessKey: s3-notesnook
-  s3InstanceRef: minoi/s3-cluster-instance
+  s3InstanceRef: minio/s3-cluster-instance
   policies:
     - notesnook
