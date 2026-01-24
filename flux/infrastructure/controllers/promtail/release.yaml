@@ -55,7 +55,7 @@ spec:
             annotations:
               description: |
                 The {{ $labels.job }} {{ $labels.route }} is experiencing
-                {{ printf \"%.2f\" $value }} errors.
+                {{ printf "%.2f" $value }} errors.
                 VALUE = {{ $value }}
                 LABELS = {{ $labels }}
               summary: Promtail request errors (instance {{ $labels.instance }})
@@ -68,7 +68,7 @@ spec:
               summary: Promtail request latency (instance {{ $labels.instance }})
               description: |
                 The {{ $labels.job }} {{ $labels.route }} is experiencing
-                {{ printf \"%.2f\" $value }}s 99th percentile latency.
+                {{ printf "%.2f" $value }}s 99th percentile latency.
                 VALUE = {{ $value }}
                 LABELS = {{ $labels }}
     sidecar:
