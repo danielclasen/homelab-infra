@@ -1,0 +1,76 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: promtail
+  namespace: promtail
+spec:
+  interval: 5m
+  timeout: 5m
+  chart:
+    spec:
+      chart: promtail
+      version: 6.17.1
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+  values:
+    config:
+      # publish data to loki
+      clients:
+        - url: http://192.168.95.111:3100/loki/api/v1/push
+          tenant_id: 1
+      extraScrapeConfigs: |
+        - job_name: syslog
+          syslog:
+            listen_address: 0.0.0.0:1514
+            listen_protocol: tcp
+            idle_timeout: 60s
+            label_structured_data: yes
+            labels:
+              job: "syslog"
+          relabel_configs:
+            - source_labels: ['__syslog_message_hostname']
+              target_label: 'host'
+    extraPorts:
+      syslog:
+        name: tcp-syslog
+        annotations: {}
+        labels: {}
+        containerPort: 1514
+        protocol: TCP
+        service:
+          type: ClusterIP
+          port: 1514
+    serviceMonitor:
+      enabled: true
+      prometheusRule:
+        enabled: true
+        rules:
+          - alert: PromtailRequestErrors
+            expr: 100 * sum(rate(promtail_request_duration_seconds_count{status_code=~"5..|failed"}[1m])) by (namespace, job, route, instance) / sum(rate(promtail_request_duration_seconds_count[1m])) by (namespace, job, route, instance) > 10
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              description: |
+                The {{ $labels.job }} {{ $labels.route }} is experiencing
+                {{ printf \"%.2f\" $value }} errors.
+                VALUE = {{ $value }}
+                LABELS = {{ $labels }}
+              summary: Promtail request errors (instance {{ $labels.instance }})
+          - alert: PromtailRequestLatency
+            expr: histogram_quantile(0.99, sum(rate(promtail_request_duration_seconds_bucket[5m])) by (le)) > 1
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: Promtail request latency (instance {{ $labels.instance }})
+              description: |
+                The {{ $labels.job }} {{ $labels.route }} is experiencing
+                {{ printf \"%.2f\" $value }}s 99th percentile latency.
+                VALUE = {{ $value }}
+                LABELS = {{ $labels }}
+    sidecar:
+      configReloader:
+        enabled: true    
