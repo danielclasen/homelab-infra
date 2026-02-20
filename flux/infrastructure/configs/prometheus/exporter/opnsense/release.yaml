@@ -20,7 +20,7 @@ spec:
     image:
       repository: ghcr.io/athennamind/opnsense-exporter
       # renovate datasource=docker depName=ghcr.io/athennamind/opnsense-exporter
-      tag: 0.0.11
+      tag: 0.0.13
       pullPolicy: IfNotPresent
 
     workload:
