@@ -42,7 +42,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cert-manager
-      version: v0.20.2
+      version: v0.21.1
   install:
     crds: CreateReplace
     remediation:
