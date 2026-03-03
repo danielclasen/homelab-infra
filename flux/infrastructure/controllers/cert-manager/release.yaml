@@ -25,6 +25,9 @@ spec:
       retries: 3
   interval: 1m0s
   values:
+    extraArgs:
+      - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
+      - --dns01-recursive-nameservers-only
     crds:
       enabled: true
       keep: true
