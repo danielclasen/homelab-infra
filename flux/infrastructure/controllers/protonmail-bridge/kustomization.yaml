@@ -4,7 +4,5 @@ kind: Kustomization
 namespace: protonmail
 resources:
   - namespace.yaml
-  - repository.yaml
-  - certificate.yaml
-  - login-secret.yaml
+  - webui-auth-secret.yaml
   - release.yaml

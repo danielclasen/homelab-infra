@@ -6,33 +6,60 @@ metadata:
   namespace: protonmail
 spec:
   interval: 5m
-  timeout: 2m
+  timeout: 5m
   chart:
     spec:
-      chart: proton-bridge
-      version: 0.1.3
+      chart: app-template
+      version: 15.38.0
       sourceRef:
         kind: HelmRepository
-        name: protonmail-bridge
+        name: truecharts
+        namespace: flux-system
   values:
-    env:
-      TZ: Europe/Berlin
-    protonmailBridge:
-      login:
-        enabled: true
-        secretName: protonmail-bridge-login-secret
-      certificate:
-        enabled: true
-        secretName: protonmail-bridge-certificate-secret
-    persistence:
-      root:
-        enabled: true
-        type: persistentVolumeClaim
-        storageClass: "ssd-perf-r3"
-        retain: true
-        size: 5Gi
+    TZ: Europe/Berlin
+
+    image:
+      repository: docker.io/pattertj/protonmail-bridge
+      # renovate datasource=docker depName=docker.io/pattertj/protonmail-bridge
+      tag: latest
+      pullPolicy: Always
+
+    securityContext:
+      container:
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+        allowPrivilegeEscalation: false
+        privileged: false
+        PUID: 0
+      pod:
+        fsGroup: 0
+        fsGroupChangePolicy: OnRootMismatch
+
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                WEBUI_AUTH_TOKEN:
+                  secretKeyRef:
+                    name: protonmail-bridge-webui-auth-secret
+                    expandObjectName: false
+                    key: token
+                CONTAINER_SMTP_PORT: "25"
+                CONTAINER_IMAP_PORT: "143"
+                WEBUI_PORT: "3000"
+
     service:
       main:
+        ports:
+          main:
+            enabled: true
+            protocol: http
+            port: 3000
+      mail:
+        enabled: true
         type: LoadBalancer
         annotations:
           metallb.io/loadBalancerIPs: &ip 192.168.95.48
@@ -41,5 +68,39 @@ spec:
         ports:
           smtp:
             enabled: true
+            protocol: tcp
+            port: 25
+            targetSelector: main
           imap:
             enabled: true
+            protocol: tcp
+            port: 143
+            targetSelector: main
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik-internal
+        hosts:
+          - host: proton.clsn.dev
+            paths:
+              - path: /
+                pathType: Prefix
+        integrations:
+          traefik:
+            enabled: true
+            entrypoints:
+              - websecure
+            forceTLS: true
+          certManager:
+            enabled: true
+            certificateIssuer: letsencrypt-prod
+
+    persistence:
+      root:
+        enabled: true
+        type: pvc
+        mountPath: /root
+        size: 5Gi
+        storageClass: ssd-perf-r3
+        retain: true
