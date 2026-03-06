@@ -1,0 +1,16 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: protonmail-bridge-tls
+  namespace: protonmail
+spec:
+  commonName: mail.clsn.dev
+  dnsNames:
+  - mail.clsn.dev
+  - smtp.clsn.dev
+  - imap.clsn.dev
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: protonmail-bridge-certificate-secret
