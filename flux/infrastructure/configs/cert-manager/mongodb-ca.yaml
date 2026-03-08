@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cert-manager.io/clusterissuer_v1.json
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-cluster-issuer
+spec:
+  selfSigned: {}
+---
+# MongoDB CA Certificate - stored in cert-manager namespace for trust-manager Bundle access
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mongodb-ca
+  namespace: cert-manager
+spec:
+  isCA: true
+  commonName: mongodb-ca
+  secretName: mongodb-ca-cert
+  duration: 87600h
+  renewBefore: 8760h
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  issuerRef:
+    name: selfsigned-cluster-issuer
+    kind: ClusterIssuer
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cert-manager.io/clusterissuer_v1.json
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: mongodb-ca-issuer
+spec:
+  ca:
+    secretName: mongodb-ca-cert

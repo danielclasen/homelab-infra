@@ -9,9 +9,11 @@ spec:
   dnsNames:
   - 'oplog.mongodb.clsn.dev'
   - '*.oplog.mongodb.clsn.dev'
+  duration: 8760h
+  renewBefore: 720h
   issuerRef:
     kind: ClusterIssuer
-    name: letsencrypt-prod
+    name: mongodb-ca-issuer
   usages:
     - server auth
     - client auth
@@ -32,7 +34,7 @@ spec:
       modes: ["SCRAM"]
     certsSecretPrefix: oplog
     tls:
-      ca: ca-bundle
+      ca: notesnook-db-ca
       enabled: true
   additionalMongodConfig:
     net:

@@ -22,7 +22,9 @@ metadata:
   name: notesnook-db-ca
 spec:
   sources:
-    - useDefaultCAs: true
+    - secret:
+        name: "mongodb-ca-cert"
+        key: "ca.crt"
   target:
     configMap:
       key: "ca-pem"

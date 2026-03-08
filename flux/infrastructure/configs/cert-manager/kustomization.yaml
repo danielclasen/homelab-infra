@@ -6,3 +6,4 @@ resources:
   - cloudflare-secret.yaml
   - cloudflare-issuer.yaml
   - trust-bundle.yaml
+  - mongodb-ca.yaml
