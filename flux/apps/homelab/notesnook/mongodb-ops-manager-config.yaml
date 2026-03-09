@@ -6,4 +6,4 @@ metadata:
 data:
   baseUrl: http://ops-manager-svc.mongodb.svc.cluster.local:8080
   projectName: notesnook
-  orgId: 6846dfeee0e87d54fdcbafe4
+  orgId: 69ae17561d4c006993de0a98
