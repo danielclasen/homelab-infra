@@ -12,8 +12,8 @@ spec:
     template:
       engineVersion: v2
       data:
-        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/notesnook?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true&tlsAllowInvalidCertificates=true" }}'
-        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/notesnook?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true&tlsAllowInvalidCertificates=true" }}'
+        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/notesnook?" | replace "&ssl=true" "" }}'
+        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/notesnook?" | replace "&ssl=true" "" }}'
         username: '{{ .username }}'
         password: '{{ .password }}'
   data:
@@ -49,8 +49,8 @@ spec:
     template:
       engineVersion: v2
       data:
-        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true&tlsAllowInvalidCertificates=true" }}'
-        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/identity?" | replace "&ssl=true" "&ssl=true&tls=true&useTls=true&tlsAllowInvalidCertificates=true" }}'
+        connectionString.standard: '{{ .connectionStringStandard | replace "/?" "/identity?" | replace "&ssl=true" "" }}'
+        connectionString.standardSrv: '{{ .connectionStringSrv | replace "/?" "/identity?" | replace "&ssl=true" "" }}'
         username: '{{ .username }}'
         password: '{{ .password }}'
   data:
