@@ -122,7 +122,7 @@ spec:
               type: RuntimeDefault
           initContainers:
             - name: mongodump
-              image: docker.io/library/mongo:7.0.21
+              image: docker.io/library/mongo:7.0.48
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
