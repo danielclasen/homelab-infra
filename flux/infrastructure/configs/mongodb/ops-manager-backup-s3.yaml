@@ -1,0 +1,77 @@
+---
+apiVersion: s3.onyxia.sh/v1alpha1
+kind: Bucket
+metadata:
+  labels:
+    app.kubernetes.io/name: bucket
+    app.kubernetes.io/instance: bucket-ops-manager-backup
+    app.kubernetes.io/part-of: s3-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: s3-operator
+  name: minio-bucket-ops-manager-backup
+spec:
+  name: ops-manager-backup
+  quota:
+    # 15GB
+    default: 15000000000
+  s3InstanceRef: minio/s3-cluster-instance
+---
+apiVersion: s3.onyxia.sh/v1alpha1
+kind: Policy
+metadata:
+  labels:
+    app.kubernetes.io/name: policy
+    app.kubernetes.io/instance: policy-ops-manager-backup
+    app.kubernetes.io/part-of: s3-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: s3-operator
+  name: minio-policy-ops-manager-backup
+spec:
+  name: ops-manager-backup
+  s3InstanceRef: minio/s3-cluster-instance
+  policyContent: >-
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+              "s3:AbortMultipartUpload",
+              "s3:DeleteObject",
+              "s3:GetObject",
+              "s3:ListMultipartUploadParts",
+              "s3:PutObject"
+          ],
+          "Resource": [
+              "arn:aws:s3:::ops-manager-backup/*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+              "s3:GetBucketLocation",
+              "s3:ListBucket",
+              "s3:ListBucketMultipartUploads"
+          ],
+          "Resource": [
+              "arn:aws:s3:::ops-manager-backup"
+          ]
+        }
+      ]
+    }
+---
+apiVersion: s3.onyxia.sh/v1alpha1
+kind: S3User
+metadata:
+  labels:
+    app.kubernetes.io/name: user
+    app.kubernetes.io/instance: user-ops-manager-backup
+    app.kubernetes.io/part-of: s3-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: s3-operator
+  name: s3-user-ops-manager-backup
+spec:
+  accessKey: s3-ops-manager-backup
+  s3InstanceRef: minio/s3-cluster-instance
+  policies:
+    - ops-manager-backup

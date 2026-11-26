@@ -10,3 +10,4 @@ resources:
   - oplog-ops-manager-secret.yaml
   - oplog-mongodb-secret.yaml
   - oplog-mongodb.yaml
+  - ops-manager-backup-s3.yaml
