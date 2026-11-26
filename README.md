@@ -68,6 +68,20 @@ The following commands can be run from the `talos` directory within this reposit
     talosctl kubeconfig --talosconfig clusterconfig/talosconfig
     ```
     This command generates the `kubeconfig` content into your default `~/.kube/config` file. Once the `kubeconfig` is correctly set up, you can use standard `kubectl` commands to interact with the cluster.
+*   **Remove an Unreachable Control Plane from etcd**:
+    etcd needs a majority of its members. With four members, losing two control planes stops the cluster; with three, it survives one. When a control plane is down for longer, remove its etcd member from a healthy node:
+    ```bash
+    talosctl -n 192.168.95.21 --talosconfig clusterconfig/talosconfig etcd members
+    talosctl -n 192.168.95.21 --talosconfig clusterconfig/talosconfig etcd remove-member <member-id>
+    ```
+    Keep the Kubernetes `Node` object. Its `LinstorSatellite` has `deletionPolicy: Evacuate`, so deleting the `Node` makes Piraeus evacuate a satellite that may hold the only copy of some volumes.
+*   **Rejoin a Removed Control Plane**:
+    A removed node still has its old etcd data and cannot rejoin with it. As soon as the node is reachable again, wipe only its `EPHEMERAL` partition (etcd, containerd and kubelet state). The LINSTOR disk and the machine config stay, and the node joins etcd as a new member:
+    ```bash
+    talosctl -n <node-ip> --talosconfig clusterconfig/talosconfig reset --system-labels-to-wipe EPHEMERAL --graceful=false --reboot
+    talosctl -n 192.168.95.21 --talosconfig clusterconfig/talosconfig etcd members
+    ```
+    `tcpl-04` (`192.168.95.24`, on `pve-05`) was removed from etcd this way on 2026-11-26 and needs this reset before it rejoins.
 
 ### Infrastructure
 
