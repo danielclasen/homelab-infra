@@ -93,7 +93,8 @@ spec:
     - db: "admin"
       name: "backup"
 ---
-# Daily mongodump of the nn replica set to the notesnook-backup bucket.
+# Daily mongodump of the nn replica set to the notesnook-backup bucket on
+# versitygw on truenas-01.
 # Dumps older than 14 days are removed after each successful upload.
 apiVersion: batch/v1
 kind: CronJob
@@ -162,7 +163,7 @@ spec:
                 - sh
                 - -ec
                 - |
-                  s3() { aws --endpoint-url http://minio.minio.svc.cluster.local:9000 "$@"; }
+                  s3() { aws --endpoint-url http://192.168.95.15:9000 "$@"; }
                   for f in /work/nn-*.archive.gz; do s3 s3 cp "$f" "s3://notesnook-backup/$(basename "$f")"; done
                   cutoff=$(date -u -d '14 days ago' +%Y-%m-%dT%H:%M:%S)
                   for key in $(s3 s3api list-objects-v2 --bucket notesnook-backup \
@@ -178,12 +179,12 @@ spec:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: s3-user-notesnook-backup
+                      name: notesnook-backup-s3-secret
                       key: accessKey
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: s3-user-notesnook-backup
+                      name: notesnook-backup-s3-secret
                       key: secretKey
               resources:
                 requests:
