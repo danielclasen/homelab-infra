@@ -56,8 +56,10 @@ spec:
             size: "5Gi"
             storageClass: ssd-perf-r1
           walStorage:
-            size: "2Gi"
+            size: "5Gi"
             storageClass: ssd-perf-r1
+          postgresql:
+            max_slot_wal_keep_size: "2GB"
         monitoring:
           enablePodMonitor: true
     dashboards:
