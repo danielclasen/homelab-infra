@@ -8,6 +8,10 @@ spec:
   replicas: 1
   version: 8.0.7
   adminCredentials: ops-manager-credentials-secret
+  security:
+    tls:
+      # default CAs plus the internal MongoDB CA, for the TLS oplog store
+      ca: ops-manager-ca
   applicationDatabase:
     members: 3
     version: 8.0.7
