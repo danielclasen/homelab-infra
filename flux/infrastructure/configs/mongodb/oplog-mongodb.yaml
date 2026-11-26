@@ -1,24 +1,4 @@
 ---
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: oplog-tls
-  namespace: mongodb
-spec:
-  commonName: oplog.mongodb.clsn.dev
-  dnsNames:
-  - 'oplog.mongodb.clsn.dev'
-  - '*.oplog.mongodb.clsn.dev'
-  duration: 8760h
-  renewBefore: 720h
-  issuerRef:
-    kind: ClusterIssuer
-    name: mongodb-ca-issuer
-  usages:
-    - server auth
-    - client auth
-  secretName: oplog-oplog-cert
----
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
@@ -32,14 +12,6 @@ spec:
     authentication:
       enabled: true
       modes: ["SCRAM"]
-    certsSecretPrefix: oplog
-    tls:
-      ca: notesnook-db-ca
-      enabled: true
-  additionalMongodConfig:
-    net:
-      ssl:
-        mode: preferSSL
   opsManager:
     configMapRef:
       name: oplog-ops-manager-config
