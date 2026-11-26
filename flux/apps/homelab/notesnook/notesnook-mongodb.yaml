@@ -44,8 +44,6 @@ spec:
     configMapRef:
       name: mongodb-ops-manager-config
   credentials: mongodb-ops-manager-secret
-  backup:
-    mode: enabled
   persistent: true
   podSpec:
     persistence:
