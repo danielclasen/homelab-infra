@@ -131,7 +131,7 @@ spec:
                 - sh
                 - -ec
                 - |
-                  mongodump --uri="$MONGODB_URI" --tlsCAFile=/ca/ca-pem \
+                  mongodump --uri="$MONGODB_URI" --sslCAFile=/ca/ca-pem \
                     --oplog --gzip --archive="/work/nn-$(date -u +%Y%m%dT%H%M%SZ).archive.gz"
               env:
                 - name: MONGODB_URI
