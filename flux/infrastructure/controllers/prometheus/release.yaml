@@ -57,7 +57,7 @@ spec:
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
-                  storage: 20Gi
+                  storage: 30Gi
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
@@ -68,7 +68,7 @@ spec:
         enableFeatures:
           - memory-snapshot-on-shutdown
         retention: 14d
-        retentionSize: 20GiB
+        retentionSize: 24GiB
         resources:
           requests:
             cpu: 100m
