@@ -51,21 +51,4 @@ spec:
     type: ClusterIP
     port: 8080
   backup:
-    enabled: true
-    headDB:
-      storage: 30Gi
-      storageClass: ssd-perf-r3
-    opLogStores:
-      - name: oplog-store
-        mongodbResourceRef:
-          name: oplog
-        mongodbUserRef:
-          name: oplog-mongodb-user
-    s3Stores:
-      - name: s3-store
-        s3SecretRef:
-          name: s3-user-ops-manager-backup
-        s3BucketEndpoint: http://minio.minio.svc.cluster.local:9000
-        s3BucketName: ops-manager-backup
-        s3RegionOverride: us-east-1
-        pathStyleAccessEnabled: true
+    enabled: false
