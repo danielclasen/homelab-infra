@@ -34,23 +34,3 @@ spec:
     namespaceSelector:
       matchLabels:
         linkerd.io/inject: "enabled"
----
-apiVersion: trust.cert-manager.io/v1alpha1
-kind: Bundle
-metadata:
-  name: ops-manager-ca
-spec:
-  sources:
-    - useDefaultCAs: true
-    - secret:
-        name: "mongodb-ca-cert"
-        key: "ca.crt"
-  target:
-    configMap:
-      key: "mms-ca.crt"
-      metadata:
-        labels:
-          app.kubernetes.io/component: "trust-bundle"
-    namespaceSelector:
-      matchLabels:
-        kubernetes.io/metadata.name: "mongodb"
