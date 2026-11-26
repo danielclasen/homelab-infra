@@ -11,6 +11,13 @@ spec:
   applicationDatabase:
     members: 3
     version: 8.0.7
+    agent:
+      mongod:
+        logRotate:
+          sizeThresholdMB: "500"
+          timeThresholdHrs: 24
+          numUncompressed: 1
+          numTotal: 5
     podSpec:
       persistence:
         single:
