@@ -13,6 +13,7 @@ resources:
   - notesnook-identity-mongodb-custom-connection-string.yaml
   - notesnook-mongodb.yaml
   - notesnook-backup-mongodb-secret.yaml
+  - notesnook-backup-s3-secret.yaml
   - backup.yaml
   - notesnook-env-secret.yaml
   - minio-resources.yaml
