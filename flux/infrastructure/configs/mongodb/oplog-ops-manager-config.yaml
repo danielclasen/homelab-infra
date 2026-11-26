@@ -6,4 +6,4 @@ metadata:
 data:
   baseUrl: http://ops-manager-svc.mongodb.svc.cluster.local:8080
   projectName: oplog
-  orgId: 68ed7f6135b47e342a2dec58
+  orgId: 6b0889c0c96e9276fbeca7e3
