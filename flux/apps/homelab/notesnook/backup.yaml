@@ -154,7 +154,7 @@ spec:
                   readOnly: true
           containers:
             - name: upload
-              image: docker.io/amazon/aws-cli:2.31.0
+              image: docker.io/amazon/aws-cli:2.42.5
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
